@@ -1,0 +1,14 @@
+.classpath
+.metadata
+.settings
+bin/
+*.class
+*.dat
+*.json
+*.xml
+
+
+# Package Files #
+*.jar
+*.war
+*.ear
