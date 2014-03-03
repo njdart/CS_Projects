@@ -14,13 +14,22 @@ import javax.swing.JPanel;
 
 
 
+
+
+
 //custom event listeners
 import eventListeners.*;
 
 public class Paint extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
-
+	
+	private JLabel mouseX,
+				   mouseY,
+				   mouseClicks,
+				   mouseIsOnCanvas;
+	private int clicks = 0;
+				   
 	public Paint(){
 		super("Swing Paint");
 		setVisible(true);
@@ -35,10 +44,10 @@ public class Paint extends JFrame{
 		JMenu file = new JMenu("File");
 		JMenuItem help = new JMenuItem("Help");
 		JMenuItem quit = new JMenuItem("Quit");
-		JLabel mouseX = new JLabel("-1");
-		JLabel mouseY = new JLabel("-1");
-		JLabel mouseClicks = new JLabel("0");
-		JLabel mouseIsOnCanvas = new JLabel("No");
+		mouseX = new JLabel("-1");
+		mouseY = new JLabel("-1");
+		mouseClicks = new JLabel("0");
+		mouseIsOnCanvas = new JLabel("No");
 		
 		this.add(menuBar, BorderLayout.NORTH);
 		this.add(canvas, BorderLayout.CENTER);
@@ -59,10 +68,22 @@ public class Paint extends JFrame{
 		status.add(new JLabel());
 		
 		
-		
+		canvas.addMouseListener(new CanvasMouseListener(this));
+		canvas.addMouseMotionListener(new CanvasMouseMotionListener(this));
 		quit.addActionListener(new CloseMenuItem());
 		
 		this.setSize(500, 500);
 		//pack();
+	}
+	
+	public void updateStatsPanel(int[] pos, boolean clicked, boolean isOnCanvas){
+		mouseX.setText(Integer.toString(pos[0]));
+		mouseY.setText(Integer.toString(pos[1]));
+		if(clicked)
+			clicks++;
+		mouseClicks.setText(Integer.toString(clicks));
+		if(isOnCanvas)
+			mouseIsOnCanvas.setText("Yes");
+		else mouseIsOnCanvas.setText("No");
 	}
 }
