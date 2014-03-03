@@ -8,7 +8,6 @@ public class CloseMenuItem implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		System.exit(0);
-
 	}
 
 }
