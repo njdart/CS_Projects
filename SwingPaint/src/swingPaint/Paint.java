@@ -12,11 +12,6 @@ import javax.swing.JPanel;
 
 
 
-
-
-
-
-
 //custom event listeners
 import eventListeners.*;
 
@@ -35,7 +30,7 @@ public class Paint extends JFrame{
 		setVisible(true);
 		
 		//JPanels
-		JPanel canvas = new JPanel();
+		Canvas canvas = new Canvas();
 		JPanel status = new JPanel();
 		
 		//Menu
@@ -44,6 +39,8 @@ public class Paint extends JFrame{
 		JMenu file = new JMenu("File");
 		JMenuItem help = new JMenuItem("Help");
 		JMenuItem quit = new JMenuItem("Quit");
+		JMenu draw = new JMenu("Draw");
+		JMenuItem colorPicker = new JMenuItem("Colour Picker");
 		mouseX = new JLabel("-1");
 		mouseY = new JLabel("-1");
 		mouseClicks = new JLabel("0");
@@ -56,6 +53,9 @@ public class Paint extends JFrame{
 		menuBar.add(file);
 		file.add(help);
 		file.add(quit);
+		menuBar.add(draw);
+		draw.add(colorPicker);
+		
 		status.setLayout(new GridLayout(3,3));
 		status.add(new JLabel("Mouse Position (X,Y)"));
 		status.add(mouseX);
@@ -70,6 +70,7 @@ public class Paint extends JFrame{
 		
 		canvas.addMouseListener(new CanvasMouseListener(this));
 		canvas.addMouseMotionListener(new CanvasMouseMotionListener(this));
+		colorPicker.addActionListener(new ColorPickerEventListener());
 		quit.addActionListener(new CloseMenuItem());
 		
 		this.setSize(500, 500);
@@ -86,4 +87,5 @@ public class Paint extends JFrame{
 			mouseIsOnCanvas.setText("Yes");
 		else mouseIsOnCanvas.setText("No");
 	}
+	
 }
