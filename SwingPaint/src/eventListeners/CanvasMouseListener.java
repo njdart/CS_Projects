@@ -2,19 +2,31 @@ package eventListeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.SwingUtilities;
+
+import drawing.PaintObjectList;
+import swingPaint.Canvas;
 import swingPaint.Paint;
 
 public class CanvasMouseListener implements MouseListener {
-
+	
+	private Canvas canvas;
 	private Paint p;
-	public CanvasMouseListener(Paint p){
+	
+	public CanvasMouseListener(Paint p, Canvas canvas){
 		super();
-		this.p = p;		
+		this.p = p;
+		this.canvas = canvas;
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		p.updateStatsPanel(new int[] {e.getX(), e.getY()}, true, true);
+		if(SwingUtilities.isLeftMouseButton(e))
+			canvas.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.CIRCLE);
+		else
+			canvas.remove(e.getX(), e.getY());
 
 	}
 

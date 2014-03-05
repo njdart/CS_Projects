@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class ColorPickerCancel implements ActionListener {
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 	}
 
 }

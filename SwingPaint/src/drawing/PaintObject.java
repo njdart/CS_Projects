@@ -1,6 +1,7 @@
 package drawing;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public abstract class PaintObject {
 	
@@ -19,9 +20,9 @@ public abstract class PaintObject {
 	
 	/*==OVERRIDE==*/
 	
-	public abstract void draw();
-	
-	public abstract String toString();
+	public abstract void draw(Graphics g);
+	public abstract void remove(Graphics g);
+	public abstract String getType();
 	
 	/*==Getters and setters==*/
 	
@@ -46,10 +47,6 @@ public abstract class PaintObject {
 		this.size = size;
 	}
 	
-	public double getDistanceFrom(int x, int y){
-		return Math.sqrt(Math.sqrt(x - this.x) + Math.sqrt(y - this.y));
-	}
-	
 	final protected void setUuid(int id){
 		this.uuid = id;
 	}
@@ -57,4 +54,14 @@ public abstract class PaintObject {
 	final protected int getUuid(){
 		return uuid;
 	}
+	
+	public double getDistanceFrom(int x, int y){
+		return Math.sqrt(Math.pow((this.x - x + size/2), 2) * Math.pow((this.y - y + size/2), 2));	//Pythagoras	
+	}
+	
+	public String toString() {
+		return getType() + " " + getUuid() + " { Pos: (" + x + "," + y + "), size " + size +
+			   " color: [" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + "] }";
+	}
+	
 }

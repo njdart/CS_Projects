@@ -1,6 +1,7 @@
 package swingPaint;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -9,20 +10,20 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
-
-
-//custom event listeners
 import eventListeners.*;
 
 public class Paint extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
+	private Color baseObjectColor = Color.black;
 	
 	private JLabel mouseX,
 				   mouseY,
 				   mouseClicks,
 				   mouseIsOnCanvas;
+	
+	private Canvas canvas;
+	
 	private int clicks = 0;
 				   
 	public Paint(){
@@ -30,7 +31,7 @@ public class Paint extends JFrame{
 		setVisible(true);
 		
 		//JPanels
-		Canvas canvas = new Canvas();
+		canvas = new Canvas();
 		JPanel status = new JPanel();
 		
 		//Menu
@@ -68,8 +69,8 @@ public class Paint extends JFrame{
 		status.add(new JLabel());
 		
 		
-		canvas.addMouseListener(new CanvasMouseListener(this));
-		canvas.addMouseMotionListener(new CanvasMouseMotionListener(this));
+		canvas.addMouseListener(new CanvasMouseListener(this, canvas));
+		canvas.addMouseMotionListener(new CanvasMouseMotionListener(this, canvas));
 		colorPicker.addActionListener(new ColorPickerEventListener());
 		quit.addActionListener(new CloseMenuItem());
 		
@@ -87,5 +88,18 @@ public class Paint extends JFrame{
 			mouseIsOnCanvas.setText("Yes");
 		else mouseIsOnCanvas.setText("No");
 	}
+	
+	public Color getColor(){
+		return baseObjectColor;
+	}
+	
+	public void setColor(Color c){
+		baseObjectColor = c;
+	}
+	
+	public void drawAt(int x, int y){
+		
+	}
+	
 	
 }

@@ -1,13 +1,8 @@
 package swingPaint;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import eventListeners.ColorPickerCancel;
+import javax.swing.JOptionPane;
 
 public class ColorPickerWindow extends JFrame{
 	
@@ -16,7 +11,8 @@ public class ColorPickerWindow extends JFrame{
 
 	public ColorPickerWindow(){
 		super();
-		JColorChooser jc = new JColorChooser();
+		System.out.println(JOptionPane.showInputDialog(new JColorChooser()));
+		/*JColorChooser jc = new JColorChooser();
 		JButton ok = new JButton("Ok");
 		JButton cancel = new JButton("Cancel");
 		JPanel north = new JPanel();
@@ -33,7 +29,7 @@ public class ColorPickerWindow extends JFrame{
 		pack();
 		
 		
-		setVisible(true);
+		setVisible(true);*/
 	}
 
 }
