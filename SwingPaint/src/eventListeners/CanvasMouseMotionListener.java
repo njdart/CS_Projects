@@ -15,13 +15,12 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		p.updateStatsPanel(new int[] {e.getX(), e.getY()}, false, true);
+
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 		p.updateStatsPanel(new int[] {e.getX(), e.getY()}, false, true);
 
 	}
