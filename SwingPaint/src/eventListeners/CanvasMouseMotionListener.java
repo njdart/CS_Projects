@@ -16,6 +16,7 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
 	public CanvasMouseMotionListener(Paint p, Canvas c){
 		super();
 		this.p = p;
+		this.c = c;
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {

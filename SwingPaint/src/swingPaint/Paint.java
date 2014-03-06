@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
 import eventListeners.*;
 
 public class Paint extends JFrame{
@@ -41,7 +43,7 @@ public class Paint extends JFrame{
 		JMenuItem help = new JMenuItem("Help");
 		JMenuItem quit = new JMenuItem("Quit");
 		JMenu draw = new JMenu("Draw");
-		JMenuItem colorPicker = new JMenuItem("Colour Picker");
+		//JColorChooser colorPicker = new JColorChooser();
 		mouseX = new JLabel("-1");
 		mouseY = new JLabel("-1");
 		mouseClicks = new JLabel("0");
@@ -55,7 +57,7 @@ public class Paint extends JFrame{
 		file.add(help);
 		file.add(quit);
 		menuBar.add(draw);
-		draw.add(colorPicker);
+		//draw.add(colorPicker);
 		
 		status.setLayout(new GridLayout(3,3));
 		status.add(new JLabel("Mouse Position (X,Y)"));
@@ -71,7 +73,7 @@ public class Paint extends JFrame{
 		
 		canvas.addMouseListener(new CanvasMouseListener(this, canvas));
 		canvas.addMouseMotionListener(new CanvasMouseMotionListener(this, canvas));
-		colorPicker.addActionListener(new ColorPickerEventListener());
+		//colorPicker.addActionListener(new ColorPickerEventListener());
 		quit.addActionListener(new CloseMenuItem());
 		
 		this.setSize(500, 500);

@@ -15,7 +15,6 @@ public class CanvasMouseListener implements MouseListener {
 	private Paint p;
 	
 	public CanvasMouseListener(Paint p, Canvas canvas){
-		super();
 		this.p = p;
 		this.canvas = canvas;
 	}

@@ -63,10 +63,10 @@ public class Canvas extends JPanel {
 	}
 	
 	public void moveObject(int x, int y){
-		//PaintObject o = findClosest(x, y);
-		//if(o != null){
-		//	o.setPosition(x, y);
-		//	repaint();
-		//}
+		PaintObject o = findClosest(x, y);
+		if(o != null){
+			o.setPosition(x, y);
+			repaint();
+		}
 	}
 }
