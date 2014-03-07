@@ -29,9 +29,8 @@ public class PaintObjectList {
 	
 	public void remove(int uuid){
 		for(PaintObject obj : objs)
-			if(obj.uuid == obj.getUuid()){
+			if(obj.uuid == obj.getUuid())
 				objs.remove(obj);
-			}
 	}
 
 	public void remove(PaintObject obj) {

@@ -11,21 +11,21 @@ import swingPaint.Paint;
 
 public class CanvasMouseListener implements MouseListener {
 	
-	private Canvas canvas;
+	private Canvas c;
 	private Paint p;
 	
 	public CanvasMouseListener(Paint p, Canvas canvas){
 		this.p = p;
-		this.canvas = canvas;
+		this.c = canvas;
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		p.updateStatsPanel(new int[] {e.getX(), e.getY()}, true, true);
 		if(SwingUtilities.isLeftMouseButton(e))
-			canvas.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.CIRCLE);
+			c.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.CIRCLE);
 		else
-			canvas.remove(e.getX(), e.getY());
+			c.remove(e.getX(), e.getY());
 
 	}
 
@@ -47,9 +47,8 @@ public class CanvasMouseListener implements MouseListener {
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void mouseReleased(MouseEvent e) {
+		c.releaseObject(e.getX(), e.getY());
 	}
 
 }

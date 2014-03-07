@@ -22,7 +22,7 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g); //--DO IT!
 		for(PaintObject obj : objects.asList()){
-			System.out.println("Painting " + obj.toString());
+			//System.out.println("Painting " + obj.toString());
 			obj.draw(g);
 		}
 	}
@@ -65,8 +65,16 @@ public class Canvas extends JPanel {
 	public void moveObject(int x, int y){
 		PaintObject o = findClosest(x, y);
 		if(o != null){
+			o.setColor(Color.red);
 			o.setPosition(x, y);
 			repaint();
 		}
+	}
+
+	public void releaseObject(int x, int y) {
+		PaintObject o = findClosest(x, y);
+		if(o != null)
+			o.setColor(Color.black);
+		repaint();
 	}
 }
