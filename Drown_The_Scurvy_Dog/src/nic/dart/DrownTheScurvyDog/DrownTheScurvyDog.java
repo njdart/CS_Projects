@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class DrownTheScurvyDog {
 
-	private static GameDictionary dict = new GameDictionary();
+	private static GameDictionaryReader dict = new GameDictionaryReader();
 	private static PhraseBook pb;
 	
 	public static void main(String[] args) throws FileNotFoundException{

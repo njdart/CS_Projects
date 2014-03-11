@@ -7,14 +7,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import com.google.gson.Gson;
 
-public class GameDictionary {
+public class GameDictionaryReader {
 	
 	private Gson g = new Gson();
 	private String dict = "./dictionary.json";
 	
-	public GameDictionary(){}
+	public GameDictionaryReader(){}
 	
-	public GameDictionary(String dict){
+	public GameDictionaryReader(String dict){
 		this.dict = dict;
 	}
 	
