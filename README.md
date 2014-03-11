@@ -1,8 +1,9 @@
 # CS Projects
 =============
 
-## Current Projects
- - SwingPaint
+### Current Projects
+ - Drown the Scurvy Dog
  
-## Completed Projects
+### Completed Projects
  - CS124_StudentsAndModules
+ - SwingPaint (handed in, Subject to further change)
