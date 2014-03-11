@@ -10,6 +10,7 @@ public abstract class PaintObject {
 	protected int size;
 	protected int uuid;
 	protected Color color;
+	protected int grabThreshold = 10;
 						
 	public PaintObject(int x, int y, int size, Color color){
 		this.x = x;
@@ -56,12 +57,18 @@ public abstract class PaintObject {
 	}
 	
 	public double getDistanceFrom(int x, int y){
-		return Math.sqrt(Math.pow((this.x - x + size/2), 2) * Math.pow((this.y - y + size/2), 2));	//Pythagoras	
+		double dist = Math.sqrt(Math.pow((this.x - x + size/2), 2) * Math.pow((this.y - y + size/2), 2));	//Pythagoras
+		System.out.println("Distance from (" + this.x + "," + this.y + ") to (" + x + "," + y + ") is " + dist);
+		return dist;
 	}
 	
 	public String toString() {
 		return getType() + " " + getUuid() + " { Pos: (" + x + "," + y + "), size " + size +
 			   " color: [" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + "] }";
+	}
+	
+	public int getThreshold(){
+		return grabThreshold;
 	}
 	
 }

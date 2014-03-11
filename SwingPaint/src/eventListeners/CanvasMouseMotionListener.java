@@ -21,9 +21,6 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		/*p.updateStatsPanel(new int[] {e.getX(), e.getY()}, false, true);
-		if(SwingUtilities.isLeftMouseButton(e))
-			c.moveObject(e.getX(), e.getY());*/
 		c.moveObject(e.getX(), e.getY());
 	}
 

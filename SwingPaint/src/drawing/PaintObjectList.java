@@ -7,6 +7,7 @@ public class PaintObjectList {
 	public enum ObjectTypes {
 		CIRCLE, SQUARE, TRIANGLE//, OCTAGON, PENTAGON, SMILYFACE
 	}
+	
 	private int latestUuid = 0;
 	
 	private ArrayList<PaintObject> objs = new ArrayList<PaintObject>();
