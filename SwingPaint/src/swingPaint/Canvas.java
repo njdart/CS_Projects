@@ -34,7 +34,7 @@ public class Canvas extends JPanel {
 				obj = new Circle(x, y, 5, Color.black);
 				break;
 			case SQUARE:
-				obj = new Square(x, y, 5, Color.black);
+				obj = new Square(x, y, 10, Color.black);
 				break;
 			case TRIANGLE: 
 				obj = new Triangle(x, y, 10, Color.black);
@@ -46,16 +46,16 @@ public class Canvas extends JPanel {
 		objects.add(obj);
 		repaint();
 	}
-	private PaintObject findClosest(int x, int y){
+	public PaintObject findClosest(int x, int y){
 		//get closest object within threshold
-			PaintObject closest = null;
-			double closestDist = removalThreshold;
-			for(PaintObject obj : objects.asList())
-				if(obj.getDistanceFrom(x, y) < removalThreshold && obj.getDistanceFrom(x, y) < closestDist){
-					closest = obj;
-					closestDist = obj.getDistanceFrom(x, y);
-				}
-			return closest;
+		PaintObject closest = null;
+		double closestDist = removalThreshold;
+		for(PaintObject obj : objects.asList())
+			if(obj.getDistanceFrom(x, y) < removalThreshold && obj.getDistanceFrom(x, y) < closestDist){
+				closest = obj;
+				closestDist = obj.getDistanceFrom(x, y);
+			}
+		return closest;
 	}
 	
 	public void remove(int x, int y){
@@ -67,18 +67,21 @@ public class Canvas extends JPanel {
 	}
 	
 	public void moveObject(int x, int y){
-		PaintObject o = findClosest(x, y);
-		if(o != null){
-			o.setColor(Color.red);
-			o.setPosition(x, y);
+		if(po != null){
+			po.setColor(Color.red);
+			po.setPosition(x, y);
 			repaint();
 		}
 	}
 
-	public void releaseObject(int x, int y) {
-		PaintObject o = findClosest(x, y);
-		if(o != null)
-			o.setColor(Color.black);
+	public void release(int x, int y) {
+		if(po != null)
+			po.setColor(Color.black);
 		repaint();
+	}
+	
+	private PaintObject po;
+	public void hold(int x, int y) {
+		po = findClosest(x, y);
 	}
 }

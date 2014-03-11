@@ -23,7 +23,7 @@ public class CanvasMouseListener implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		p.updateStatsPanel(new int[] {e.getX(), e.getY()}, true, true);
 		if(SwingUtilities.isLeftMouseButton(e))
-			c.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.TRIANGLE);
+			c.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.SQUARE);
 		else
 			c.remove(e.getX(), e.getY());
 
@@ -41,14 +41,16 @@ public class CanvasMouseListener implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent e) {
+		if(SwingUtilities.isLeftMouseButton(e))
+			c.hold(e.getX(), e.getY());
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		c.releaseObject(e.getX(), e.getY());
+		if(SwingUtilities.isLeftMouseButton(e))
+			c.release(e.getX(), e.getY());
 	}
 
 }
