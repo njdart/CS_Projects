@@ -23,7 +23,7 @@ public class CanvasMouseListener implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		p.updateStatsPanel(new int[] {e.getX(), e.getY()}, true, true);
 		if(SwingUtilities.isLeftMouseButton(e))
-			c.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.CIRCLE);
+			c.addObject(e.getX(), e.getY(), PaintObjectList.ObjectTypes.TRIANGLE);
 		else
 			c.remove(e.getX(), e.getY());
 

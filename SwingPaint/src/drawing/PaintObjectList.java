@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PaintObjectList {
 	
 	public enum ObjectTypes {
-		CIRCLE, SQUARE //, TRIANGLE, OCTAGON, PENTAGON, SMILYFACE
+		CIRCLE, SQUARE, TRIANGLE//, OCTAGON, PENTAGON, SMILYFACE
 	}
 	private int latestUuid = 0;
 	

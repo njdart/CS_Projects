@@ -9,6 +9,7 @@ import drawing.Circle;
 import drawing.PaintObject;
 import drawing.PaintObjectList;
 import drawing.Square;
+import drawing.Triangle;
 import drawing.PaintObjectList.ObjectTypes;
 
 public class Canvas extends JPanel {
@@ -34,6 +35,9 @@ public class Canvas extends JPanel {
 				break;
 			case SQUARE:
 				obj = new Square(x, y, 5, Color.black);
+				break;
+			case TRIANGLE: 
+				obj = new Triangle(x, y, 10, Color.black);
 				break;
 			default:
 				obj = new Circle(x, y, 5, Color.red);
