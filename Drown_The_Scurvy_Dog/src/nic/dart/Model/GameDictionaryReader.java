@@ -1,4 +1,4 @@
-package nic.dart.DrownTheScurvyDog;
+package nic.dart.Model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

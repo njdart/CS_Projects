@@ -1,4 +1,4 @@
-package nic.dart.DrownTheScurvyDog;
+package nic.dart.Model;
 
 public class GameModel implements GameModelInterface {
 	

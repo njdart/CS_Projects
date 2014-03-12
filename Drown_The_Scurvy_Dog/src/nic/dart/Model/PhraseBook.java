@@ -1,4 +1,4 @@
-package nic.dart.DrownTheScurvyDog;
+package nic.dart.Model;
 
 import java.util.ArrayList;
 import java.util.Random;
