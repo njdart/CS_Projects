@@ -1,16 +1,34 @@
 package nic.dart.Model;
 
+import java.util.ArrayList;
+
 public class GameModel implements GameModelInterface {
 	
 	private String word;
 	private int guesses;
 	private int lives;
+	private ArrayList<Character> guessedChars = new ArrayList<Character>();
+	private boolean inGame = false;
+	private String visible;
 	
 	
 	@Override
 	public String getVisible() {
-		// TODO Auto-generated method stub
-		return null;
+		return visible;
+	}
+	
+	private void updateVisible() {
+		String newVisible = "";
+		for(char w: word.toCharArray()){
+			for(char g: guessedChars){
+				if(g == w)
+					newVisible+=w;
+				else newVisible+='*';
+			}
+		}
+		if(visible.length() != newVisible.length())
+			System.out.println("We've got a problem here!");
+		visible = newVisible;
 	}
 
 	@Override
@@ -21,26 +39,35 @@ public class GameModel implements GameModelInterface {
 
 	@Override
 	public int guessLeft() {
-		// TODO Auto-generated method stub
-		return 0;
+		return lives-guesses;
 	}
 
 	@Override
 	public String getLetters() {
-		// TODO Auto-generated method stub
-		return null;
+		String guessed = "";
+		for(char c: guessedChars)
+			guessed+=c;
+		return guessed;
 	}
 
 	@Override
 	public boolean tryThis(char letter) {
-		// TODO Auto-generated method stub
+		guessedChars.add(letter);
+		for(char c: word.toCharArray())
+			if(c == letter){
+				updateVisible();
+				return true;
+			}
 		return false;
 	}
 
 	@Override
 	public boolean tryWord(String guess) {
-		// TODO Auto-generated method stub
-		return false;
+		return guess.equals(word);
+	}
+
+	public boolean isInGame() {
+		return inGame;
 	}
 
 }

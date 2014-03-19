@@ -12,3 +12,8 @@ bin/
 *.jar
 *.war
 *.ear
+
+# Misc #
+*.zip
+*.tar.gz
+*.tar.bz

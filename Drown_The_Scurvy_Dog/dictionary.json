@@ -1,5 +1,5 @@
 {
-	"singleWords" : [
+	"words" : [
 		"ahoy",
 		"yarr",
 		"avas",
@@ -8,7 +8,8 @@
 		"aft",
 		"peglegg",
 		"arrrrrrgh!",
-		"ye"
+		"ye",
+		"freeman"
 	],
 	"phrases" : [
 		"ahoy there",
@@ -16,6 +17,10 @@
 		"well, shiver me timbers",
 		"you're a bilge rat",
 		"land lubber",
-		"Episode 27"
+		"episode 27",
+		"blow me down",
+		"a right skallywag",
+		"antiscurvy machine",
+		"livin' and dead alike shall bow before the great Cap'n Freeman"
 	]
 }
