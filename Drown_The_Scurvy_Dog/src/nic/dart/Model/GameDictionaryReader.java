@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 
 public class GameDictionaryReader {
 	
-	private Gson g = new Gson();
-	private String dict = "./dictionary.json";
+	private static Gson g = new Gson();
+	private static String dict = "./dictionary.json";
 	
 	public GameDictionaryReader(){}
 	
@@ -22,7 +22,7 @@ public class GameDictionaryReader {
 		this.dict = dict;
 	}
 	
-	public PhraseBook readDictionary() throws FileNotFoundException{
+	public static PhraseBook readDictionary() throws FileNotFoundException{
 		try(BufferedReader dictReader = new BufferedReader(new InputStreamReader(new FileInputStream(dict)))){
 			return g.fromJson(dictReader, PhraseBook.class);
 		} catch (IOException e){
@@ -31,7 +31,7 @@ public class GameDictionaryReader {
 		}
 	}
 	
-	public void writeDictionary(PhraseBook pb) throws FileNotFoundException {
+	public static void writeDictionary(PhraseBook pb) throws FileNotFoundException {
 		try (BufferedWriter dictWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dict)))){
 			g.toJson(pb, dictWriter);
 		} catch (IOException e){
