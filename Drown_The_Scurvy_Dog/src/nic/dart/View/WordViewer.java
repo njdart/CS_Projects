@@ -1,6 +1,7 @@
 package nic.dart.View;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Point;
 
@@ -57,6 +58,10 @@ public class WordViewer extends JFrame {
 			this.setVisible(true);
 			this.pack();
 		}
+	}
+	
+	public void dispose(){
+		
 	}
 
 }

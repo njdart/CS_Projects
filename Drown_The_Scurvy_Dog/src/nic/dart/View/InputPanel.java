@@ -8,15 +8,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import nic.dart.EventListners.GuessPhraseListener;
+
 public class InputPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	JTextField guess = new JTextField();
-	JLabel output = new JLabel();
-	JButton guessBtn = new JButton();
-	JLabel usedLetters = new JLabel();
-	JLabel visableWord = new JLabel();
+	private static JTextField guess = new JTextField();
+	private JLabel output = new JLabel();
+	private JButton guessBtn = new JButton();
+	private JLabel usedLetters = new JLabel();
+	private JLabel visableWord = new JLabel();
 	
 	public InputPanel(){
 		super();
@@ -29,10 +31,17 @@ public class InputPanel extends JPanel {
 		this.add(output);
 		this.add(new JLabel());
 		
+		guessBtn.addActionListener(new GuessPhraseListener());
+		guess.addActionListener(new GuessPhraseListener());
+		
 		output.setText("******");
 		usedLetters.setText("ABCD");
 		usedLetters.setAlignmentX(CENTER_ALIGNMENT);
 		usedLetters.setAlignmentY(CENTER_ALIGNMENT);
 		guessBtn.setText("Guess");
+	}
+	
+	public static String getGuessText(){
+		return guess.getText();
 	}
 }

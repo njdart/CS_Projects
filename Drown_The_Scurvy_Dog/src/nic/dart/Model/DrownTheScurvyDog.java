@@ -19,6 +19,8 @@ public class DrownTheScurvyDog {
 	private static File dictionaryFile = new File(DrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "dictionary.json");
 	
 	public static void main(String[] args) throws FileNotFoundException {	//I can only catch it so many times!!
+		
+		//If the file doesnt exist, ask for it, if they say no, ceate it
 		try {
 			pb = GameDictionaryReader.readDictionary(dictionaryFile);
 		} catch (FileNotFoundException e) {
@@ -34,9 +36,9 @@ public class DrownTheScurvyDog {
 		}
 		
 		v.setVisible(true);
-		v.setSize(500, 500);
+		//v.setSize(500, 500);
 		
-		//v.pack();
+		v.pack();
 	}
 	
 	public static PhraseBook getPhraseBook(){

@@ -8,7 +8,7 @@ public class GameModel implements GameModelInterface {
 	private int guesses;
 	private int lives;
 	private ArrayList<Character> guessedChars = new ArrayList<Character>();
-	private boolean inGame = false;
+	private static boolean inGame = false;
 	private String visible;
 	
 	
@@ -68,6 +68,10 @@ public class GameModel implements GameModelInterface {
 
 	public boolean isInGame() {
 		return inGame;
+	}
+
+	public static void setInGame() {
+		inGame = true;
 	}
 
 }
