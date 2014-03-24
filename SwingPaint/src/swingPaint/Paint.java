@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -59,7 +58,7 @@ public class Paint extends JFrame{
 		menuBar.add(draw);
 		//draw.add(colorPicker);
 		
-		/*status.setLayout(new GridLayout(3,3));
+		status.setLayout(new GridLayout(3,3));
 		status.add(new JLabel("Mouse Position (X,Y)"));
 		status.add(mouseX);
 		status.add(mouseY);
@@ -68,7 +67,7 @@ public class Paint extends JFrame{
 		status.add(new JLabel());
 		status.add(new JLabel("Is on Canvas"));
 		status.add(mouseIsOnCanvas);
-		status.add(new JLabel());*/
+		status.add(new JLabel());
 		
 		
 		canvas.addMouseListener(new CanvasMouseListener(this, canvas));

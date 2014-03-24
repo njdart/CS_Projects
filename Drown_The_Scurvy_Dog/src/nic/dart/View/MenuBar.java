@@ -44,6 +44,9 @@ public class MenuBar extends JMenuBar {
 		addWord.addActionListener(new AddWordMenuItem());
 		deleteWord.addActionListener(new RemoveWordMenuItem());
 		showWords.addActionListener(new WordViewerListener());
+		save.addActionListener(new SaveDictionaryListener());
+		reload.addActionListener(new ReloadDictionaryListener());
+		load.addActionListener(new LoadDictionaryListener());
 		
 		exit.addActionListener(new ActionListener() {
 			

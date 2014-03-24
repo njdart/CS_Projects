@@ -3,8 +3,6 @@ package eventListeners;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.SwingUtilities;
-
 import swingPaint.Canvas;
 import swingPaint.Paint;
 

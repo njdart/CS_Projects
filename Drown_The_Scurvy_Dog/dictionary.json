@@ -1,26 +1,33 @@
 {
-	"words" : [
-		"ahoy",
-		"yarr",
-		"avas",
-		"port",
-		"starbord",
-		"aft",
-		"peglegg",
-		"arrrrrrgh!",
-		"ye",
-		"freeman"
-	],
-	"phrases" : [
-		"ahoy there",
-		"me hearties",
-		"well, shiver me timbers",
-		"you're a bilge rat",
-		"land lubber",
-		"episode 27",
-		"blow me down",
-		"a right skallywag",
-		"antiscurvy machine",
-		"livin' and dead alike shall bow before the great Cap'n Freeman"
-	]
+  "words": [
+    "ahoy",
+    "yarr",
+    "avas",
+    "port",
+    "starbord",
+    "aft",
+    "peglegg",
+    "arrrrrrgh!",
+    "ye",
+    "freeman"
+  ],
+  "phrases": [
+    "ahoy there",
+    "me hearties",
+    "well, shiver me timbers",
+    "you\u0027re a bilge rat",
+    "land lubber",
+    "episode 27",
+    "blow me down",
+    "a right skallywag",
+    "antiscurvy machine",
+    "livin\u0027 and dead alike shall bow before the great Cap\u0027n Freeman"
+  ],
+  "r": {
+    "seed": {
+      "value": 187769257273292
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  }
 }
