@@ -1,6 +1,7 @@
 package nic.dart.Model;
 
 import java.awt.Point;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -14,7 +15,8 @@ public class DrownTheScurvyDog {
 	private static PhraseBook pb;
 	private static View v = new View();
 	private static GameModel gm = new GameModel();
-	private static String dictionaryFile = "./dictionary.json";
+	//attempt to get the run location of the jar
+	private static File dictionaryFile = new File(DrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "dictionary.json");
 	
 	public static void main(String[] args) throws FileNotFoundException {	//I can only catch it so many times!!
 		try {
@@ -23,7 +25,7 @@ public class DrownTheScurvyDog {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-				DrownTheScurvyDog.dictionaryFile = chooser.getSelectedFile().getAbsolutePath();
+				DrownTheScurvyDog.dictionaryFile = new File(chooser.getSelectedFile().getAbsolutePath());
 				pb = GameDictionaryReader.readDictionary(dictionaryFile);
 			} else {
 				JOptionPane.showMessageDialog(null, "The Dictionary file does not exist, one will be created!");
@@ -52,8 +54,8 @@ public class DrownTheScurvyDog {
 	
 	public static boolean load(String dict){
 		try {
-			pb = GameDictionaryReader.readDictionary(dict);
-			DrownTheScurvyDog.dictionaryFile = dict;	//only if we can actually read it!
+			pb = GameDictionaryReader.readDictionary(new File(dict));
+			DrownTheScurvyDog.dictionaryFile = new File(dict);	//only if we can actually read it!
 			return true;
 		} catch (FileNotFoundException e) {
 			return false;
@@ -77,7 +79,7 @@ public class DrownTheScurvyDog {
 		return gm.isInGame();
 	}
 	
-	public static String getDict(){
+	public static File getDict(){
 		return dictionaryFile;
 	}
 }
