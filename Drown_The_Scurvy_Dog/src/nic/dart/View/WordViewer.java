@@ -1,19 +1,11 @@
 package nic.dart.View;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Point;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
-
-import nic.dart.Model.DrownTheScurvyDog;
 import nic.dart.Model.PhraseBook;
+import nic.dart.Model.SwingDrownTheScurvyDog;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class WordViewer extends JFrame {
 
@@ -29,8 +21,8 @@ public class WordViewer extends JFrame {
 		super("Word Viewer");
 		this.add(mainPanel);
 		
-		PhraseBook pb = DrownTheScurvyDog.getPhraseBook();
-		if(DrownTheScurvyDog.isInGame()){
+		PhraseBook pb = SwingDrownTheScurvyDog.getPhraseBook();
+		if(SwingDrownTheScurvyDog.isInGame()){
 			JOptionPane.showMessageDialog(null, "You are in a game, this would be cheating...");
 		}else{
 			mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));

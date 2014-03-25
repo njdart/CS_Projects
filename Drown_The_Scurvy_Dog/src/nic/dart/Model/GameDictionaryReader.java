@@ -33,10 +33,12 @@ public class GameDictionaryReader {
 	public static PhraseBook createDictionary(File dict){
 		try {
 			new PrintWriter(dict, "UTF-8");
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 		return new PhraseBook();
 	}
 }

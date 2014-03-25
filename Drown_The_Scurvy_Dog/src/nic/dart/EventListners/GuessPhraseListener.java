@@ -1,13 +1,10 @@
 package nic.dart.EventListners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import sun.awt.OSInfo.WindowsVersion;
-import sun.java2d.Disposer;
 import nic.dart.Model.GameModel;
 import nic.dart.View.InputPanel;
-import nic.dart.View.WordViewer;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GuessPhraseListener implements ActionListener {
 

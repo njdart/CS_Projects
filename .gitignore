@@ -17,3 +17,9 @@ bin/
 *.zip
 *.tar.gz
 *.tar.bz
+
+#intellij
+*.idea
+*.eml
+*.iml
+

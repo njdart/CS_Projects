@@ -1,11 +1,10 @@
 package nic.dart.EventListners;
 
+import nic.dart.Model.SwingDrownTheScurvyDog;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
-
-import nic.dart.Model.DrownTheScurvyDog;
 
 public class AddWordMenuItem implements ActionListener {
 
@@ -17,7 +16,7 @@ public class AddWordMenuItem implements ActionListener {
             JOptionPane.PLAIN_MESSAGE,
             null,null,null);
 	    
-		boolean success = DrownTheScurvyDog.getPhraseBook().add(word);
+		boolean success = SwingDrownTheScurvyDog.getPhraseBook().add(word);
 		
 		if(success)
 			JOptionPane.showMessageDialog(null, "Successfully added \"" + word + "\"");
