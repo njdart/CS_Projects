@@ -19,6 +19,9 @@ public class View extends JFrame{
 		this.add(ip, BorderLayout.CENTER);
 		this.add(g, BorderLayout.SOUTH);
 		this.setResizable(false);
+		
+		this.pack();
+		this.setVisible(true);
 	}
 
 	public Point getPosition() {

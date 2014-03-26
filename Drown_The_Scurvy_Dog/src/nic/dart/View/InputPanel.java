@@ -18,24 +18,21 @@ public class InputPanel extends JPanel {
 	private JLabel output = new JLabel();
 	private JButton guessBtn = new JButton();
 	private JLabel usedLetters = new JLabel();
-	private JLabel visableWord = new JLabel();
 	
 	public InputPanel(){
 		super();
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.setLayout(new GridLayout(2,3,10,10));
+		this.setLayout(new GridLayout(2,2,10,10));
 		this.add(guess);
 		this.add(guessBtn);
 		this.add(usedLetters);
-		this.add(new JLabel());
 		this.add(output);
-		this.add(new JLabel());
 		
 		guessBtn.addActionListener(new GuessPhraseListener());
 		guess.addActionListener(new GuessPhraseListener());
 		
-		output.setText("******");
-		usedLetters.setText("ABCD");
+		output.setText("y*a**");
+		usedLetters.setText("ABCDY");
 		usedLetters.setAlignmentX(CENTER_ALIGNMENT);
 		usedLetters.setAlignmentY(CENTER_ALIGNMENT);
 		guessBtn.setText("Guess");

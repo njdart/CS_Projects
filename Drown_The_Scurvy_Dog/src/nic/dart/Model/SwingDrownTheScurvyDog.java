@@ -3,6 +3,7 @@ package nic.dart.Model;
 import nic.dart.View.View;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,9 +15,21 @@ public class SwingDrownTheScurvyDog {
 	private static View v = new View();
 	private static GameModel gm = new GameModel();
 	//attempt to get the run location of the jar
-	private static File dictionaryFile = new File(SwingDrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "dictionary.json");
+	private static File dictionaryFile;
 	
 	public SwingDrownTheScurvyDog() throws FileNotFoundException {	//I can only catch it so many times!!
+		
+		//try to find the dictionary file.
+		String runtimeLocation = SwingDrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
+		System.out.println(runtimeLocation);
+		if(runtimeLocation.contains(".jar")){
+			System.out.println("RUNNING FROM JAR!");
+			//regex adapted from http://stackoverflow.com/questions/8374742/regex-last-occurrence
+			runtimeLocation = runtimeLocation.replaceAll("(\\\\|/)(?:.(?!(\\\\|/)))+$", "");
+			System.out.println("New Runtime: " + runtimeLocation);
+		}
+		dictionaryFile = new File(runtimeLocation + "/dictionary.json");
+		System.out.println(dictionaryFile.toString());
 		
 		//If the file doesnt exist, ask for it, if they say no, ceate it
 		try {
@@ -32,11 +45,6 @@ public class SwingDrownTheScurvyDog {
 				pb = GameDictionaryReader.createDictionary(dictionaryFile);
 			}
 		}
-		
-		v.setVisible(true);
-		//v.setSize(500, 500);
-		
-		v.pack();
 	}
 
 	
