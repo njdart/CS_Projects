@@ -1,7 +1,7 @@
 package nic.dart.EventListners;
 
 import nic.dart.Model.GameModel;
-import nic.dart.View.InputPanel;
+import nic.dart.View.Swing.InputPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

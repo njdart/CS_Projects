@@ -79,6 +79,10 @@ public class PhraseBook {
 			returnWords+=w+"\n";
 		return returnWords.trim();
 	}
+
+    public ArrayList<String> getWordsAsList(){
+        return words;
+    }
 	
 	public String getPhrases(){
 		String returnPhrases = "";
@@ -86,6 +90,11 @@ public class PhraseBook {
 			returnPhrases+=p+"\n";
 		return returnPhrases.trim();
 	}
+
+    public ArrayList<String> getPhrasesAsList(){
+        return phrases;
+    }
+
 	
 	public String toString(){
 		String out = "PHRASEBOOK {\n\tSingle Words:[\n";
@@ -97,4 +106,11 @@ public class PhraseBook {
 		out += "\t]\n}";
 		return out;
 	}
+
+    public ArrayList<String> getAllItems() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.addAll(words);
+        toReturn.addAll(phrases);
+        return toReturn;
+    }
 }

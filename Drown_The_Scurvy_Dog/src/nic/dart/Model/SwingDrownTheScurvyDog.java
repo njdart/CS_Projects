@@ -1,6 +1,6 @@
 package nic.dart.Model;
 
-import nic.dart.View.View;
+import nic.dart.View.Swing.View;
 
 import javax.swing.*;
 
@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class SwingDrownTheScurvyDog {
+public class SwingDrownTheScurvyDog{
 
 	private static PhraseBook pb;
 	private static View v = new View();
-	private static GameModel gm = new GameModel();
+	private static GameModel gm = new GameModel(pb);
 	//attempt to get the run location of the jar
 	private static File dictionaryFile;
 	
@@ -91,4 +91,5 @@ public class SwingDrownTheScurvyDog {
     public static PhraseBook getPhraseBook(){
         return pb;
     }
+
 }
