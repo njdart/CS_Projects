@@ -30,7 +30,7 @@ public class GameDictionaryReader {
 		dictWriter.close();
 	}
 	
-	public static PhraseBook createDictionary(File dict){
+	public static void createDictionary(File dict){
 		try {
 			new PrintWriter(dict, "UTF-8");
 		} catch (FileNotFoundException e) {
@@ -39,6 +39,5 @@ public class GameDictionaryReader {
 		} catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-		return new PhraseBook();
 	}
 }

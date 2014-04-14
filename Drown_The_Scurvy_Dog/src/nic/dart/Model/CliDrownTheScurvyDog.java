@@ -2,24 +2,24 @@ package nic.dart.Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class CliDrownTheScurvyDog implements DrownTheScurvyDog {
+public class CliDrownTheScurvyDog implements Observer {
 
-	GameModel gm = new GameModel();
-	PhraseBook pb;
-	
+    public CliDrownTheScurvyDog(){}
 	
 	public CliDrownTheScurvyDog(String dict){
 		try{
-			pb = GameDictionaryReader.readDictionary(new File(dict));
+			GameDictionaryReader.readDictionary(new File(dict));
 		} catch(FileNotFoundException e){
-			pb = GameDictionaryReader.createDictionary(new File(dict));
+			GameDictionaryReader.createDictionary(new File(dict));
 		}
-	}
-	
-	@Override
-	public GameModel getModel() {
-		return gm;
+        //gm = new GameModel();
 	}
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import nic.dart.EventListners.GuessPhraseListener;
+import nic.dart.View.Swing.EventListners.GuessPhraseListener;
 
 public class InputPanel extends JPanel {
 

@@ -8,7 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
-import nic.dart.EventListners.*;
+import nic.dart.View.Swing.EventListners.*;
 
 public class MenuBar extends JMenuBar {
 

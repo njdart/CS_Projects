@@ -1,7 +1,10 @@
 package nic.dart.Model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
 public class GameModel extends Observable implements GameModelInterface{
 	
@@ -12,12 +15,48 @@ public class GameModel extends Observable implements GameModelInterface{
 	private static boolean inGame = false;
 	private String visible;
     private PhraseBook phraseBook;
+    private File dictionaryFile;
 
-    public GameModel(PhraseBook phraseBook){
-        this.phraseBook = phraseBook;
+    /**
+     * Assumes the dictionary file is located in the "root".
+     * either in out/production/drown_the_scurcy_dog or
+     * in the same directory as the jar file.
+     */
+    public GameModel(){
+        try {
+            dictionaryFile = getRootDictionary();
+            this.phraseBook = GameDictionaryReader.readDictionary(dictionaryFile);
+        } catch (FileNotFoundException e){
+            System.out.println("ERROR: Dictionary could not be found!");
+        }
     }
-	
-	@Override
+
+
+    public GameModel(String dict){
+        try {
+            dictionaryFile = new File(dict);
+            this.phraseBook = GameDictionaryReader.readDictionary(dictionaryFile);
+        } catch(FileNotFoundException e){
+            System.out.println("ERROR: Not a valid dictionary file! (`" + dictionaryFile.toString() + "`)");
+        }
+    }
+
+    private static File getRootDictionary() {
+        File dictionaryFile;
+        String runtimeLocation = SwingDrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
+        //System.out.println("Running from : " + runtimeLocation);
+        if(runtimeLocation.contains(".jar")){
+            //System.out.println("RUNNING FROM JAR!");
+            //regex adapted from http://stackoverflow.com/questions/8374742/regex-last-occurrence
+            runtimeLocation = runtimeLocation.replaceAll("(\\\\|/)(?:.(?!(\\\\|/)))+$", "");
+            //System.out.println("New Runtime: " + runtimeLocation);
+        }
+        dictionaryFile = new File(runtimeLocation + "/dictionary.json");
+        System.out.println("\tAssuming dictionary at : " + dictionaryFile.toString());
+        return dictionaryFile;
+    }
+
+    @Override
 	public String getVisible() {
 		return visible;
 	}
@@ -78,12 +117,24 @@ public class GameModel extends Observable implements GameModelInterface{
 		return guess.equals(word);
 	}
 
-	public boolean isInGame() {
+    public static GameModel createDict() {
+        GameDictionaryReader.createDictionary(getRootDictionary());
+        return new GameModel();
+    }
+
+    @Override
+    public synchronized void addObserver(Observer o){
+        super.addObserver(o);//fix later!
+    }
+
+    public boolean isInGame() {
 		return inGame;
 	}
 
 	public static void setInGame() {
 		inGame = true;
 	}
+
+    public static void setOutOfGame() {inGame = false; }
 
 }

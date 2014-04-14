@@ -27,7 +27,7 @@ public class View extends JFrame{
 	}
 	
 	public void hideWordViewer(){
-		wv.setVisible(false);;
+		wv.setVisible(false);
 	}
 	
 	public void showWordViewer(){

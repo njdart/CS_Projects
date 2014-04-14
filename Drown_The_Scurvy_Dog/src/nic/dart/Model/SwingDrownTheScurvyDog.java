@@ -9,16 +9,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
+public class SwingDrownTheScurvyDog{
 
 	private static PhraseBook pb;
 	private static View v = new View();
-	private static GameModel gm = new GameModel(pb);
+	//private static GameModel gm = new GameModel(pb);
 	//attempt to get the run location of the jar
 	private static File dictionaryFile;
-	
+
+    @Deprecated
 	public SwingDrownTheScurvyDog() throws FileNotFoundException {	//I can only catch it so many times!!
-		
+
 		//try to find the dictionary file.
 		String runtimeLocation = SwingDrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
 		System.out.println(runtimeLocation);
@@ -30,7 +31,7 @@ public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 		}
 		dictionaryFile = new File(runtimeLocation + "/dictionary.json");
 		System.out.println(dictionaryFile.toString());
-		
+
 		//If the file doesnt exist, ask for it, if they say no, ceate it
 		try {
 			pb = GameDictionaryReader.readDictionary(dictionaryFile);
@@ -42,14 +43,14 @@ public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 				pb = GameDictionaryReader.readDictionary(dictionaryFile);
 			} else {
 				JOptionPane.showMessageDialog(null, "The Dictionary file does not exist, one will be created!");
-				pb = GameDictionaryReader.createDictionary(dictionaryFile);
+				//pb = GameDictionaryReader.createDictionary(dictionaryFile);
 			}
 		}
-		
+
 		v = new View();
 	}
 
-	
+
 	public static boolean save(){
 		try{
 			GameDictionaryReader.writeDictionary(pb, SwingDrownTheScurvyDog.getDict());
@@ -58,7 +59,7 @@ public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 			return false;
 		}
 	}
-	
+
 	public static boolean load(String dict){
 		try {
 			pb = GameDictionaryReader.readDictionary(new File(dict));
@@ -68,7 +69,7 @@ public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 			return false;
 		}
 	}
-	
+
 	public static boolean reload(){
 		try{
 			pb = GameDictionaryReader.readDictionary(dictionaryFile);
@@ -79,13 +80,13 @@ public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 	}
 
 	public static boolean isInGame() {
-		return gm.isInGame();
+		return false;
 	}
-	
+
 	public GameModel getModel(){
-		return gm;
+		return null;
 	}
-	
+
 	public static File getDict(){
 		return dictionaryFile;
 	}
@@ -93,7 +94,7 @@ public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
     public static PhraseBook getPhraseBook(){
         return pb;
     }
-    
+
     public static View getView(){
     	return v;
     }

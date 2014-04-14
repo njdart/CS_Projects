@@ -16,13 +16,13 @@ public class WordViewer extends JFrame {
 	private JPanel mainPanel = new JPanel();
 	private JPanel topPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
-	
+    PhraseBook pb;
+
 	public WordViewer(Container parent){
 		super("Word Viewer");
 		this.setVisible(false);
 		this.add(mainPanel);
-		
-		PhraseBook pb = SwingDrownTheScurvyDog.getPhraseBook();
+
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -35,20 +35,21 @@ public class WordViewer extends JFrame {
 		bottomPanel.add(words);
 		bottomPanel.add(phrases);
 		bottomPanel.setLayout(new GridLayout(1,2,10,10));
-		
-		words.setText(pb.getWords());
+
 		words.setEditable(false);
-		
-		phrases.setText(pb.getPhrases());
+
 		phrases.setEditable(false);
 		
 		this.setResizable(false);
 		
 		this.pack();
 	}
-	
-	public void dispose(){
-		this.dispose();
-	}
 
+    @Override
+    public void setVisible(boolean state){
+        pb = SwingDrownTheScurvyDog.getPhraseBook();
+        if(state)
+            words.setText(pb.getWords());
+        super.setVisible(state);
+    }
 }
