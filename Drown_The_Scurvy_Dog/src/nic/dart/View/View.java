@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import nic.dart.Model.SwingDrownTheScurvyDog;
 
 public class View extends JFrame{
 
@@ -12,6 +15,7 @@ public class View extends JFrame{
 	private InputPanel ip = new InputPanel();
 	private Gallows g = new Gallows();
 	private MenuBar mb = new MenuBar();
+	private WordViewer wv = new WordViewer(this);
 	
 	public View(){
 		super("Drown the Scurvy Dog");
@@ -23,8 +27,15 @@ public class View extends JFrame{
 		this.pack();
 		this.setVisible(true);
 	}
-
-	public Point getPosition() {
-		return new Point(this.getX() + this.getWidth()/4, this.getY() + this.getHeight()/4);
+	
+	public void hideWordViewer(){
+		wv.setVisible(false);;
+	}
+	
+	public void showWordViewer(){
+		if(!SwingDrownTheScurvyDog.isInGame())
+			wv.setVisible(true);
+		else
+			JOptionPane.showMessageDialog(this, "That would be cheating!");
 	}
 }

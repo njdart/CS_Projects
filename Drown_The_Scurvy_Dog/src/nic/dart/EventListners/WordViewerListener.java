@@ -10,7 +10,7 @@ public class WordViewerListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		new WordViewer(SwingDrownTheScurvyDog.getViewPosition());
+		SwingDrownTheScurvyDog.getView().showWordViewer();
 	}
 
 }

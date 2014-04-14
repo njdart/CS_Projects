@@ -17,43 +17,38 @@ public class WordViewer extends JFrame {
 	private JPanel topPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
 	
-	public WordViewer(Point pos){
+	public WordViewer(Container parent){
 		super("Word Viewer");
+		this.setVisible(false);
 		this.add(mainPanel);
 		
 		PhraseBook pb = SwingDrownTheScurvyDog.getPhraseBook();
-		if(SwingDrownTheScurvyDog.isInGame()){
-			JOptionPane.showMessageDialog(null, "You are in a game, this would be cheating...");
-		}else{
-			mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-			mainPanel.setLayout(new BorderLayout());
-			mainPanel.add(topPanel, BorderLayout.NORTH);
-			mainPanel.add(bottomPanel, BorderLayout.SOUTH);
-			
-			topPanel.add(new JLabel("Single Words"));
-			topPanel.add(new JLabel("Phrases"));
-			topPanel.setLayout(new GridLayout(1,2,10,10));
-			
-			bottomPanel.add(words);
-			bottomPanel.add(phrases);
-			bottomPanel.setLayout(new GridLayout(1,2,10,10));
-			
-			words.setText(pb.getWords());
-			words.setEditable(false);
-			
-			phrases.setText(pb.getPhrases());
-			phrases.setEditable(false);
-			
-			this.setResizable(false);
-			this.setLocation(pos.x, pos.y);
-			
-			this.setVisible(true);
-			this.pack();
-		}
+		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(topPanel, BorderLayout.NORTH);
+		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+		
+		topPanel.add(new JLabel("Single Words"));
+		topPanel.add(new JLabel("Phrases"));
+		topPanel.setLayout(new GridLayout(1,2,10,10));
+		
+		bottomPanel.add(words);
+		bottomPanel.add(phrases);
+		bottomPanel.setLayout(new GridLayout(1,2,10,10));
+		
+		words.setText(pb.getWords());
+		words.setEditable(false);
+		
+		phrases.setText(pb.getPhrases());
+		phrases.setEditable(false);
+		
+		this.setResizable(false);
+		
+		this.pack();
 	}
 	
 	public void dispose(){
-		
+		this.dispose();
 	}
 
 }

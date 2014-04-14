@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class SwingDrownTheScurvyDog {
+public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 
 	private static PhraseBook pb;
-	private static View v = new View();
 	private static GameModel gm = new GameModel();
+	private static View v;
 	//attempt to get the run location of the jar
 	private static File dictionaryFile;
 	
@@ -45,6 +45,8 @@ public class SwingDrownTheScurvyDog {
 				pb = GameDictionaryReader.createDictionary(dictionaryFile);
 			}
 		}
+		
+		v = new View();
 	}
 
 	
@@ -76,12 +78,12 @@ public class SwingDrownTheScurvyDog {
 		}
 	}
 
-	public static Point getViewPosition() {
-		return v.getPosition();
-	}
-
 	public static boolean isInGame() {
 		return gm.isInGame();
+	}
+	
+	public GameModel getModel(){
+		return gm;
 	}
 	
 	public static File getDict(){
@@ -90,5 +92,9 @@ public class SwingDrownTheScurvyDog {
 
     public static PhraseBook getPhraseBook(){
         return pb;
+    }
+    
+    public static View getView(){
+    	return v;
     }
 }

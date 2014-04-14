@@ -1,6 +1,7 @@
 package nic.dart.EventListners;
 
 import nic.dart.Model.GameModel;
+import nic.dart.Model.SwingDrownTheScurvyDog;
 import nic.dart.View.InputPanel;
 
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ public class GuessPhraseListener implements ActionListener {
 		
 		if(guess.length() > 0){
 			GameModel.setInGame();
+			SwingDrownTheScurvyDog.getView().hideWordViewer();
 		}
 	}
 

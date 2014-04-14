@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="F:/Nic/Documents/git/CS_Projets/Drown_The_Scurvy_Dog/gson-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
