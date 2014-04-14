@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
-        GameModel model;
+        GameModel model = null;
 
     	if(args.length > 0){
             if(args[0].toLowerCase().equals("--help") ||
@@ -27,7 +27,6 @@ public class Main {
             	if(args.length > 1){
             	    if(args[1].toLowerCase().equals("--create")) {
                         model = GameModel.createDict();
-                        model.addObserver(new CliDrownTheScurvyDog());
                     } else if(args[1].toLowerCase().equals("--help") ||
                               args[1].toLowerCase().equals("help")){
                         System.out.println("Usage:\n" +
@@ -39,9 +38,9 @@ public class Main {
                         System.exit(0);
                     } else{
                         model = new GameModel(args[1]);
-                        model.addObserver(new CliDrownTheScurvyDog());
                     }
             	} else model = new GameModel();
+                model.addObserver(new CliDrownTheScurvyDog());
             }
         } //else model = new SwingDrownTheScurvyDog().getModel();
 
