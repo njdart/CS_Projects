@@ -1,4 +1,4 @@
-package nic.dart.View;
+package nic.dart.View.Swing;
 
 import nic.dart.Model.PhraseBook;
 import nic.dart.Model.SwingDrownTheScurvyDog;

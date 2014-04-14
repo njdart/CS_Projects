@@ -1,7 +1,7 @@
 package nic.dart.EventListners;
 
 import nic.dart.Model.SwingDrownTheScurvyDog;
-import nic.dart.View.WordViewer;
+import nic.dart.View.Swing.WordViewer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

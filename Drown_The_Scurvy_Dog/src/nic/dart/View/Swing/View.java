@@ -1,11 +1,9 @@
-package nic.dart.View;
+package nic.dart.View.Swing;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import nic.dart.Model.SwingDrownTheScurvyDog;
 
 public class View extends JFrame{

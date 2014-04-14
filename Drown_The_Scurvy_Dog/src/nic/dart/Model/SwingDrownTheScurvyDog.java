@@ -1,6 +1,6 @@
 package nic.dart.Model;
 
-import nic.dart.View.View;
+import nic.dart.View.Swing.View;
 
 import javax.swing.*;
 
@@ -12,8 +12,8 @@ import java.io.IOException;
 public class SwingDrownTheScurvyDog implements DrownTheScurvyDog{
 
 	private static PhraseBook pb;
-	private static GameModel gm = new GameModel();
-	private static View v;
+	private static View v = new View();
+	private static GameModel gm = new GameModel(pb);
 	//attempt to get the run location of the jar
 	private static File dictionaryFile;
 	

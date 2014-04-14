@@ -1,8 +1,9 @@
 package nic.dart.Model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class GameModel implements GameModelInterface {
+public class GameModel extends Observable implements GameModelInterface{
 	
 	private String word;
 	private int guesses;
@@ -10,7 +11,11 @@ public class GameModel implements GameModelInterface {
 	private ArrayList<Character> guessedChars = new ArrayList<Character>();
 	private static boolean inGame = false;
 	private String visible;
-	
+    private PhraseBook phraseBook;
+
+    public GameModel(PhraseBook phraseBook){
+        this.phraseBook = phraseBook;
+    }
 	
 	@Override
 	public String getVisible() {
@@ -33,7 +38,14 @@ public class GameModel implements GameModelInterface {
 
 	@Override
 	public String getHidden() {
-		// TODO Auto-generated method stub
+        String wordHints = "";
+        for(String w: phraseBook.getAllItems()){
+            for(char c: guessedChars)
+                if(w.contains(""+c)){ //There has to be a better way??!?!?!?!?
+                    wordHints+=wordHints + ", ";
+                    break;
+                }
+        }
 		return null;
 	}
 
