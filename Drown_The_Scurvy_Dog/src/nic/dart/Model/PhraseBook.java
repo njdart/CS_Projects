@@ -113,4 +113,8 @@ public class PhraseBook {
         toReturn.addAll(phrases);
         return toReturn;
     }
+
+    public int length() {
+        return getAllItems().size();
+    }
 }

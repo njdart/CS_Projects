@@ -2,22 +2,27 @@ package nic.dart.Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
+import java.util.Random;
 
 public class GameModel extends Observable implements GameModelInterface{
 	
-	private String word;
+	private static String word;
 	private int guesses;
 	private int lives;
 	private ArrayList<Character> guessedChars = new ArrayList<Character>();
 	private static boolean inGame = false;
 	private String visible;
-    private PhraseBook phraseBook;
+    private static PhraseBook phraseBook;
     private File dictionaryFile;
 
     /**
+     * The game model, contains methods for searching strings,
+     * represenging a phrase/word as known and unknown chars,
+     * guess methods.
+     *
      * Assumes the dictionary file is located in the "root".
      * either in out/production/drown_the_scurcy_dog or
      * in the same directory as the jar file.
@@ -31,16 +36,30 @@ public class GameModel extends Observable implements GameModelInterface{
         }
     }
 
-
+    /**
+     * Assumes the dict is at a location specified by the param `dict`
+     * @param dict `location as a string`
+     */
     public GameModel(String dict){
         try {
             dictionaryFile = new File(dict);
             this.phraseBook = GameDictionaryReader.readDictionary(dictionaryFile);
         } catch(FileNotFoundException e){
             System.out.println("ERROR: Not a valid dictionary file! (`" + dictionaryFile.toString() + "`)");
+            System.exit(1);
         }
     }
 
+    /**
+     * Takes a file as the dictionary
+     * @param dict
+     */
+    public GameModel(File dict){ this.dictionaryFile = dict; }
+
+    /**
+     * tries to get the location of the runtime
+     * @return
+     */
     private static File getRootDictionary() {
         File dictionaryFile;
         String runtimeLocation = SwingDrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
@@ -54,6 +73,10 @@ public class GameModel extends Observable implements GameModelInterface{
         dictionaryFile = new File(runtimeLocation + "/dictionary.json");
         System.out.println("\tAssuming dictionary at : " + dictionaryFile.toString());
         return dictionaryFile;
+    }
+
+    public boolean getInGame() {
+        return inGame;
     }
 
     @Override
@@ -70,22 +93,28 @@ public class GameModel extends Observable implements GameModelInterface{
 				else newVisible+='*';
 			}
 		}
-		if(visible.length() != newVisible.length())
-			System.out.println("We've got a problem here!");
-		visible = newVisible;
+        if(visible != null) {
+            if (visible.length() != newVisible.length())
+                System.out.println("We've got a problem here!");
+            visible = newVisible;
+        }
 	}
 
 	@Override
 	public String getHidden() {
         String wordHints = "";
-        for(String w: phraseBook.getAllItems()){
-            for(char c: guessedChars)
-                if(w.contains(""+c)){ //There has to be a better way??!?!?!?!?
-                    wordHints+=wordHints + ", ";
-                    break;
+        boolean found = false;
+        for(char w : word.toCharArray()) {
+            found = false;
+            for (char c : guessedChars) {
+                if (w == c) {
+                    wordHints += w;
+                    found = true;
                 }
+            }
+            if(!found) wordHints += "*";
         }
-		return null;
+		return wordHints;
 	}
 
 	@Override
@@ -117,24 +146,65 @@ public class GameModel extends Observable implements GameModelInterface{
 		return guess.equals(word);
 	}
 
-    public static GameModel createDict() {
-        GameDictionaryReader.createDictionary(getRootDictionary());
-        return new GameModel();
-    }
-
-    @Override
-    public synchronized void addObserver(Observer o){
-        super.addObserver(o);//fix later!
+    public void createDict() {
+        dictionaryFile = getRootDictionary();
+        GameDictionaryReader.createDictionary(dictionaryFile);
     }
 
     public boolean isInGame() {
 		return inGame;
 	}
 
-	public static void setInGame() {
-		inGame = true;
+	public static void setInGame(boolean state) {
+		inGame = state;
+        word = phraseBook.getAllItems().get(new Random().nextInt(phraseBook.length()));
+        System.out.println("Starting game with word " + word);
 	}
 
-    public static void setOutOfGame() {inGame = false; }
+    public static boolean getGameState() { return inGame; }
 
+    public PhraseBook getPhraseBook() {
+        return phraseBook;
+    }
+
+    public boolean load(String fileAbsolute) {
+        try{
+            PhraseBook tempPhraseBook = null;
+            if(new File(fileAbsolute).exists()) {
+                dictionaryFile = new File(fileAbsolute);
+                tempPhraseBook = GameDictionaryReader.readDictionary(dictionaryFile);
+
+            }
+            if(tempPhraseBook != null) {
+                phraseBook = tempPhraseBook;
+                return true;
+            }
+            return false;
+        } catch (FileNotFoundException e){
+            return false;
+        }
+
+    }
+
+    public boolean reload() {
+        try {
+            GameDictionaryReader.readDictionary(dictionaryFile);
+            return true;
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+    }
+
+    public String getDict() {
+        return dictionaryFile.toString();
+    }
+
+    public boolean save() {
+        try{
+            GameDictionaryReader.writeDictionary(phraseBook, dictionaryFile);
+            return true;
+        } catch (IOException e){
+            return false;
+        }
+    }
 }

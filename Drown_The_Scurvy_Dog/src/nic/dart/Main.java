@@ -1,17 +1,29 @@
 package nic.dart;
 
-import nic.dart.Model.CliDrownTheScurvyDog;
 import nic.dart.Model.GameModel;
-import nic.dart.Model.SwingDrownTheScurvyDog;
+import nic.dart.View.CommandLine.CliView;
+import nic.dart.View.PirateView;
+import nic.dart.View.Swing.SwingView;
 
 import java.io.FileNotFoundException;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
 
-        GameModel model = null;
+    /**
+     * main method.
+     * @param args none given will use a swing UI, and ask for inputs as needed. if --no-gui is used,
+     * @throws FileNotFoundException
+     */
+    public static void main(String[] args) throws FileNotFoundException /* from SwingDrownTheScurvyDog*/{
 
+        PirateView view;
+        GameModel model;
+
+
+        //Cli or help
     	if(args.length > 0){
+            view = new CliView();
+            //help (me?)
             if(args[0].toLowerCase().equals("--help") ||
                args[0].toLowerCase().equals("help")) {
                 System.out.println("Usage:\n" +
@@ -23,12 +35,18 @@ public class Main {
                         "\t\t\t\tIf no dictionary file is provided, it is assumed it will be in `out/production/Drown_the_Scurvy_Dog or\n" +
                         "\t\t\t\twith the jar file.");
                 System.exit(0);
+                model = null;
+            //no gui
             } else if(args[0].toLowerCase().equals("--no-gui")){
+                view = new CliView();
             	if(args.length > 1){
-            	    if(args[1].toLowerCase().equals("--create")) {
-                        model = GameModel.createDict();
+            	    //create dictionary file
+                    if(args[1].toLowerCase().equals("--create")) {
+                        model = new GameModel();
+                        model.createDict();
+                    //help
                     } else if(args[1].toLowerCase().equals("--help") ||
-                              args[1].toLowerCase().equals("help")){
+                              args[1].toLowerCase().equals("help")) {
                         System.out.println("Usage:\n" +
                                 "$ java ... --no-gui <dictionary file | --create>\n" +
                                 "\n" +
@@ -36,14 +54,24 @@ public class Main {
                                 "\t\t\t\tIf no dictionary file is provided, it is assumed it will be in `out/production/Drown_the_Scurvy_Dog or\n" +
                                 "\t\t\t\twith the jar file.");
                         System.exit(0);
-                    } else{
-                        model = new GameModel(args[1]);
-                    }
+                        model = null;
+                    //assume the second arg is the file.
+                    } else model = new GameModel(args[1]);
+                //nogui with specified file location
             	} else model = new GameModel();
-                model.addObserver(new CliDrownTheScurvyDog());
+                //add the observer to the model, in this case, CLI veriant.
+                view = new CliView();
+            } else {
+                System.out.println("Error, Unknown argument, use `--help` for instructions");
+                model = null;
             }
-        } //else model = new SwingDrownTheScurvyDog().getModel();
 
 
+        //else, Swing view
+        } else {
+            view = new SwingView();
+            model = new GameModel();
+        }
+        view.addModel(model);
     }
 }

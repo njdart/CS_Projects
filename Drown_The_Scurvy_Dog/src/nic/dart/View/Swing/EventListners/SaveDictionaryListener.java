@@ -1,6 +1,6 @@
 package nic.dart.View.Swing.EventListners;
 
-import nic.dart.Model.SwingDrownTheScurvyDog;
+import nic.dart.View.Swing.SwingView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,8 +10,9 @@ public class SaveDictionaryListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		SwingDrownTheScurvyDog.save();
-		JOptionPane.showMessageDialog(null, "Successfully saved " + SwingDrownTheScurvyDog.getDict());
+        if(SwingView.getModel().save())
+		    JOptionPane.showMessageDialog(null, "Successfully saved " + SwingView.getModel().getDict());
+        else JOptionPane.showMessageDialog(null, "Could not save the dictionary file " + SwingView.getModel().getDict());
 	}
 
 }

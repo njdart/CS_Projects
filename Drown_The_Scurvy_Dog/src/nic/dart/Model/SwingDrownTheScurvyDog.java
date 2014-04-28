@@ -1,23 +1,20 @@
 package nic.dart.Model;
 
-import nic.dart.View.Swing.View;
+import nic.dart.View.Swing.SwingView;
 
 import javax.swing.*;
-
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class SwingDrownTheScurvyDog{
+@Deprecated
+public class SwingDrownTheScurvyDog {
 
 	private static PhraseBook pb;
-	private static View v = new View();
-	//private static GameModel gm = new GameModel(pb);
-	//attempt to get the run location of the jar
+	private static SwingView v = new SwingView();
 	private static File dictionaryFile;
+    private static GameModel model;
 
-    @Deprecated
 	public SwingDrownTheScurvyDog() throws FileNotFoundException {	//I can only catch it so many times!!
 
 		//try to find the dictionary file.
@@ -32,7 +29,7 @@ public class SwingDrownTheScurvyDog{
 		dictionaryFile = new File(runtimeLocation + "/dictionary.json");
 		System.out.println(dictionaryFile.toString());
 
-		//If the file doesnt exist, ask for it, if they say no, ceate it
+		//If the file doesnt exist, ask for it, if they say no, create it
 		try {
 			pb = GameDictionaryReader.readDictionary(dictionaryFile);
 		} catch (FileNotFoundException e) {
@@ -47,7 +44,7 @@ public class SwingDrownTheScurvyDog{
 			}
 		}
 
-		v = new View();
+		v = new SwingView();
 	}
 
 
@@ -95,7 +92,7 @@ public class SwingDrownTheScurvyDog{
         return pb;
     }
 
-    public static View getView(){
+    public static SwingView getView(){
     	return v;
     }
 }

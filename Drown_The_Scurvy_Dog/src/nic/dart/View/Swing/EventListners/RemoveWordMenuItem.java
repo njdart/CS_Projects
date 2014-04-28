@@ -1,6 +1,6 @@
 package nic.dart.View.Swing.EventListners;
 
-import nic.dart.Model.SwingDrownTheScurvyDog;
+import nic.dart.View.Swing.SwingView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,7 @@ public class RemoveWordMenuItem implements ActionListener {
                 JOptionPane.PLAIN_MESSAGE,
                 null,null,null);
 
-		boolean success = SwingDrownTheScurvyDog.getPhraseBook().remove(word);
+		boolean success = SwingView.getPhraseBook().remove(word);
 		
 		if(success)
 			JOptionPane.showMessageDialog(null, "Successfully removed \"" + word + "\"");

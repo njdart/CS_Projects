@@ -1,6 +1,6 @@
 package nic.dart.View.Swing.EventListners;
 
-import nic.dart.Model.SwingDrownTheScurvyDog;
+import nic.dart.View.Swing.SwingView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,10 +10,10 @@ public class ReloadDictionaryListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(SwingDrownTheScurvyDog.reload())
-			JOptionPane.showMessageDialog(null, "The Dictionary " + SwingDrownTheScurvyDog.getDict() + " was reloaded successfully!");
+		if(SwingView.getModel().reload())
+			JOptionPane.showMessageDialog(null, "The Dictionary " + SwingView.getModel().getDict() + " was reloaded successfully!");
 		else
-			JOptionPane.showMessageDialog(null, "The Dictionary " + SwingDrownTheScurvyDog.getDict() + " could not be reloaded");
+			JOptionPane.showMessageDialog(null, "The Dictionary " + SwingView.getModel().getDict() + " could not be reloaded");
 	}
 
 }

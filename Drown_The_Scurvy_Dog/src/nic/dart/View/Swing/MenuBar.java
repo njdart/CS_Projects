@@ -1,14 +1,10 @@
 package nic.dart.View.Swing;
 
+import nic.dart.View.Swing.EventListners.*;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-
-import nic.dart.View.Swing.EventListners.*;
 
 public class MenuBar extends JMenuBar {
 
@@ -17,6 +13,7 @@ public class MenuBar extends JMenuBar {
 	//Menu headders
 	private JMenu file = new JMenu("File");
 	private JMenu edit = new JMenu("Edit");
+    private JMenu game = new JMenu("Game");
 	//file menu items
 	private JMenuItem save = new JMenuItem("Save Phrasebook");
 	private JMenuItem load = new JMenuItem("Load Phrasebook");
@@ -26,11 +23,15 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem addWord = new JMenuItem("Add a Phrases");
 	private JMenuItem deleteWord = new JMenuItem("Delete a Phrases");
 	private JMenuItem showWords = new JMenuItem("Show Phrases");
+    //game menu items
+    private JMenuItem abandonGame = new JMenuItem("Abandon");
+    private JMenuItem revealAnswer = new JMenuItem("Reveal Answer");
 	
 	public MenuBar(){
 		super();
 		this.add(file);
 		this.add(edit);
+        this.add(game);
 		
 		file.add(save);
 		file.add(load);
@@ -40,6 +41,8 @@ public class MenuBar extends JMenuBar {
 		edit.add(addWord);
 		edit.add(deleteWord);
 		edit.add(showWords);
+        game.add(abandonGame);
+        game.add(revealAnswer);
 		
 		addWord.addActionListener(new AddWordMenuItem());
 		deleteWord.addActionListener(new RemoveWordMenuItem());

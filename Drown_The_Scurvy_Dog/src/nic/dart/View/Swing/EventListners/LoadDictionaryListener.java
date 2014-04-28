@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import nic.dart.Model.CliDrownTheScurvyDog;
 import nic.dart.Model.SwingDrownTheScurvyDog;
+import nic.dart.View.CommandLine.CliView;
+import nic.dart.View.Swing.SwingView;
 
 public class LoadDictionaryListener implements ActionListener {
 
@@ -18,7 +21,7 @@ public class LoadDictionaryListener implements ActionListener {
 		if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 			fileAbsolute = chooser.getSelectedFile().getAbsolutePath();
 			fileRelative = chooser.getSelectedFile().getName();
-			if(SwingDrownTheScurvyDog.load(fileAbsolute))
+			if(SwingView.getModel().load(fileAbsolute))
 				JOptionPane.showMessageDialog(null, "Successfully loaded the new file!" + fileRelative);
 			else JOptionPane.showMessageDialog(null, "Failed to load " + fileRelative);
 		}

@@ -1,7 +1,6 @@
 package nic.dart.View.Swing;
 
 import nic.dart.Model.PhraseBook;
-import nic.dart.Model.SwingDrownTheScurvyDog;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,11 +15,16 @@ public class WordViewer extends JFrame {
 	private JPanel mainPanel = new JPanel();
 	private JPanel topPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
-    PhraseBook pb;
+    PhraseBook phraseBook;
 
-	public WordViewer(Container parent){
+    private boolean isInGame = false;
+
+	public WordViewer(PhraseBook phraseBook){
 		super("Word Viewer");
-		this.setVisible(false);
+
+        this.phraseBook = phraseBook;
+
+		setVisible(false);
 		this.add(mainPanel);
 
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -42,14 +46,33 @@ public class WordViewer extends JFrame {
 		
 		this.setResizable(false);
 		
-		this.pack();
+		updateView();
 	}
 
-    @Override
-    public void setVisible(boolean state){
-        pb = SwingDrownTheScurvyDog.getPhraseBook();
-        if(state)
-            words.setText(pb.getWords());
-        super.setVisible(state);
+    public boolean show(PhraseBook phraseBook){
+        if(!SwingView.getModel().isInGame()) {
+            this.phraseBook = phraseBook;
+            updateView();
+            setVisible(true);
+            return true;
+        } else return false;
+    }
+
+    private void updateView(){
+        String words = "";
+        String phrases = "";
+
+        for(String word: phraseBook.getWordsAsList())
+            words += word + "\n";
+        for(String phrase: phraseBook.getPhrasesAsList())
+            phrases += phrase + "\n";
+
+        this.words.setText(words.trim());
+        this.phrases.setText(phrases.trim());
+        this.pack();
+    }
+
+    public boolean isInGame(){
+        return isInGame;
     }
 }
