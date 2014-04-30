@@ -1,9 +1,9 @@
-package nic.dart;
+package nic.Dart;
 
-import nic.dart.Model.GameModel;
-import nic.dart.View.CommandLine.CliView;
-import nic.dart.View.PirateView;
-import nic.dart.View.Swing.SwingView;
+import nic.Dart.Model.GameModel;
+import nic.Dart.View.CommandLine.CliView;
+import nic.Dart.View.PirateView;
+import nic.Dart.View.Swing.SwingView;
 
 import java.io.FileNotFoundException;
 
@@ -14,7 +14,7 @@ public class Main {
      * @param args none given will use a swing UI, and ask for inputs as needed. if --no-gui is used,
      * @throws FileNotFoundException
      */
-    public static void main(String[] args) throws FileNotFoundException /* from SwingDrownTheScurvyDog*/{
+    public static void main(String[] args) throws FileNotFoundException{
 
         PirateView view;
         GameModel model;

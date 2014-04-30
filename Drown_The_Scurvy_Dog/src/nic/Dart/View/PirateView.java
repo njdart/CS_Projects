@@ -1,6 +1,6 @@
-package nic.dart.View;
+package nic.Dart.View;
 
-import nic.dart.Model.GameModel;
+import nic.Dart.Model.GameModel;
 
 /**
  * Created by nic on 14/04/14.

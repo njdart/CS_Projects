@@ -1,4 +1,4 @@
-package nic.dart.View.Swing;
+package nic.Dart.View.Swing;
 
 import java.awt.Dimension;
 

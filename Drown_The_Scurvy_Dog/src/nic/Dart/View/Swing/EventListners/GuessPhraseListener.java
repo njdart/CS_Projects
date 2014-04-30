@@ -1,7 +1,7 @@
-package nic.dart.View.Swing.EventListners;
+package nic.Dart.View.Swing.EventListners;
 
-import nic.dart.View.Swing.InputPanel;
-import nic.dart.View.Swing.SwingView;
+import nic.Dart.View.Swing.InputPanel;
+import nic.Dart.View.Swing.SwingView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

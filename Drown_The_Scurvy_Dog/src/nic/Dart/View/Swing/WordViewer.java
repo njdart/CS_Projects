@@ -1,6 +1,6 @@
-package nic.dart.View.Swing;
+package nic.Dart.View.Swing;
 
-import nic.dart.Model.PhraseBook;
+import nic.Dart.Model.PhraseBook;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

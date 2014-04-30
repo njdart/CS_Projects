@@ -1,4 +1,4 @@
-package nic.dart.Model;
+package nic.Dart.Model;
 /**
 * This interface describes the behaviour of a hangman type of game
 * To be used in CS124 individual assignment

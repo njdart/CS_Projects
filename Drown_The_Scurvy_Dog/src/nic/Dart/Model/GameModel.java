@@ -1,15 +1,14 @@
-package nic.dart.Model;
+package nic.Dart.Model;
 
-import nic.dart.Main;
+import nic.Dart.Main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Observable;
 import java.util.Random;
 import java.util.TreeSet;
 
-public class GameModel extends Observable implements GameModelInterface{
+public class GameModel implements GameModelInterface{
 	
 	private static String word;
 	private static int fails = 0;
@@ -167,7 +166,6 @@ public class GameModel extends Observable implements GameModelInterface{
             word = phraseBook.getAllItems().get(new Random().nextInt(phraseBook.length()));
             System.out.println("Starting game with word " + word);
         } else {
-            System.out.println("Resetting for a new game");
             //reset for a new game
             word = "";
             fails = 0;
@@ -234,13 +232,7 @@ public class GameModel extends Observable implements GameModelInterface{
             }
         }
 
-        if(containsUnknowns){
-            System.out.println("Game is still going");
-            return false;
-        } else {
-            System.out.println("Game is complete");
-            return true;
-        }
+        return !containsUnknowns;
     }
 
     public boolean isGameOver() {

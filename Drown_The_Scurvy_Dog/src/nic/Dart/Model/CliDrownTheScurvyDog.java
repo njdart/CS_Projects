@@ -1,4 +1,4 @@
-package nic.dart.Model;
+package nic.Dart.Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;

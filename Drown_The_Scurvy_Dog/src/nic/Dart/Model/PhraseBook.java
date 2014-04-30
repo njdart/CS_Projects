@@ -1,4 +1,4 @@
-package nic.dart.Model;
+package nic.Dart.Model;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,10 +36,12 @@ public class PhraseBook {
 	}
 
 	public boolean add(String s) {
-		if(s == null || s.equals("")) return false;
+		if(s == null) return false;
+        if(s.equals("")) return false;
+        s=s.toLowerCase();
 		if(s.split("\\s+").length > 1){
 			for(String p: phrases)
-				if(s.toLowerCase().equals(p.toLowerCase()))
+				if(s.equals(p.toLowerCase()))
 					return false;
 			this.addPhrase(s);
 			return true;
@@ -53,10 +55,12 @@ public class PhraseBook {
 	}
 	
 	public boolean remove(String s){
-		if(s == null || s.equals("")) return false;
+		if(s == null) return false;
+        if(s.equals("")) return false;
+        s=s.toLowerCase();
 		if(s.split("\\s+").length > 1){
 			for(String p: phrases){
-				if(s.toLowerCase().equals(p.toLowerCase())){
+				if(s.equals(p.toLowerCase())){
 					phrases.remove(p);
 					return true;
 				}

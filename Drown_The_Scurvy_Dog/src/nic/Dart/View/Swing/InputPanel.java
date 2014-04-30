@@ -1,7 +1,7 @@
-package nic.dart.View.Swing;
+package nic.Dart.View.Swing;
 
-import nic.dart.Model.GameModel;
-import nic.dart.View.Swing.EventListners.GuessPhraseListener;
+import nic.Dart.Model.GameModel;
+import nic.Dart.View.Swing.EventListners.GuessPhraseListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -63,7 +63,6 @@ public class InputPanel extends JPanel {
         guessBtn.setText(model.guessLeft() + " Lives Left");
 
         output.setText(model.getHidden());
-        System.out.println(result);
         usedLetters.setText(model.getLetters());
         String message = "";
 
