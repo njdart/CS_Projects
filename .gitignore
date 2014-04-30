@@ -25,3 +25,9 @@ bin/
 *.iml
 out/
 META-INF
+
+#latex and pdf
+*.aux
+*.log
+*.pdf
+*.toc
