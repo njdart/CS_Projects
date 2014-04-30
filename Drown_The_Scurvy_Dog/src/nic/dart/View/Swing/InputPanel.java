@@ -57,21 +57,32 @@ public class InputPanel extends JPanel {
         if(guess.length() < 1 || guess == null)
             return;
         if(guess.length() == 1)
-            result = model.tryThis(guess.toCharArray()[0]);
+            result = model.tryThis(guess.charAt(0));
         else result = model.tryWord(guess);
+
+        guessBtn.setText(model.guessLeft() + " Lives Left");
 
         output.setText(model.getHidden());
         System.out.println(result);
-        if(result){
-            //success
-        } else {
-            usedLetters.setText(usedLetters.getText() + "," + guess);
+        usedLetters.setText(model.getLetters());
+        String message = "";
+
+        if(model.isGameOver()){
+            JOptionPane.showMessageDialog(this, "You ran out of lives! The word was " + model.getVisible() + ".\nBetter luck next time!");
+            model.setInGame(false);
+            setInGame(false);
+        }
+        else if(model.isCompletedWord()){
+            JOptionPane.showMessageDialog(this, "Congratulations! You won in " + model.getGuesses() + " guesses! (" + model.getFails() + " incorrect guesses)");
+            model.setInGame(false);
+            setInGame(false);
         }
     }
 
     public void initGame() {
+        guessBtn.setText(SwingView.getModel().guessLeft() + " Lives Left");
         usedLetters.setText("");
-        SwingView.getModel().setInGame(true);
+        output.setText("");
         output.setText(SwingView.getModel().getHidden());
         guess.setEditable(true);
     }

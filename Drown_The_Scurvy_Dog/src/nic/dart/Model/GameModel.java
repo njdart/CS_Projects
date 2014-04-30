@@ -1,22 +1,25 @@
 package nic.dart.Model;
 
+import nic.dart.Main;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
+import java.util.TreeSet;
 
 public class GameModel extends Observable implements GameModelInterface{
 	
 	private static String word;
-	private int guesses;
-	private int lives;
-	private ArrayList<Character> guessedChars = new ArrayList<Character>();
+	private static int fails = 0;
+	private static final int lives = 10;
+	private static TreeSet<Character> guessedChars = new TreeSet<Character>();
 	private static boolean inGame = false;
-	private String visible;
+	private static String visible;
     private static PhraseBook phraseBook;
-    private File dictionaryFile;
+    private static File dictionaryFile;
+    private static int guesses = 0;
 
     /**
      * The game model, contains methods for searching strings,
@@ -62,7 +65,7 @@ public class GameModel extends Observable implements GameModelInterface{
      */
     private static File getRootDictionary() {
         File dictionaryFile;
-        String runtimeLocation = SwingDrownTheScurvyDog.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
+        String runtimeLocation = Main.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
         //System.out.println("Running from : " + runtimeLocation);
         if(runtimeLocation.contains(".jar")){
             //System.out.println("RUNNING FROM JAR!");
@@ -75,75 +78,78 @@ public class GameModel extends Observable implements GameModelInterface{
         return dictionaryFile;
     }
 
+    public int getGuesses() {
+        return guesses;
+    }
+
     public boolean getInGame() {
         return inGame;
     }
 
     @Override
 	public String getVisible() {
-		return visible;
-	}
-	
-	private void updateVisible() {
-		String newVisible = "";
-		for(char w: word.toCharArray()){
-			for(char g: guessedChars){
-				if(g == w)
-					newVisible+=w;
-				else newVisible+='*';
-			}
-		}
-        if(visible != null) {
-            if (visible.length() != newVisible.length())
-                System.out.println("We've got a problem here!");
-            visible = newVisible;
-        }
+		return word;
 	}
 
 	@Override
 	public String getHidden() {
         String wordHints = "";
-        boolean found = false;
+        boolean found;
         for(char w : word.toCharArray()) {
             found = false;
-            for (char c : guessedChars) {
-                if (w == c) {
-                    wordHints += w;
-                    found = true;
+            if(w == ' '){
+                wordHints+=w;
+            } else {
+                for (char c : guessedChars) {
+                    if (w == c) {
+                        wordHints += w;
+                        found = true;
+                    }
                 }
+                if (!found) wordHints += "*";
             }
-            if(!found) wordHints += "*";
         }
 		return wordHints;
 	}
 
 	@Override
 	public int guessLeft() {
-		return lives-guesses;
+		return lives- fails;
 	}
 
 	@Override
 	public String getLetters() {
 		String guessed = "";
 		for(char c: guessedChars)
-			guessed+=c;
+			guessed+=c+",";
 		return guessed;
 	}
 
 	@Override
 	public boolean tryThis(char letter) {
+        ++guesses;
+        if(guessLeft()<= 0) return false;
 		guessedChars.add(letter);
 		for(char c: word.toCharArray())
 			if(c == letter){
-				updateVisible();
 				return true;
 			}
+
+        ++fails;
 		return false;
 	}
 
 	@Override
 	public boolean tryWord(String guess) {
-		return guess.equals(word);
+        ++guesses;
+        if(guessLeft() <= 0) return false;
+        if(guess.equals(word)){
+
+            return true;
+        } else {
+            ++fails;
+            return false;
+        }
 	}
 
     public void createDict() {
@@ -157,8 +163,18 @@ public class GameModel extends Observable implements GameModelInterface{
 
 	public static void setInGame(boolean state) {
 		inGame = state;
-        word = phraseBook.getAllItems().get(new Random().nextInt(phraseBook.length()));
-        System.out.println("Starting game with word " + word);
+        if(state) {
+            word = phraseBook.getAllItems().get(new Random().nextInt(phraseBook.length()));
+            System.out.println("Starting game with word " + word);
+        } else {
+            System.out.println("Resetting for a new game");
+            //reset for a new game
+            word = "";
+            fails = 0;
+            guessedChars = new TreeSet<Character>();
+            visible = "";
+            guesses = 0;
+        }
 	}
 
     public static boolean getGameState() { return inGame; }
@@ -206,5 +222,32 @@ public class GameModel extends Observable implements GameModelInterface{
         } catch (IOException e){
             return false;
         }
+    }
+
+    public boolean isCompletedWord(){
+        boolean containsUnknowns = false;
+
+        for(char c : getHidden().toCharArray()) {
+            if(c == '*') {
+                containsUnknowns = true;
+                break;
+            }
+        }
+
+        if(containsUnknowns){
+            System.out.println("Game is still going");
+            return false;
+        } else {
+            System.out.println("Game is complete");
+            return true;
+        }
+    }
+
+    public boolean isGameOver() {
+        return guessLeft() <=0;
+    }
+
+    public int getFails() {
+        return fails;
     }
 }

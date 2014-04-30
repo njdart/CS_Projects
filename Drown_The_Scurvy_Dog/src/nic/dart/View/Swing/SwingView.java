@@ -18,13 +18,13 @@ public class SwingView extends JFrame implements PirateView{
 	private static WordViewer wv;
 	
 	public SwingView(){
-		super("Drown the Scurvy Dog");
 		this.add(mb, BorderLayout.NORTH);
 		this.add(ip, BorderLayout.CENTER);
 		this.add(g, BorderLayout.SOUTH);
 		this.setResizable(false);
-		
-		this.pack();
+        this.setPreferredSize(new Dimension(600, 600));
+
+        this.pack();
 		this.setVisible(true);
 	}
 
