@@ -32,7 +32,7 @@ public class GameModel implements GameModelInterface{
      */
     public GameModel(){
         try {
-            System.out.println("Assuming dictionary file is with .jar or in bin/");
+            //System.out.println("Assuming dictionary file is with .jar or in bin/");
             this.phraseBook = GameDictionaryReader.readDictionary(getRootDictionary());
         } catch (FileNotFoundException e){
             System.out.println("ERROR: Dictionary could not be found!");
@@ -74,7 +74,7 @@ public class GameModel implements GameModelInterface{
             //System.out.println("New Runtime: " + runtimeLocation);
         }
         dictionaryFile = new File(runtimeLocation + "/dictionary.json");
-        System.out.println("\tAssuming dictionary at : " + dictionaryFile.toString());
+        //System.out.println("\tAssuming dictionary at : " + dictionaryFile.toString());
         return dictionaryFile;
     }
 
@@ -244,7 +244,7 @@ public class GameModel implements GameModelInterface{
     }
 
     public void setWord(String word){
-        System.out.println("WARNING, THE MODELS' WORD HAS BEEN CHANGED!");
+        //System.out.println("WARNING, THE MODELS' WORD HAS BEEN CHANGED!");
         this.word = word;   //Only used in testing.
     }
 
