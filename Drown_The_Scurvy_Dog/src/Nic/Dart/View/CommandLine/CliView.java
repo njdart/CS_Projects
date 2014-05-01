@@ -1,12 +1,12 @@
-package nic.Dart.View.CommandLine;
+package Nic.Dart.View.CommandLine;
 
-import nic.Dart.Model.GameModel;
-import nic.Dart.View.PirateView;
+import Nic.Dart.Model.GameModel;
+import Nic.Dart.View.PirateView;
 
 import java.util.Scanner;
 
 /**
- * Created by nic on 04/04/14.
+ * Created by Nic on 04/04/14.
  */
 public class CliView implements PirateView{
 

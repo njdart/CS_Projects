@@ -1,7 +1,7 @@
-package nic.Dart.View.Swing;
+package Nic.Dart.View.Swing;
 
-import nic.Dart.Model.GameModel;
-import nic.Dart.View.Swing.EventListners.GuessPhraseListener;
+import Nic.Dart.Model.GameModel;
+import Nic.Dart.View.Swing.EventListners.GuessPhraseListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

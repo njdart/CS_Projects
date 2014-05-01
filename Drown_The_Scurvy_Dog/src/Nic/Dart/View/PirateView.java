@@ -1,9 +1,9 @@
-package nic.Dart.View;
+package Nic.Dart.View;
 
-import nic.Dart.Model.GameModel;
+import Nic.Dart.Model.GameModel;
 
 /**
- * Created by nic on 14/04/14.
+ * Created by Nic on 14/04/14.
  */
 public interface PirateView {
 

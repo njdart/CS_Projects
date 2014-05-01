@@ -1,6 +1,6 @@
-package nic.Dart.Tests;
+package Nic.Dart.Tests;
 
-import nic.Dart.Model.GameModel;
+import Nic.Dart.Model.GameModel;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

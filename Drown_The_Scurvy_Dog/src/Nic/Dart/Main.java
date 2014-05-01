@@ -1,9 +1,9 @@
-package nic.Dart;
+package Nic.Dart;
 
-import nic.Dart.Model.GameModel;
-import nic.Dart.View.CommandLine.CliView;
-import nic.Dart.View.PirateView;
-import nic.Dart.View.Swing.SwingView;
+import Nic.Dart.Model.GameModel;
+import Nic.Dart.View.CommandLine.CliView;
+import Nic.Dart.View.PirateView;
+import Nic.Dart.View.Swing.SwingView;
 
 import java.io.FileNotFoundException;
 

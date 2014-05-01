@@ -1,8 +1,8 @@
-package nic.Dart.View.Swing;
+package Nic.Dart.View.Swing;
 
-import nic.Dart.Model.GameModel;
-import nic.Dart.Model.PhraseBook;
-import nic.Dart.View.PirateView;
+import Nic.Dart.Model.GameModel;
+import Nic.Dart.Model.PhraseBook;
+import Nic.Dart.View.PirateView;
 
 import javax.swing.*;
 import java.awt.*;

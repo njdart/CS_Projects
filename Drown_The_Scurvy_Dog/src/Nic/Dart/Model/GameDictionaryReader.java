@@ -1,4 +1,4 @@
-package nic.Dart.Model;
+package Nic.Dart.Model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

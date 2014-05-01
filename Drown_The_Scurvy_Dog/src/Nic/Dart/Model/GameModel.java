@@ -1,6 +1,6 @@
-package nic.Dart.Model;
+package Nic.Dart.Model;
 
-import nic.Dart.Main;
+import Nic.Dart.Main;
 
 import java.io.File;
 import java.io.FileNotFoundException;

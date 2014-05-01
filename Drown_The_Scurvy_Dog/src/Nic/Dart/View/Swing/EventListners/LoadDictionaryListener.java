@@ -1,11 +1,11 @@
-package nic.Dart.View.Swing.EventListners;
+package Nic.Dart.View.Swing.EventListners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import nic.Dart.View.Swing.SwingView;
+import Nic.Dart.View.Swing.SwingView;
 
 public class LoadDictionaryListener implements ActionListener {
 

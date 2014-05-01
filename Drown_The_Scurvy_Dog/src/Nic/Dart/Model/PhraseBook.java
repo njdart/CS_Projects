@@ -1,4 +1,4 @@
-package nic.Dart.Model;
+package Nic.Dart.Model;
 
 import java.util.ArrayList;
 import java.util.Random;
