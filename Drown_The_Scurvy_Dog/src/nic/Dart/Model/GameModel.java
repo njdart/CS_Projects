@@ -19,6 +19,7 @@ public class GameModel implements GameModelInterface{
     private static PhraseBook phraseBook;
     private static File dictionaryFile;
     private static int guesses = 0;
+    private static boolean isComplete = false;
 
     /**
      * The game model, contains methods for searching strings,
@@ -31,8 +32,8 @@ public class GameModel implements GameModelInterface{
      */
     public GameModel(){
         try {
-            dictionaryFile = getRootDictionary();
-            this.phraseBook = GameDictionaryReader.readDictionary(dictionaryFile);
+            System.out.println("Assuming dictionary file is with .jar or in bin/");
+            this.phraseBook = GameDictionaryReader.readDictionary(getRootDictionary());
         } catch (FileNotFoundException e){
             System.out.println("ERROR: Dictionary could not be found!");
         }
@@ -94,13 +95,13 @@ public class GameModel implements GameModelInterface{
 	public String getHidden() {
         String wordHints = "";
         boolean found;
-        for(char w : word.toCharArray()) {
+        for(char w : word.toLowerCase().toCharArray()) {
             found = false;
             if(w == ' '){
                 wordHints+=w;
             } else {
                 for (char c : guessedChars) {
-                    if (w == c) {
+                    if (w == Character.toLowerCase(c)) {
                         wordHints += w;
                         found = true;
                     }
@@ -126,24 +127,39 @@ public class GameModel implements GameModelInterface{
 
 	@Override
 	public boolean tryThis(char letter) {
+        if(guessLeft() <= 0) return false;
+        letter = Character.toLowerCase(letter);
         ++guesses;
-        if(guessLeft()<= 0) return false;
-		guessedChars.add(letter);
-		for(char c: word.toCharArray())
-			if(c == letter){
-				return true;
-			}
+		if(guessedChars.add(letter)) {
+            boolean toReturn = false;
+            for (char c : word.toCharArray())
+                if (Character.toLowerCase(c) == letter) {
+                    toReturn = true;
+                    break;
+                }
 
-        ++fails;
-		return false;
+            boolean unknownChars = false;
+            for (char c : getHidden().toCharArray()) {
+                if (c == '*') {
+                    unknownChars = true;
+                    break;
+                }
+            }
+            if (!unknownChars)
+                isComplete = true;
+
+            if (!toReturn)
+                ++fails;
+            return toReturn;
+        } return false;
 	}
 
 	@Override
 	public boolean tryWord(String guess) {
-        ++guesses;
         if(guessLeft() <= 0) return false;
-        if(guess.equals(word)){
-
+        ++guesses;
+        if(word.toLowerCase().equals(guess.toLowerCase())){
+            isComplete = true;
             return true;
         } else {
             ++fails;
@@ -163,15 +179,16 @@ public class GameModel implements GameModelInterface{
 	public static void setInGame(boolean state) {
 		inGame = state;
         if(state) {
-            word = phraseBook.getAllItems().get(new Random().nextInt(phraseBook.length()));
-            System.out.println("Starting game with word " + word);
-        } else {
+            //System.out.println("Starting game with word " + word);
             //reset for a new game
             word = "";
             fails = 0;
             guessedChars = new TreeSet<Character>();
             visible = "";
             guesses = 0;
+            isComplete = false;
+
+            word = phraseBook.getAllItems().get(new Random().nextInt(phraseBook.length()));
         }
 	}
 
@@ -223,16 +240,12 @@ public class GameModel implements GameModelInterface{
     }
 
     public boolean isCompletedWord(){
-        boolean containsUnknowns = false;
+        return isComplete;
+    }
 
-        for(char c : getHidden().toCharArray()) {
-            if(c == '*') {
-                containsUnknowns = true;
-                break;
-            }
-        }
-
-        return !containsUnknowns;
+    public void setWord(String word){
+        System.out.println("WARNING, THE MODELS' WORD HAS BEEN CHANGED!");
+        this.word = word;   //Only used in testing.
     }
 
     public boolean isGameOver() {

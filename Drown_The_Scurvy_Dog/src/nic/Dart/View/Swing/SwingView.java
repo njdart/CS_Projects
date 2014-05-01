@@ -18,6 +18,7 @@ public class SwingView extends JFrame implements PirateView{
 	private static WordViewer wv;
 	
 	public SwingView(){
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.add(mb, BorderLayout.NORTH);
 		this.add(ip, BorderLayout.CENTER);
 		this.add(g, BorderLayout.SOUTH);

@@ -58,7 +58,16 @@ public class Main {
                     //assume the second arg is the file.
                     } else model = new GameModel(args[1]);
                 //nogui with specified file location
-            	} else model = new GameModel();
+            	} else {
+                    System.out.println("Usage:\n" +
+                            "$ java ... --no-gui <dictionary file | --create>\n" +
+                            "\n" +
+                            "\t--create\tCreates the dictionary file. Will be empty!\n" +
+                            "\t\t\t\tIf no dictionary file is provided, it is assumed it will be in `out/production/Drown_the_Scurvy_Dog or\n" +
+                            "\t\t\t\twith the jar file.");
+                    System.exit(0);
+                    model = null;
+                }
                 //add the observer to the model, in this case, CLI veriant.
                 view = new CliView();
             } else {

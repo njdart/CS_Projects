@@ -97,17 +97,22 @@ public class CliView implements PirateView{
                     "\t" + model.getHidden());
             System.out.print("Make a guess (letter or word)\n>");
             guess = in.nextLine().trim();
-            if(guess.length() > 1)
-                model.tryWord(guess);
-            else model.tryThis(guess.charAt(0));
+            if(guess != null){
+                if(guess.length() > 0){
+                    if(guess.length() > 1)
+                        model.tryWord(guess);
+                    else model.tryThis(guess.charAt(0));
 
-            if(model.isGameOver()) {
-                System.out.println("\nGAME OVER!\nThe word was '" + model.getVisible() + "'");
-                inGame = false;
-            } else if(model.isCompletedWord()) {
-                System.out.println("\nCongratulations! You completed it in " + model.getGuesses() + " guesses\n("
-                    + model.getFails() + " wrong tries)");
-                inGame = false;
+                    if(model.isGameOver()) {
+                        System.out.println("\nGAME OVER!\nThe word was '" + model.getVisible() + "'");
+                        inGame = false;
+                    } else if(model.isCompletedWord()) {
+                        System.out.println("\nCongratulations! You completed it in " + model.getGuesses() + " guesses\n("
+                            + model.getFails() + " wrong tries)");
+                        inGame = false;
+
+                    }
+                }
             }
         }
 
