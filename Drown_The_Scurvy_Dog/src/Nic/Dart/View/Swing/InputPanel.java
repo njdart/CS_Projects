@@ -24,9 +24,11 @@ public class InputPanel extends JPanel {
 		this.add(guessBtn);
 		this.add(usedLetters);
 		this.add(output);
+
+        GuessPhraseListener gpl = new GuessPhraseListener();
 		
-		guessBtn.addActionListener(new GuessPhraseListener());
-		guess.addActionListener(new GuessPhraseListener());
+		guessBtn.addActionListener(gpl);
+		guess.addActionListener(gpl);
 
 		output.setText("y*a**");
 		usedLetters.setText("ABCDY");
@@ -65,6 +67,9 @@ public class InputPanel extends JPanel {
         output.setText(model.getHidden());
         usedLetters.setText(model.getLetters());
         String message = "";
+
+        if(!result)
+            SwingView.getGallows().update(model.getFails());
 
         if(model.isGameOver()){
             JOptionPane.showMessageDialog(this, "You ran out of lives! The word was " + model.getVisible() + ".\nBetter luck next time!");

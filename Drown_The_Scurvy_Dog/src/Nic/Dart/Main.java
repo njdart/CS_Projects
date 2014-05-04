@@ -71,8 +71,8 @@ public class Main {
                 //add the observer to the model, in this case, CLI veriant.
                 view = new CliView();
             } else {
-                System.out.println("Error, Unknown argument, use `--help` for instructions");
-                model = null;
+                model = new GameModel(args[0]);
+                view = new SwingView();
             }
 
 
@@ -81,6 +81,8 @@ public class Main {
             view = new SwingView();
             model = new GameModel();
         }
+
+
         view.addModel(model);
     }
 }

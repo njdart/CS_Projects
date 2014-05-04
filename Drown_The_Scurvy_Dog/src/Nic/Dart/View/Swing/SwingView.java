@@ -11,10 +11,12 @@ public class SwingView extends JFrame implements PirateView{
 
 	private static final long serialVersionUID = 1L;
 
-	private static InputPanel ip = new InputPanel();
-	private Gallows g = new Gallows();
-	private MenuBar mb = new MenuBar();
     private static GameModel model;
+
+	private static InputPanel ip = new InputPanel();
+	private MenuBar mb = new MenuBar();
+
+    private static Gallows g = new Gallows(10, model);    //lives
 	private static WordViewer wv;
 	
 	public SwingView(){
@@ -23,7 +25,6 @@ public class SwingView extends JFrame implements PirateView{
 		this.add(ip, BorderLayout.CENTER);
 		this.add(g, BorderLayout.SOUTH);
 		this.setResizable(false);
-        this.setPreferredSize(new Dimension(600, 600));
 
         this.pack();
 		this.setVisible(true);
@@ -35,6 +36,10 @@ public class SwingView extends JFrame implements PirateView{
 
     public static InputPanel getInputPanel() {
         return ip;
+    }
+
+    public static Gallows getGallows() {
+        return g;
     }
 
     @Override

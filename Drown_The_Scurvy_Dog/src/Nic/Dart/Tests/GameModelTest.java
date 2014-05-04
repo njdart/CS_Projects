@@ -88,9 +88,9 @@ public class GameModelTest {
         model.tryThis('c');
         model.tryThis('d');
 
+        model.tryThis('a');
+
         assertEquals("Incorrect guesses left", "a,b,c,d,", model.getLetters());
-
-
     }
 
     @Test
@@ -217,18 +217,28 @@ public class GameModelTest {
         model.setInGame(true);
         model.setWord("xyz");
 
-        for(int i = 0; i < 11; i++)
+        for(int i = 0; i < 10; i++)
             model.tryThis((char)(65+i));
         assertTrue("Game should be over", model.isGameOver());
     }
 
     @Test
-    public void testIsGameNotOver() throws Exception {
+    public void testIsGameNotOverChar() throws Exception {
         GameModel model = new GameModel();
         model.setInGame(true);
         model.setWord("wheresTheRumGone?");
 
         model.tryThis('p');
+        assertFalse("Game should be over", model.isCompletedWord());
+    }
+
+    @Test
+    public void testIsGameNotOverWord() throws Exception {
+        GameModel model = new GameModel();
+        model.setInGame(true);
+        model.setWord("isTheRumGone?");
+
+        model.tryWord("theRumsGoneJack!");
         assertFalse("Game should be over", model.isCompletedWord());
     }
 
