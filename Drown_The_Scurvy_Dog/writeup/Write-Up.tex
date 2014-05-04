@@ -1,16 +1,19 @@
 \documentclass[a4paper, 11pt]{article}
 
-\usepackage{fullpage, graphicx, float, tabulary, multirow, multicol}
+\usepackage{fullpage, graphicx, float, tabulary, multirow, multicol, lscape, hyperref}
 
 \setcounter{tocdepth}{2}
 
 \begin{document}
 
 \title{CS124 Individual Project - Drown The Scurvy Dog - Write-Up}
-\author{Nicholas Dart (nid21@aber.ac.uk)}
-\date{}
+\author{Nic Dart (nid21@aber.ac.uk)}
+\date{May 2014}
 
 \maketitle
+
+\newpage
+
 \tableofcontents
 
 \newpage
@@ -25,30 +28,23 @@ The problem space for this assignment was defined in the original project specif
 This project is a variation of hangman. It involves programming both a text based, and a graphics based version of the same game. The graphics based version should be pirate themed. The words to be guessed must be pirate themed and must be read from the provided file called piratewords.txt that has the format (you can add to the phrases: see http://www.yarr.org.uk/talk/)
 \end{quote}
 
-I have defined the solution space to encompass the whole of the problem space, as well as to include some of the suggested advanced functionality. This is because I believe I should be able to provide an accurate and reliable implementation of the application defined in the original specification and that providing additional functionality will not hinder the application's performance.
+I have defined the solution space to encompass the whole of the problem space, as well as to include some of the suggested advanced functionality and features of my own. This is because I believe I will be able to provide an accurate and reliable implementation of the application defined in the original specification and by providing additional functionality will not hinder the application's performance.
 
 \subsection{Application Requirements}
 
 After reading through the original specification, I have decided that the application has the following functional requirements:
 
 \begin{enumerate}
-\item Present a graphical interface which allows a user to create an animation by allowing them to do the following:
+\item Present a graphical and command line interface which allows a user to play a game of 'Drown The Scurvy Dog' and do the following:
 \begin{enumerate}
-\item Change the state of 'Squares' by left or right clicking on them
-\item Insert new frames into the animation
-\item Duplicate existing frames in the animation
-\item Delete existing frames
-\item Move between frames in the animation
-\item Create a new animation of a specified size
-\item Open an existing animation from a file (using the file format laid out in the original specification)
-\item Save the current animation to a file (using the file format laid out in the original specification).
+\item Add or delete words or phrases to the dictionary
+\item Save, load or reload the dictionary file
+\item View all phrases and words
+\item View an animated representation of the game
+\item Play complete and abandon games
 \end{enumerate}
-\item Present a graphical interface which allows a user to play back a previously created animation by allowing them to do the following:
-\begin{enumerate}
-\item Begin/resume the playback of the animation
-\item Pause the playback of the animation
-\item Move between frames of the animation.
-\end{enumerate}
+\item Utilize a human readable storage format
+\item I have decided to use Json as the storage format as it is standardized notation/structure and is still human readable
 \end{enumerate}
 
 As well as the above functional requirements, I have also established a number of aesthetic and non-functional requirements:
@@ -57,43 +53,37 @@ As well as the above functional requirements, I have also established a number o
 \setcounter{enumi}{2}
 \item The graphical interfaces provided by the application should contain menu bars and tool bars, similar to a traditional WIMP application
 \begin{enumerate}
-\item The menus and menu items should be appropriately labelled
-\item The menus and menu items should have appropriate icons where applicable
-\item The menus and menu items should have appropriate shortcut keys for keyboard navigation (e.g. {\tt Alf+F} for the File menu)
-\item The menu items which perform more important operations (such as opening and saving a file) have appropriate global shortcut key combinations (e.g. {\tt Ctrl+S} for the file save option)
-\item The toolbar buttons should have appropriate icons
-\item Where applicable, the toolbar icon should match the menu item icon
-\item The toolbar action should be exactly the same as the menu item action.
+\item The menus and menu items should be appropriately labeled
+\item Menu Items should be placed under the relevant headings
 \end{enumerate}
-\item The graphical interfaces provided should have a 'status bar' to display essential information
-\item The graphical interfaces should allow the user to zoom in or out on the animation grid.
+\item There should be a status bar where guessed letters and the word to be guessed should be shown, along with an input box, submit button and number of lives left.
+\item The graphical interfaces should not have different input fields for a single character or whole word (as this is easily detected)
+\item The graphic display should take up the majority of the space, providing a large, picture or vector graphic based view of the state of the game
 \end{enumerate}
 
-I have represented the requirements laid out above as a Use Case Diagram. Please see Figure \ref{UseCaseDiagram} on page \pageref{UseCaseDiagram}.
+I have represented the requirements laid out above as a Use Case Diagram (\ref{UseCaseDiagram}) on page \pageref{UseCaseDiagram}.
 
 \subsection{Running Environment}
 
-From the specification I can determine several factors about the environment my implementation will be run in. I am also making several assumptions about the environment based on what information I haven't been told. These are:
+From the specification I can determine several factors about the environment my implementation will be run in. I am also making several assumptions about the environment based on what information I haven't been told:
 
 \begin{enumerate}
-\item The application will be run using the latest version of the Java Runtime Environment (1.7 at the time of writing)
+\item The application will be run using Java 1.7 (OpenJDK 7) as OpenJDK8 is not available in the package repository of my operating system. 
 \item The application will be run on a platform which supports the Java Swing library
 \item I cannot assume what Operating System the application will be run on, therefore it should be compatible with all major Operating Systems: Windows, Macintosh OS X, and Linux
 \end{enumerate}
 
 \subsection{My Solution}
 
-My solution to the problem space is to implement an application using the Model-view-controller design pattern, where a graphical user interface takes the role of the controller and view, an an underlying structure to contain the model.
+I plan on implementing a solution using MVC design patters, I considered using Observer/Observable but there is a two way exchange of data to/from the View which would make an Observer/Observable approach impracticable as the View and Model would both have to be an Observer and Observable of each other. This solution allows me to separate out the view from the underlying models/work to allow rewriting/changes/replacement of the view with minimal to no changes of the model. This also gives me the added easy implementation of the two Views specified in the brief. 
 
-The model will contain all the code necessary for it to provide all the non-graphical functions so it could (in theory) run independently from the graphical interface. This includes saving and loading files, adding and duplication frames, removing frames, and so on.
+The controllers will be the EventListener for the Swing graphical view, but for the Command line view they will be rolled into the view, as there is little or need or practicality of separating out the controllers. 
 
-The graphical interface will contain a model which it will interact with, and take the output from to draw it to the screen. Through the use of menus and toolbars it will allow the users to access the methods the model provides, such as adding and removing frames, and provide other conveniences, such as file dialogues, to make interacting with the model easier.
-
-I have taken this approach to the problem as I feel it divides the larger problem space into two smaller problem spaces which are easier to manage. I also want to use this design paradigm as it would allow easier expansion of either the model or the view/controller in the future, and would allow the model code to be reused if another, alternative interface were to be developed (e.g. a command line application designed for scripting).
+My decision to use Json as the storage format instead of the provided format was to keep the data standardized and easy to manipulate by hand, the provided format was clumsy because editing it required you to add the desired elements and then edit the total number of elements in that section, whilst easy when adding/deleting in small numbers of words or phrases, or altering an existing word, larger numbers of additions/deletions would be more time consuming and would result in parsing errors if the number of words/phrases at the beginning was incorrect. 
 
 \begin{figure}[H]
 \centering
-%includegraphics[scale=0.4]{UseCaseDiagram}
+\includegraphics[scale=0.6]{./res/UsecaseDiagram.jpg}
 \caption{Use Case Diagram}
 \label{UseCaseDiagram}
 \end{figure}
@@ -107,263 +97,151 @@ I have taken this approach to the problem as I feel it divides the larger proble
 
 \begin{figure}[H]
 \centering
-%includegraphics[scale=0.3]{ModelClassDiagram}
-\caption{Animation Model Class Diagram}
+\includegraphics[scale=0.7]{./res/PackageDiagram.jpg}
+\caption{Package Diagram}
+\label{PackageDiagram}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{./res/ClassDiagram.jpg}
+\caption{Class Diagram}
 \label{ModelClassDiagram}
 \end{figure}
 
-The \texttt{Animation} class holds the ArrayList of Frames, and provides methods for loading and saving Animations to file, as well as interacting with Frames within the \texttt{Animation} (e.g. adding and removing frames). It also provides access to other variables from the system which could be used by the GUI, such as the current frame number and the size of the Frames.
+Following MVC guidelines, I have split the views and the models up, in the \texttt{Main} class, the \texttt{Model} is created, and then passed to the \texttt{View} that the user has chosen. the \texttt{PirateView} interface contains one method; \texttt{addModel} which takes a \texttt{Model} and associates it with the view. I designed it this way so the view can retrieve data from the model when necessary, as there is no need for the model to notify the \texttt{View} of a change as changes only happen when new data has been entered, and the \texttt{View} can then make method calls to the \texttt{Model} to do guesses. 
 
-The \texttt{Frame} class contains a 2D ArrayList of Squares, and a public method to access a \texttt{Square} at a particular co-ordinate. It also has a clone method, which could be used to duplicate the existing \texttt{Frame}.
+The \texttt{PhraseBook} class holds the associated pirate words and phrases, it is the thing that is (de)serialized to/from Json in the dictionary.json file. The \texttt{DictionaryReader} class only serves to read from a file and return a \texttt{PhraseBook} object, or take a \texttt{PhraseBook} object and a file location and serialize and write the \texttt{PhraseBook} to Json.
 
-The \texttt{Square} class is a wrapper class for a \texttt{SquareType}, which is an enumerated type. It provides a getter and setter, as well as a method which parses a char into a \texttt{SquareType}, and a \texttt{toString} method to do the opposite. I chose an enumerated type as I feel it's better than using a string or an integer, as you don't have to do any error checking on inputs.
+The \texttt{SwingView} and \texttt{CliView} which both implement \texttt{PirateView} are the Views (and Controllers) for the Model. I decided to separate the \texttt{ActionListeners} out from the \texttt{SwingView} so as to not have many classes or anonymous classes in the associated \texttt{SwingView} elements. However for the \texttt{CliView} as there is significantly less code required to create visual elements, I opted to keep the Controllers within the class, as separating them would only make using it more cumbersome. 
 
 \subsection{Graphical User Interface Design}
 
-I have separated the Class Diagrams for the design of the Graphical User Interface into several diagrams:
-\begin{itemize}
-\item Figure \ref{CreatorClassDiagram} (Page \pageref{CreatorClassDiagram}): The graphical aspects of the creator window
-\item Figure \ref{RunnerClassDiagram} (Page \pageref{RunnerClassDiagram}): The graphical aspects of the playback window
-\item Figure \ref{TemplateClassDiagram} (Page \pageref{TemplateClassDiagram}): The relationship between template classes and classes that extend them
-\end{itemize}
+A loose design was provided for us in the brief, both for Swing and Cli, however the brief said `might look like', so some creative freedom was implied. I decided to simplify the design to make it slightly more user friendly, my initial designs were as follows:
 
 \begin{figure}[H]
 \centering
-%includegraphics[scale=0.25]{CreatorClassDiagram}
-\caption{Creator GUI Class Diagram}
-\label{CreatorClassDiagram}
+\includegraphics[scale=0.5]{./res/SwingViewDesign.png}
+\caption{Swing View Initial Design}
+\label{SwingView}
+\end{figure}
+
+The File menu will hold options for loading and saving the dictionary file, Edit will hold options for adding and deleting words from the game, as well as viewing a list of phrases and words in the game, and lastly Game will hold options for abandoning the game or getting hints.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{./res/CliViewDesign.png}
+\caption{Command Line Initial Design}
+\label{CliView}
+\end{figure}
+
+The majority of funtionality from the SwingView will be present, but in a purely text based environment. When not in game, the user will be able to access help, the word list, add and remove words, save and reload the dictionary etc. whilst in game the user will only be able to make guesses to the current game.
+
+The finished UI looked as follows
+
+\begin{landscape}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{./res/CliView.png}
+\caption{Command Line}
+\label{CliViewFinished}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-%includegraphics[scale=0.25]{RunnerClassDiagram}
-\caption{Runner GUI Class Diagram}
-\label{RunnerClassDiagram}
+\includegraphics[scale=0.5]{./res/SwingView.png}
+\caption{Swing View}
+\label{SwingViewFinished}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{TemplateClassDiagram}
-\caption{Template GUI Class Diagram}
-\label{TemplateClassDiagram}
-\end{figure}
-
-There are several template classes that I have written. These provide methods that are common to both the Creator and Runner windows.
-
-\vspace{\baselineskip}
-
-\texttt{TemplateMenuBar} provides methods to conveniently create JMenus and JMenuItems with one or more of the following : a label, optional icon (which takes the file path and automatically marks it as a resource so it's included in a jar file), optional shortcut key (for keyboard menu navigation), and an optional global shortcut key (e.g. \texttt{Ctrl+X}). It also attaches an ActionListener to the newly created item.
-
-\texttt{TemplateToolBar} provides a method to conveniently create a JButton with an icon for use in tool bars. It marks the specified image as a resource, so it is included in a jar file.
-
-\texttt{TemplateAnimationPanel} provides a JPanel which has pre-made methods to draw an \texttt{Animation} (which is part of the panel) to the screen, and some methods to interact with the \texttt{Animation}.
-
-\texttt{TemplateFrame} provides a JFrame with some common preferences (such as setting the size, location and title of the window pre-programmed in the constructor.
-
-\vspace{\baselineskip}
-
-\texttt{CreatorMenuBar} and \texttt{RunnerMenuBar} both extend \texttt{TemplateMenuBar}. They contain the JMenu and JMenuItems for the the appropriate menu, and a overridden \texttt{actionPerformed} method.
-
-\texttt{CreatorToolBar} and \texttt{RunnerToolBar} both extent \texttt{TemplateToolBar}. They contain the JButton objects they need, and a overridden \texttt{actionPerformed} method.
-
-\texttt{CreatorAnimationPanel} and \texttt{RunnerAnimationPanel} both extend \texttt{TemplateAnimationPanel}. \texttt{CreatorAnimationPanel} contains methods that provide graphical assistance for functions such as opening and saving an \texttt{Animation}, creating and deleting frames, and opening the runner window. \texttt{RunnerAnimationPanel} contains methods for controlling the animation speed, and starting and stopping the animation.
-
-\texttt{CreatorFrame} and \texttt{RunnerFrame} extend \texttt{TemplateFrame}, and each add a \texttt{CreatorPanel} and \texttt{RunnerPanel} to themselves and display it. With \texttt{RunnerPanel}, the \texttt{Animation} model is passed through from \texttt{CreatorPanel}.
-
-\texttt{HTMLFrame} is a stand-alone JFrame which displays a HTML file to the user. It can also be supplied with an argument for the window title, as well as a custom width or height. This is used to display a simple help screen for each window, as well as an about screen for the application.
-
-\texttt{BlockmationSuite} contains the main method which launches the application. It simply creates tells the Swing Event Dispatch Thread to create a new \texttt{CreatorFrame}, and from there the rest of the GUI is spawned.
-
-\subsection{Algorithm Design}
-
-Here I will design a few of the larger algorithms for my application, focusing on non-graphical aspects. These are done in pseudo-code, so will not be syntactically correct, but will hopefully give a clear picture of what the algorithm will do.
-
-\subsubsection{File Loading}
-
-
-\begin{quotation}
-\begin{tt}
-
-fileContents $\rightarrow$ new StringBuilder \par
-open file \par
-numberOfFrames $\rightarrow$ file.nextInteger \par
-frameSize $\rightarrow$ file.nextInteger \par
-linesToReadFromFile $\rightarrow$ numberOfFrames * frameSize \par
-for i = 1 to linesToReadFromFile do \par
-{\addtolength{\leftskip}{5mm} line $\rightarrow$ file.nextLine \par}
-{\addtolength{\leftskip}{5mm} fileContents.add(line) \par}
-end for \par
-lengthOfEachFrame $\rightarrow$ frameSize * frameSize \par
-stringLength $\rightarrow$ numberOfFrames * lengthOfEachFrame \par
-if length of fileContents not equal to stringLength \par
-{\addtolength{\leftskip}{5mm} throw error \par}
-end if \par
-for i = 0 to numberOfFrames - 1\par
-{\addtolength{\leftskip}{5mm} startPos $\rightarrow$ lengthOfEachFrame * i  \par}
-{\addtolength{\leftskip}{5mm} endPos $\rightarrow$ startPos + lengthOfEachFrame \par}
-{\addtolength{\leftskip}{5mm} frameString $\rightarrow$ fileContents.subString(startPos to endPost)\par}
-{\addtolength{\leftskip}{5mm} animation.addFrame(frameString) \par}
-end for \par
-close file \par
-
-\end{tt}
-\end{quotation}
-
-This algorithm will read in the number of frames and size of each frame and store them in local variables. It will then calculate the number of lines it needs to read from the file, and read that number of lines, adding them all to a StringBuilder to produce a long string. Then, for the number of frames it's read in, it will it take a substring from the stringbuilder of the correct length and in the correct position, and will then add a \texttt{Frame}, supplying the substring as an argument. The code in the \texttt{Frame} class will then process that string.
-
-\subsubsection{File Saving}
-
-\begin{quotation}
-\begin{tt}
-
-open file \par
-file.write(animation.numberOfFrames) \par
-file.write(animation.frameSize) \par
-for each Frame f in animation.frames \par
-{\addtolength{\leftskip}{5mm} file.write(f.toString) \par}
-end for \par
-close file \par
-
-\end{tt}
-\end{quotation}
-
-This algorithm simply writes the number of frames and frame size to the file, then writes each frames String representation one after the other. The string representation returns a block of characters matching the format defined in the specification.
-
-\subsubsection{New Frame}
-
-\begin{quotation}
-\begin{tt}
-
-charsInFrame $\rightarrow$ frameSize * frameSize \par
-characterArray $\rightarrow$ new array of chars[length charsInFrame]\par
-characterArray.fillwithCharacter('b') \par
-frameDataString $\rightarrow$ characterArray.toString \par
-addFrame(position, frameDataString) \par
-
-\end{tt}
-\end{quotation}
-
-This algorithm creates a new blank frame at a certain position. Because the \texttt{addFrame} method takes a String as an argument, this algorithm generates an array of characters, fills that array with the character for the background colour, and converts it to a String which is then used. To duplicate a frame, the following would need to be done:
-
-\begin{quotation}
-\begin{tt}
-
-addFrame(position, currentFrame.toString) \par
-
-\end{tt}
-\end{quotation}
-
-
-
-\subsubsection{Other Algorithms}
-
-The algorithms that are required for the other requirements of my application are fairly trivial. For example, to move to the next frame only two lines of code are needed:
-
-\begin{quotation}
-\begin{tt}
-
-animation.currentFrame = animation.currentFrame + 1 \par
-repaint \par
-
-\end{tt}
-\end{quotation}
-
-Other operations, such as zooming in and out and controlling the animation speed, also just rely on setting variables and repainting the screen.
-
-\newpage
-
+\end{landscape}
 \section{Testing}
 
-\subsection{Creator Window Tests}
-\begin{tabulary}{1\textwidth}{|C|C|L|L|L|C|L|}
+\subsection{Model Testing}
+
+These tests were done using the JUnit testing framework. The Input column depicts what the word being guessed was set to. see the \ref{JUnitTests} (Page \pageref{JUnitTests}) screenshot.
+
+\begin{landscape}
+
+\begin{tabulary}{1\textwidth}{|L|p{10cm}|p{5cm}|p{5cm}|C|}
 \hline
-\textbf{ID} & \textbf{Requirement} & \textbf{Description} & \textbf{Input} & \textbf{Expected Output} & \textbf{Pass or Fail} & \textbf{See Figure} \\
+\textbf{ID} & \textbf{Description} & \textbf{Input} & \textbf{Expected Output} & \textbf{Pass or Fail} \\
 \hline
-1 & \multirow{4}{*}{1f} & \multirow{4}{3cm}{Create a new animation of a specified size} & Size: 0 & Should display error message and not create animation & Pass & \ref{CreatorScreenshot1}, \ref{CreatorScreenshot2} \\
-\cline{1-1}
-\cline{4-7}
-2 & & & Size: 1 & Should create a new animation with size 1  & Pass & \ref{CreatorScreenshot3}, \ref{CreatorScreenshot4} \\
-\cline{1-1}
-\cline{4-7}
-3 & & & Size: 50 & Should create a new animation with size 50  & Pass & \ref{CreatorScreenshot5}, \ref{CreatorScreenshot6} \\
-\cline{1-1}
-\cline{4-7}
-4 & & & Size: 51 & Should display error message and not create animation  & Pass & \ref{CreatorScreenshot7}, \ref{CreatorScreenshot2} \\
+1 & getVisible returns whole word & `a right skallywag' & `a right skallywag' & Pass \\
 \hline
-5 & \multirow{2}{*}{1g} & \multirow{2}{2cm}{Open an existing animation from file} & A valid animation file (scotty.txt) & Should load the animation correctly & Pass & \ref{CreatorScreenshot8}, \ref{CreatorScreenshot9} \\
+2 & \multirow{4}{10cm}{getHidden returns correct value with the word containing spaces, special characters and with no and some guesses made} & `arrrrrrgh!' & `**********' & Pass \\
 \cline{1-1}
-\cline{4-7}
-6 & & & An invalid animation file & Should display an error & Pass & \ref{CreatorScreenshot10}, \ref{CreatorScreenshot11} \\
+\cline{3-5}
+3 & & `antiscurvy machine' & `********** *******' & Pass \\
+\cline{1-1}
+\cline{3-5}
+4 & & `starbord!' with guessed charc `s' and `r' & `s**r**r**' & Pass \\
+\cline{1-1}
+\cline{3-5}
+5 & & `livin' and dead alike shall bow before the great cap'n freeman' & guesse chars `a', `b', `c' & Pass \\
 \hline
-7 & 1h & Save the current animation to a file & test.txt & Should save the animation correctly to test.txt & Pass & \ref{CreatorScreenshot12}, \ref{CreatorScreenshot13} \\
+6 & guess correct and incorrect are registered correctly & `land lubber' with guessed chars `a', `b', `c' & 9 & Pass \\
 \hline
-8 & \multirow{3}{*}{1b} & \multirow{3}{2cm}{Insert a new blank frame into the animation} & Create new frame before current & \multirow{3}{4cm}{Create new blank frame in appropriate place} & Pass & \ref{CreatorScreenshot15}, \ref{CreatorScreenshot16} \\
-\cline{1-1}
-\cline{4-4}
-\cline{6-7}
-9 & & & Create new frame after current & & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot17} \\
-\cline{1-1}
-\cline{4-4}
-\cline{6-7}
-10 & & & Create new frame at end & & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot17} \\
+7 & getLetters returns all letters guessed, correct or incorrect, excluding repeat entries & `antiscurvy machine' with guessed chars `a', `b', `c', `d' & `a,b,c,d,' & Pass \\
 \hline
-11 & \multirow{3}{*}{1c} & \multirow{3}{2cm}{Duplicate an existing frame in the animation} & Duplicate frame before current & \multirow{3}{4cm}{Duplicate frame in appropriate place} & Pass & \ref{CreatorScreenshot15}, \ref{CreatorScreenshot16} \\
+8 & \multirow{4}{10cm}{try char guess with upper and lower case letters and special characters} & `ahoythar' with guessed char `a' & True & Pass \\
 \cline{1-1}
-\cline{4-4}
-\cline{6-7}
-12 & & & Duplicate frame after current & & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot15} \\
+\cline{3-5}
+9 & & `meharties' with guessed char `H' & True & Pass \\
 \cline{1-1}
-\cline{4-4}
-\cline{6-7}
-13 & & & Duplicate frame at end & & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot15} \\
+\cline{3-5}
+10 & & `arrrrrrgh!' with guessed char `!' & True & Pass \\
+\cline{1-1}
+\cline{3-5}
+11 & & `arrrrrrgh!' with guessed char `\%' & False & Pass \\
 \hline
-14 & \multirow{2}{*}{1d} & \multirow{2}{2cm}{Delete the current frame of the animation} & Delete current frame button clicked (2 frames) & Current frame is deleted and animation moves to previous frame & Pass & \ref{CreatorScreenshot15}, \ref{CreatorScreenshot14}\\
+12 & \multirow{3}{10cm}{try word with uppercase and lowercase, with and without spaces and special chars} & `freeman' with guessed word `freeman' & True & Pass \\
 \cline{1-1}
-\cline{4-7}
-15 & & & Delete current frame button clicked(1 frame) & Frame is not deleted & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot14}\\
-\hline
-16 & \multirow{2}{*}{1e} & \multirow{2}{3cm}{Move between frames of the animation} & Move to previous frame & Animation moves to the previous frame & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot18} \\
+\cline{3-5}
+13 & & `livin' and dead alike shall bow before the great Cap'n Freeman' with guessed word `livin' and dead alike shall bow before the great cap'n freeman' & True & Pass \\
 \cline{1-1}
-\cline{4-7}
-17 & & & Move to next frame & Animation moves to the next frame & Pass & \ref{CreatorScreenshot14}, \ref{CreatorScreenshot18}\\
+\cline{3-5}
+14 & & `starbord' with guessed word `STARBORD' & True & Pass \\
 \hline
 \end{tabulary}
 
-Some screenshots are reused, at the appearance of the application is identical at various points.
+\begin{tabulary}{1\textwidth}{|L|p{10cm}|p{5cm}|p{5cm}|C|}
+\hline
+\textbf{ID} & \textbf{Description} & \textbf{Input} & \textbf{Expected Output} & \textbf{Pass or Fail} \\
+\hline
+15 & try word with uppercase and lowercase, with and without spaces and special chars & `antiscurvy machine' with guessed word `AnTiScUrVy MaChInE' & True & Pass \\
+\hline
+16 & guess with whole word completes the game & `ahoy' with guess `ahoy' & True & Pass \\
+\hline
+17 & guess with all letters completes the game & `ye' with guessed chars `y' and `e' & True & Pass \\
+\hline
+18 & guess with wrong word does not complete the game & `aft' with guessed word `asdf' & False & Pass \\
+\hline
+19 & guess with some letters does not complete the game & `peglegg' with guesses `p' and `e' & False & Pass \\
+\hline
+20 & tests if the game is considered over if 10 wrong guesses are made & `XYZ' with guessed chars `A' through `J' & True & Pass \\
+\hline
+21 & tests if the game is considered over if only one guessed char is made & `wheresTheRumGone?' with guessed char `p' & False & Pass \\
+\hline
+22 & tests if the game is considered over if a word is guessed & `isTheRumGone?' with guessed word `theRumsGoneJack!' & False & Pass \\
+\hline
+23 & checks fails are tallied correctly & `well blow me down!' with guessed word `blow me down!' and guessed char `p' & 2 & Pass \\
+\hline
 
-\newpage
 
-\subsection{Runner Window Tests}
-\begin{tabulary}{1\textwidth}{|C|C|L|L|L|C|L|}
-\hline
-\textbf{ID} & \textbf{Requirement} & \textbf{Description} & \textbf{Input} & \textbf{Expected Output} & \textbf{Pass or Fail} & \textbf{See Figure} \\
-\hline
-18 & 2a & Run the animation & Run button clicked & Animation starts & Pass & \ref{RunnerScreenshot1}, \ref{RunnerScreenshot3} \\
-\hline
-19 & 2b & Stop the animation & Pause button clicked & Animation pauses & Pass & \ref{RunnerScreenshot3}, \ref{RunnerScreenshot1} \\
-\hline
-20 & \multirow{2}{*}{2c} & \multirow{2}{2cm}{Move between frames} & Move to previous frame & Animation moves to the previous frame & Pass & \ref{RunnerScreenshot2}, \ref{RunnerScreenshot1} \\
-\cline{1-1}
-\cline{4-7}
-21 & & & Move to next frame & Animation moves to the next frame & Pass & \ref{RunnerScreenshot1}, \ref{RunnerScreenshot2} \\
-\hline
-22 & \multirow{2}{*}{5} & \multirow{2}{2cm}{Zoom in and out of the animation} & Zoom In button clicked & Animation is enlarged & Pass & \ref{RunnerScreenshot1}, \ref{RunnerScreenshot4} \\
-\cline{1-1}
-\cline{4-7}
-23 & & & Zoom Out button clicked & Animation made smaller & Pass & \ref{RunnerScreenshot4}, \ref{RunnerScreenshot1} \\
-\hline
+
 \end{tabulary}
-
-Some screenshots are reused, at the appearance of the application is identical at various points.
-
-\subsection{JUnit Tests}
 
 \begin{figure}[H]
 \centering
-%includegraphics[scale=0.6]{JUnitTests}
+\includegraphics[scale=0.5]{./res/tests.png}
 \caption{JUnit Testing Screenshot}
 \label{JUnitTests}
 \end{figure}
+
+\end{landscape}
 
 Figure \ref{JUnitTests} shows the results of my JUnit test suite. There are three JUnit classes within the suite: One for the \texttt{Animation} class, one for the \texttt{Frame} class, and one for the \texttt{Square} class.
 
@@ -375,182 +253,44 @@ Figure \ref{JUnitTests} shows the results of my JUnit test suite. There are thre
 
 For this assignment I would give myself a mark of \textbf{71/100}, which translates to an \textbf{A grade}.
 
-I believe this mark is an accurate representation of the amount of work I have put into the assignment. I have spent around 40 hours in total, including the original Analysis and Design, the implementation, and the testing.
+I believe this mark is an accurate representation of the amount of work I have put into the assignment. I would estimate I have spent over 40 hours in total on this project, including design, research, implementation, testing/debugging and documentation.
 
-I feel I have created a robust, maintainable and extendible implementation of the specification. I feel that my solution makes very good use of objects and object-orientated paradigms such as the Model-view-controller design pattern, especially when it comes to my underlying model. I am also very happy with the design and layout of my graphical user interface, and think it looks very professional, although if this assignment were larger, I would have liked to implement additional features.
-
-Some of these features include support for more than the default three colours, and using Swing features such as a JColorChooser to provide a configurable palette, paired with an algorithm which would prompt the user to choose a new colour whenever a new character is read in. Another feature could be to dynamically resize an animation and stretch the contents to fit, and to allow the user to rotate frames.
+I feel my solution to this problem is for the most part maintainable and expendable. I would have preferred to stick more closely to the principles of MVC. 
 
 I feel I could have improved 
 
+\subsection{Running instructions}
+
+For best results, run the jar:
+
+If the dictionary is in the same directory as the jar file, then simply use
+\begin{quote}
+\$ java -jar DrownTheScurvyDog.jar
+\end{quote}
+
+else use:
+\begin{quote}
+\$ java -jar DrownTheScurvyDog.jar \textless path for dictionary.json\textgreater
+\end{quote}
+
+To run the source directly, use
+\begin{quote}
+\$ java -classpath bin/:lib/gson-2.2.4.jar Nic.Dart.Main
+\end{quote}
+
+
+
+
 \vspace{\baselineskip}
 
-Whilst completing this assignment, I have increased my knowledge and experience in developing Java Swing applications, especially with drawing custom objects to the screen. I have also gained a lot of background knowledge on threading within applications, and feel this knowledge will be of use in future projects, and that the concepts I have learnt can also be applied to other programming languages.
+Whilst completing this assignment, I have increased my knowledge and experience in developing Java Swing applications, use and implementation of the MVC programming paradigm and the appropriate use of packages to separate out classes/files.
+\section{External resources used}
 
-\newpage
-
-\begin{appendix}
-
-\section{Testing Screenshots}
-
-\begin{multicols}{2}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.4]{CreatorScreenshot1}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.4]{CreatorScreenshot2}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot2}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.4]{CreatorScreenshot3}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot3}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.3]{CreatorScreenshot4}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot4}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.4]{CreatorScreenshot5}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot5}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot6}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot6}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.4]{CreatorScreenshot7}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot7}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.3]{CreatorScreenshot8}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot8}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot9}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot9}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.3]{CreatorScreenshot10}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot10}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.3]{CreatorScreenshot11}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot11}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.3]{CreatorScreenshot12}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot12}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot13}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot13}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot14}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot14}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot15}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot15}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot16}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot16}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot17}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot17}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{CreatorScreenshot18}
-\caption{Testing Screenshot}
-\label{CreatorScreenshot18}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{RunnerScreenshot1}
-\caption{Testing Screenshot}
-\label{RunnerScreenshot1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{RunnerScreenshot2}
-\caption{Testing Screenshot}
-\label{RunnerScreenshot2}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{RunnerScreenshot3}
-\caption{Testing Screenshot}
-\label{RunnerScreenshot3}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%includegraphics[scale=0.2]{RunnerScreenshot4}
-\caption{Testing Screenshot}
-\label{RunnerScreenshot4}
-\end{figure}
-
-\end{multicols}
-
-\end{appendix}
+\begin{enumerate}
+\item Google's Gson library for parsing, reading and producing Json \url{https://code.google.com/p/google-gson/}
+\item IDEA's Intellij IDEA (instead of eclipse) \url{http://www.jetbrains.com/idea/} 
+\item Lecture presentations and worksheets on Blackboard
+\item GenMyModel for UML/Class/Package diagrams \url{https://app.genmymodel.com/}
+\end{enumerate}
 
 \end{document}
