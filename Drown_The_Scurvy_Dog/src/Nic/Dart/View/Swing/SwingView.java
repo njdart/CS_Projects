@@ -10,11 +10,11 @@ public class SwingView extends JFrame implements PirateView{
 
 	private static final long serialVersionUID = 1L;
 
-    private static GameModel model;
-	private static InputPanel ip;
+    private GameModel model;
+	private InputPanel ip;
 	private MenuBar mb;
-    private static Gallows g;
-	private static WordViewer wv;
+    private Gallows g;
+	private WordViewer wv;
 	
 	public SwingView(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,7 +38,7 @@ public class SwingView extends JFrame implements PirateView{
         this.setVisible(true);
     }
 
-    public static void setInGame() {
+    public void setInGame() {
         wv.setVisible(false);
         model.setInGame(true);
         ip.initGame();
