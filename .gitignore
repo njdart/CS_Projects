@@ -31,3 +31,10 @@ META-INF
 *.log
 *.pdf
 *.toc
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+
+#vim derps
+*.swp
