@@ -5,6 +5,7 @@ import Nic.Dart.Main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeSet;
 
@@ -263,5 +264,18 @@ public class GameModel implements GameModelInterface{
 
     public void createDict(File file) throws FileNotFoundException, IOException{
         phraseBook = GameDictionaryReader.createDictionary(file);
+    }
+
+    public Character giveHint() {
+        LinkedList<Character> unusedChars = new LinkedList<Character>();
+
+        for(Character c: word.toLowerCase().toCharArray())
+            if(!guessedChars.contains(c))
+                unusedChars.add(c);
+
+        if(unusedChars.size() > 0) {
+            ++fails;
+            return unusedChars.get(new Random().nextInt(unusedChars.size()));
+        } else return null;
     }
 }

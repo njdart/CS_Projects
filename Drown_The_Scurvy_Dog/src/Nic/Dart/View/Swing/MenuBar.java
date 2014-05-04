@@ -28,16 +28,19 @@ public class MenuBar extends JMenuBar {
     //game menu items
     private JMenuItem abandonGame = new JMenuItem("Abandon");
     private JMenuItem revealAnswer = new JMenuItem("Reveal Answer");
+    private JMenuItem hint = new JMenuItem("Hint");
 
     private GameModel model;
     private SwingView view;
     private WordViewer wordViewer;
-	
-	public MenuBar(GameModel model, SwingView view, WordViewer wordViewer){
+	private InputPanel inputPanel;
+
+	public MenuBar(GameModel model, SwingView view, WordViewer wordViewer, InputPanel inputPanel){
 		super();
         this.model = model;
         this.view = view;
         this.wordViewer = wordViewer;
+        this.inputPanel = inputPanel;
 
 		this.add(file);
 		this.add(edit);
@@ -54,14 +57,18 @@ public class MenuBar extends JMenuBar {
 		edit.add(showWords);
         game.add(abandonGame);
         game.add(revealAnswer);
+        game.add(hint);
 
 		newPb.addActionListener(new NewPhraseBookListener(model, view));
-		addWord.addActionListener(new AddWordMenuItem(model));
-		deleteWord.addActionListener(new RemoveWordMenuItem(model));
+		addWord.addActionListener(new AddWordMenuItem(model, view));
+		deleteWord.addActionListener(new RemoveWordMenuItem(model, view));
 		showWords.addActionListener(new WordViewerListener(model, view, wordViewer));
-		save.addActionListener(new SaveDictionaryListener(model));
-		reload.addActionListener(new ReloadDictionaryListener(model));
-		load.addActionListener(new LoadDictionaryListener(model));
+		save.addActionListener(new SaveDictionaryListener(model, view));
+		reload.addActionListener(new ReloadDictionaryListener(model, view));
+		load.addActionListener(new LoadDictionaryListener(model, view));
+        abandonGame.addActionListener(new AbandonGameListener(model, view));
+        revealAnswer.addActionListener(new RevealAnswerListener(model, view));
+        hint.addActionListener(new HintListener(model, view, inputPanel));
 		
 		exit.addActionListener(new ActionListener() {
 			

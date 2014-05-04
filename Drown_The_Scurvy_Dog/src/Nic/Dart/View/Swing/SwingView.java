@@ -27,8 +27,8 @@ public class SwingView extends JFrame implements PirateView{
 
         g = new Gallows(model.getLives(), model);
         wv = new WordViewer(model);
-        ip = new InputPanel(model, this, ip, g);
-        mb = new MenuBar(model, this, wv);
+        ip = new InputPanel(model, this, g);
+        mb = new MenuBar(model, this, wv, ip);
 
         this.add(mb, BorderLayout.NORTH);
         this.add(ip, BorderLayout.CENTER);
@@ -42,5 +42,10 @@ public class SwingView extends JFrame implements PirateView{
         wv.setVisible(false);
         model.setInGame(true);
         ip.initGame();
+    }
+
+    public void abandonGame() {
+        ip.reset();
+        model.setInGame(false);
     }
 }

@@ -23,7 +23,7 @@ public class WordViewerListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
         if(!viewer.showViewer(model.getPhraseBook(), model))
-            JOptionPane.showMessageDialog(null, "That would be cheating!");
+            JOptionPane.showMessageDialog(view, "That would be cheating!");
 	}
 
 }

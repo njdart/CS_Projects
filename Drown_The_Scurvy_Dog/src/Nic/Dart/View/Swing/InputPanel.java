@@ -17,14 +17,12 @@ public class InputPanel extends JPanel {
 	private JLabel usedLetters = new JLabel();
     private GameModel model;
     private SwingView view;
-    private InputPanel inputPanel;
     private Gallows gallows;
 
-	public InputPanel(GameModel model, SwingView view, InputPanel inputPanel, Gallows gallows){
+	public InputPanel(GameModel model, SwingView view, Gallows gallows){
 		super();
         this.model = model;
         this.view = view;
-        this.inputPanel = inputPanel;
         this.gallows = gallows;
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.setLayout(new GridLayout(2,2,10,10));
@@ -40,6 +38,7 @@ public class InputPanel extends JPanel {
 
 		output.setText("y*a**");
 		usedLetters.setText("ABCDY");
+        reset();
 		usedLetters.setAlignmentX(CENTER_ALIGNMENT);
 		usedLetters.setAlignmentY(CENTER_ALIGNMENT);
 
@@ -81,11 +80,13 @@ public class InputPanel extends JPanel {
         if(model.isGameOver()){
             JOptionPane.showMessageDialog(this, "You ran out of lives! The word was " + model.getVisible() + ".\nBetter luck next time!");
             model.setInGame(false);
+            reset();
             setInGame(false);
         }
         else if(model.isCompletedWord()){
             JOptionPane.showMessageDialog(this, "Congratulations! You won in " + model.getGuesses() + " guesses! (" + model.getFails() + " incorrect guesses)");
             model.setInGame(false);
+            reset();
             setInGame(false);
         }
     }
@@ -93,8 +94,16 @@ public class InputPanel extends JPanel {
     public void initGame() {
         guessBtn.setText(model.guessLeft() + " Lives Left");
         usedLetters.setText("");
-        output.setText("");
         output.setText(model.getHidden());
         guess.setEditable(true);
+    }
+
+    public void reset() {
+        guessBtn.setText("Begin");
+        guess.setEditable(false);
+        output.setText("");
+        usedLetters.setText("");
+
+
     }
 }
