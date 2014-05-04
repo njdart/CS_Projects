@@ -10,16 +10,16 @@ import java.util.TreeSet;
 
 public class GameModel implements GameModelInterface{
 	
-	private static String word;
-	private static int fails = 0;
-	private static final int lives = 10;
-	private static TreeSet<Character> guessedChars = new TreeSet<Character>();
-	private static boolean inGame = false;
-	private static String visible;
-    private static PhraseBook phraseBook;
-    private static File dictionaryFile;
-    private static int guesses = 0;
-    private static boolean isComplete = false;
+	private String word;
+	private int fails = 0;
+	private final int lives = 10;
+	private TreeSet<Character> guessedChars = new TreeSet<Character>();
+	private boolean inGame = false;
+	private String visible;
+    private PhraseBook phraseBook;
+    private File dictionaryFile;
+    private int guesses = 0;
+    private boolean isComplete = false;
 
     /**
      * The game model, contains methods for searching strings,
@@ -36,6 +36,7 @@ public class GameModel implements GameModelInterface{
             this.phraseBook = GameDictionaryReader.readDictionary(getRootDictionary());
         } catch (FileNotFoundException e){
             System.out.println("ERROR: Dictionary could not be found!");
+            System.exit(1);
         }
     }
 
@@ -54,16 +55,10 @@ public class GameModel implements GameModelInterface{
     }
 
     /**
-     * Takes a file as the dictionary
-     * @param dict
-     */
-    public GameModel(File dict){ this.dictionaryFile = dict; }
-
-    /**
      * tries to get the location of the runtime
-     * @return
+     * @return Absolute file of the dictionary file
      */
-    private static File getRootDictionary() {
+    private File getRootDictionary() {
         File dictionaryFile;
         String runtimeLocation = Main.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path
         //System.out.println("Running from : " + runtimeLocation);
@@ -76,6 +71,10 @@ public class GameModel implements GameModelInterface{
         dictionaryFile = new File(runtimeLocation + "/dictionary.json");
         //System.out.println("\tAssuming dictionary at : " + dictionaryFile.toString());
         return dictionaryFile;
+    }
+
+    public int getLives() {
+        return lives;
     }
 
     public int getGuesses() {
@@ -169,14 +168,20 @@ public class GameModel implements GameModelInterface{
 
     public void createDict() {
         dictionaryFile = getRootDictionary();
-        GameDictionaryReader.createDictionary(dictionaryFile);
+        try {
+            GameDictionaryReader.createDictionary(dictionaryFile);
+        } catch (FileNotFoundException e){
+            System.out.println("Error, file not found!");
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     public boolean isInGame() {
 		return inGame;
 	}
 
-	public static void setInGame(boolean state) {
+	public void setInGame(boolean state) {
 		inGame = state;
         if(state) {
             //System.out.println("Starting game with word " + word);
@@ -192,7 +197,7 @@ public class GameModel implements GameModelInterface{
         }
 	}
 
-    public static boolean getGameState() { return inGame; }
+    public boolean getGameState() { return inGame; }
 
     public PhraseBook getPhraseBook() {
         return phraseBook;
@@ -254,5 +259,9 @@ public class GameModel implements GameModelInterface{
 
     public int getFails() {
         return fails;
+    }
+
+    public void createDict(File file) throws FileNotFoundException, IOException{
+        phraseBook = GameDictionaryReader.createDictionary(file);
     }
 }

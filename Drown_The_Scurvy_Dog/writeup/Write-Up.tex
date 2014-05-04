@@ -44,13 +44,13 @@ After reading through the original specification, I have decided that the applic
 \item Play complete and abandon games
 \end{enumerate}
 \item Utilize a human readable storage format
-\item I have decided to use Json as the storage format as it is standardized notation/structure and is still human readable
+\item I have decided to use Json as the storage format as it is a standardized notation/structure and is still human readable
 \end{enumerate}
 
 As well as the above functional requirements, I have also established a number of aesthetic and non-functional requirements:
 
 \begin{enumerate}
-\setcounter{enumi}{2}
+\setcounter{enumi}{3}
 \item The graphical interfaces provided by the application should contain menu bars and tool bars, similar to a traditional WIMP application
 \begin{enumerate}
 \item The menus and menu items should be appropriately labeled
@@ -71,6 +71,7 @@ From the specification I can determine several factors about the environment my 
 \item The application will be run using Java 1.7 (OpenJDK 7) as OpenJDK8 is not available in the package repository of my operating system. 
 \item The application will be run on a platform which supports the Java Swing library
 \item I cannot assume what Operating System the application will be run on, therefore it should be compatible with all major Operating Systems: Windows, Macintosh OS X, and Linux
+\item The application could conceivably be run as a Jar
 \end{enumerate}
 
 \subsection{My Solution}
@@ -156,14 +157,9 @@ The finished UI looked as follows
 \label{SwingViewFinished}
 \end{figure}
 
-\end{landscape}
 \section{Testing}
 
 \subsection{Model Testing}
-
-These tests were done using the JUnit testing framework. The Input column depicts what the word being guessed was set to. see the \ref{JUnitTests} (Page \pageref{JUnitTests}) screenshot.
-
-\begin{landscape}
 
 \begin{tabulary}{1\textwidth}{|L|p{10cm}|p{5cm}|p{5cm}|C|}
 \hline
@@ -242,10 +238,6 @@ These tests were done using the JUnit testing framework. The Input column depict
 \end{figure}
 
 \end{landscape}
-
-Figure \ref{JUnitTests} shows the results of my JUnit test suite. There are three JUnit classes within the suite: One for the \texttt{Animation} class, one for the \texttt{Frame} class, and one for the \texttt{Square} class.
-
-\newpage
 
 \section{Evaluation}
 

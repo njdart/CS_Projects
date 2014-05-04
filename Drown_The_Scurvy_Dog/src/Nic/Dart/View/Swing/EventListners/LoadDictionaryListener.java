@@ -1,13 +1,18 @@
 package Nic.Dart.View.Swing.EventListners;
 
+import Nic.Dart.Model.GameModel;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import Nic.Dart.View.Swing.SwingView;
 
 public class LoadDictionaryListener implements ActionListener {
+
+    private GameModel model;
+
+    public LoadDictionaryListener(GameModel model){
+        this.model = model;
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -18,7 +23,7 @@ public class LoadDictionaryListener implements ActionListener {
 		if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 			fileAbsolute = chooser.getSelectedFile().getAbsolutePath();
 			fileRelative = chooser.getSelectedFile().getName();
-			if(SwingView.getModel().load(fileAbsolute))
+			if(model.load(fileAbsolute))
 				JOptionPane.showMessageDialog(null, "Successfully loaded the new file!" + fileRelative);
 			else JOptionPane.showMessageDialog(null, "Failed to load " + fileRelative);
 		}

@@ -20,13 +20,11 @@ public class GameDictionaryReader {
 		dictWriter.close();
 	}
 	
-	public static void createDictionary(File dict){
-		try {
-			new PrintWriter(dict, "UTF-8");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-	}
+	public static PhraseBook createDictionary(File dict) throws FileNotFoundException, IOException {
+        BufferedWriter dictWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dict)));
+        PhraseBook pb = new PhraseBook();
+        dictWriter.write(g.toJson(pb));
+        dictWriter.close();
+        return pb;
+    }
 }

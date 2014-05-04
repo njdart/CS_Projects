@@ -15,9 +15,17 @@ public class InputPanel extends JPanel {
 	private JLabel output = new JLabel();
 	private JButton guessBtn = new JButton();   //starts off saying "Begin"
 	private JLabel usedLetters = new JLabel();
+    private GameModel model;
+    private SwingView view;
+    private InputPanel inputPanel;
+    private Gallows gallows;
 
-	public InputPanel(){
+	public InputPanel(GameModel model, SwingView view, InputPanel inputPanel, Gallows gallows){
 		super();
+        this.model = model;
+        this.view = view;
+        this.inputPanel = inputPanel;
+        this.gallows = gallows;
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.setLayout(new GridLayout(2,2,10,10));
 		this.add(guess);
@@ -25,7 +33,7 @@ public class InputPanel extends JPanel {
 		this.add(usedLetters);
 		this.add(output);
 
-        GuessPhraseListener gpl = new GuessPhraseListener();
+        GuessPhraseListener gpl = new GuessPhraseListener(model, view, this, gallows);
 		
 		guessBtn.addActionListener(gpl);
 		guess.addActionListener(gpl);
@@ -54,7 +62,6 @@ public class InputPanel extends JPanel {
 
     public void guess(String guess){
         this.guess.setText("");
-        GameModel model = SwingView.getModel();
         boolean result;
         if(guess.length() < 1 || guess == null)
             return;
@@ -69,7 +76,7 @@ public class InputPanel extends JPanel {
         String message = "";
 
         if(!result)
-            SwingView.getGallows().update(model.getFails());
+            gallows.update(model.getFails());
 
         if(model.isGameOver()){
             JOptionPane.showMessageDialog(this, "You ran out of lives! The word was " + model.getVisible() + ".\nBetter luck next time!");
@@ -84,10 +91,10 @@ public class InputPanel extends JPanel {
     }
 
     public void initGame() {
-        guessBtn.setText(SwingView.getModel().guessLeft() + " Lives Left");
+        guessBtn.setText(model.guessLeft() + " Lives Left");
         usedLetters.setText("");
         output.setText("");
-        output.setText(SwingView.getModel().getHidden());
+        output.setText(model.getHidden());
         guess.setEditable(true);
     }
 }

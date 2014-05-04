@@ -11,6 +11,10 @@ public class Main {
 
     /**
      * main method.
+     *
+     * first argument should be either: a) the dictionary file to use with the swing view, or b) the
+     * --no-gui. if the latter is the case, --create can also be appended to create an empty dictionary
+     * file.
      * @param args none given will use a swing UI, and ask for inputs as needed. if --no-gui is used,
      * @throws FileNotFoundException
      */

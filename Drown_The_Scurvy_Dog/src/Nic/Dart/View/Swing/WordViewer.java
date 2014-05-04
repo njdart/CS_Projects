@@ -1,5 +1,6 @@
 package Nic.Dart.View.Swing;
 
+import Nic.Dart.Model.GameModel;
 import Nic.Dart.Model.PhraseBook;
 
 import javax.swing.*;
@@ -15,13 +16,14 @@ public class WordViewer extends JFrame {
 	private JPanel mainPanel = new JPanel();
 	private JPanel topPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
-    PhraseBook phraseBook;
+    private PhraseBook phraseBook;
+    private GameModel model;
 
     private boolean isInGame = false;
 
-	public WordViewer(PhraseBook phraseBook){
+	public WordViewer(GameModel model){
 		super("Word Viewer");
-
+        this.model = model;
         this.phraseBook = phraseBook;
 
 		setVisible(false);
@@ -45,12 +47,10 @@ public class WordViewer extends JFrame {
 		phrases.setEditable(false);
 		
 		this.setResizable(false);
-		
-		updateView();
 	}
 
-    public boolean show(PhraseBook phraseBook){
-        if(!SwingView.getModel().isInGame()) {
+    public boolean showViewer(PhraseBook phraseBook, GameModel model){
+        if(!model.isInGame()) {
             this.phraseBook = phraseBook;
             updateView();
             setVisible(true);

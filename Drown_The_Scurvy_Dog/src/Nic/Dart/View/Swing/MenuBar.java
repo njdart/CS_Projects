@@ -1,5 +1,6 @@
 package Nic.Dart.View.Swing;
 
+import Nic.Dart.Model.GameModel;
 import Nic.Dart.View.Swing.EventListners.*;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class MenuBar extends JMenuBar {
 	private JMenu edit = new JMenu("Edit");
     private JMenu game = new JMenu("Game");
 	//file menu items
+    private JMenuItem newPb = new JMenuItem("New Phrasebook");
 	private JMenuItem save = new JMenuItem("Save Phrasebook");
 	private JMenuItem load = new JMenuItem("Load Phrasebook");
 	private JMenuItem reload = new JMenuItem("Reload Phrasebook");
@@ -26,13 +28,22 @@ public class MenuBar extends JMenuBar {
     //game menu items
     private JMenuItem abandonGame = new JMenuItem("Abandon");
     private JMenuItem revealAnswer = new JMenuItem("Reveal Answer");
+
+    private GameModel model;
+    private SwingView view;
+    private WordViewer wordViewer;
 	
-	public MenuBar(){
+	public MenuBar(GameModel model, SwingView view, WordViewer wordViewer){
 		super();
+        this.model = model;
+        this.view = view;
+        this.wordViewer = wordViewer;
+
 		this.add(file);
 		this.add(edit);
         this.add(game);
-		
+
+        file.add(newPb);
 		file.add(save);
 		file.add(load);
 		file.add(reload);
@@ -43,13 +54,14 @@ public class MenuBar extends JMenuBar {
 		edit.add(showWords);
         game.add(abandonGame);
         game.add(revealAnswer);
-		
-		addWord.addActionListener(new AddWordMenuItem());
-		deleteWord.addActionListener(new RemoveWordMenuItem());
-		showWords.addActionListener(new WordViewerListener());
-		save.addActionListener(new SaveDictionaryListener());
-		reload.addActionListener(new ReloadDictionaryListener());
-		load.addActionListener(new LoadDictionaryListener());
+
+		newPb.addActionListener(new NewPhraseBookListener(model, view));
+		addWord.addActionListener(new AddWordMenuItem(model));
+		deleteWord.addActionListener(new RemoveWordMenuItem(model));
+		showWords.addActionListener(new WordViewerListener(model, view, wordViewer));
+		save.addActionListener(new SaveDictionaryListener(model));
+		reload.addActionListener(new ReloadDictionaryListener(model));
+		load.addActionListener(new LoadDictionaryListener(model));
 		
 		exit.addActionListener(new ActionListener() {
 			
