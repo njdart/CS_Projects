@@ -40,20 +40,27 @@ public class Gallows extends JPanel {
         reset();
 	}
 
+    /**
+     * updates the pirate on the gang plank.
+     * @param failedGuesses incorrect guesses
+     */
     public void update(int failedGuesses){
-        if(failedGuesses == lives)
+        /*if(failedGuesses == lives)
             doFailAnimation();
-        else {
+        else {*/
             pirateX = pirateStartingX - (failedGuesses * (plankLength / lives));
             pirateY = pirateStartingY; //this shouldnt need to change
             repaint();
-        }
+        //}
     }
 
     private void doFailAnimation() {
 
     }
 
+    /**
+     * resets the pirate to the starting position.
+     */
     public void reset(){
         pirateX = pirateStartingX;
         pirateY = pirateStartingY;
@@ -61,6 +68,10 @@ public class Gallows extends JPanel {
         repaint();
     }
 
+    /**
+     * required to make gallows take up as much space as needed
+     * @return preferred dimension
+     */
     public Dimension getPreferredSize() {
         return background == null ? super.getPreferredSize() : new Dimension(background.getWidth(), background.getHeight());
     }

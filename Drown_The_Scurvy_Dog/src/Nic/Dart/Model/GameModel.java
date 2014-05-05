@@ -55,10 +55,6 @@ public class GameModel implements GameModelInterface{
         }
     }
 
-    /**
-     * tries to get the location of the runtime
-     * @return Absolute file of the dictionary file
-     */
     private File getRootDictionary() {
         File dictionaryFile;
         String runtimeLocation = Main.class.getProtectionDomain().getCodeSource().getLocation().getFile();	//backtrace fo find teh runtime path

@@ -11,7 +11,7 @@ public class InputPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static JTextField guess = new JTextField();
+	private JTextField guess = new JTextField();
 	private JLabel output = new JLabel();
 	private JButton guessBtn = new JButton();   //starts off saying "Begin"
 	private JLabel usedLetters = new JLabel();
@@ -44,11 +44,20 @@ public class InputPanel extends JPanel {
 
         setInGame(false);
 	}
-	
-	public static String getGuessText(){
+
+    /**
+     * get the text in the input field
+     * @return text the user has typed in the input field
+     */
+	public String getGuessText(){
 		return guess.getText();
 	}
 
+    /**
+     * sets if the view is in game.
+     * does not call model.setInGame()
+     * @param state boolean state
+     */
     public void setInGame(boolean state){
         if(state) {
             guess.setEditable(true);
@@ -59,6 +68,11 @@ public class InputPanel extends JPanel {
         }
     }
 
+    /**
+     * wrapper for GameModel, determines if the user is trying
+     * to guess a word or letter and acts accordingly
+     * @param guess
+     */
     public void guess(String guess){
         this.guess.setText("");
         boolean result;
@@ -91,6 +105,9 @@ public class InputPanel extends JPanel {
         }
     }
 
+    /**
+     * initialises the view for a new game
+     */
     public void initGame() {
         guessBtn.setText(model.guessLeft() + " Lives Left");
         usedLetters.setText("");
@@ -98,12 +115,14 @@ public class InputPanel extends JPanel {
         guess.setEditable(true);
     }
 
+    /**
+     * resets the view to the uneditable state, and
+     * prepares for a new game. button will say "Begin"
+     */
     public void reset() {
         guessBtn.setText("Begin");
         guess.setEditable(false);
         output.setText("");
         usedLetters.setText("");
-
-
     }
 }

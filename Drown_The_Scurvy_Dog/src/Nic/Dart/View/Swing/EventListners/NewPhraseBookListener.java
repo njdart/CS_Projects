@@ -37,7 +37,7 @@ public class NewPhraseBookListener implements ActionListener {
             } catch (FileNotFoundException e){
                 JOptionPane.showMessageDialog(parent, "Error whilst creating file!");
             } catch (IOException ex){
-
+                ex.printStackTrace();
             }
         }
     }

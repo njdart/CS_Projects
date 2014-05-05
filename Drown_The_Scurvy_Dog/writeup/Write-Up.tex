@@ -28,7 +28,7 @@ The problem space for this assignment was defined in the original project specif
 This project is a variation of hangman. It involves programming both a text based, and a graphics based version of the same game. The graphics based version should be pirate themed. The words to be guessed must be pirate themed and must be read from the provided file called piratewords.txt that has the format (you can add to the phrases: see http://www.yarr.org.uk/talk/)
 \end{quote}
 
-I have defined the solution space to encompass the whole of the problem space, as well as to include some of the suggested advanced functionality and features of my own. This is because I believe I will be able to provide an accurate and reliable implementation of the application defined in the original specification and by providing additional functionality will not hinder the application's performance.
+I have defined the solution space to encompass the whole of the problem space, as well as to include some of the suggested advanced functionality and features of my own. This is as I believe I will be able to provide an accurate and reliable implementation of the application defined in the original specification and by providing additional functionality will not hinder the application's performance.
 
 \subsection{Application Requirements}
 
@@ -41,10 +41,10 @@ After reading through the original specification, I have decided that the applic
 \item Save, load or reload the dictionary file
 \item View all phrases and words
 \item View an animated representation of the game
-\item Play complete and abandon games
+\item Play, abandon and get hints for games
 \end{enumerate}
 \item Utilize a human readable storage format
-\item I have decided to use Json as the storage format as it is a standardized notation/structure and is still human readable
+\item I have decided to use Json as the storage format as it is a standardized notation/structure and is still human readable, I chose this over XML as Json is a more compact/less wasteful format.
 \end{enumerate}
 
 As well as the above functional requirements, I have also established a number of aesthetic and non-functional requirements:
@@ -54,11 +54,11 @@ As well as the above functional requirements, I have also established a number o
 \item The graphical interfaces provided by the application should contain menu bars and tool bars, similar to a traditional WIMP application
 \begin{enumerate}
 \item The menus and menu items should be appropriately labeled
-\item Menu Items should be placed under the relevant headings
+\item Menu items should be placed under the relevant headings
 \end{enumerate}
 \item There should be a status bar where guessed letters and the word to be guessed should be shown, along with an input box, submit button and number of lives left.
 \item The graphical interfaces should not have different input fields for a single character or whole word (as this is easily detected)
-\item The graphic display should take up the majority of the space, providing a large, picture or vector graphic based view of the state of the game
+\item The graphic/drawn display should take up the majority of the space, providing a large picture or vector graphic based view of the state of the game
 \end{enumerate}
 
 I have represented the requirements laid out above as a Use Case Diagram (\ref{UseCaseDiagram}) on page \pageref{UseCaseDiagram}.
@@ -68,19 +68,19 @@ I have represented the requirements laid out above as a Use Case Diagram (\ref{U
 From the specification I can determine several factors about the environment my implementation will be run in. I am also making several assumptions about the environment based on what information I haven't been told:
 
 \begin{enumerate}
-\item The application will be run using Java 1.7 (OpenJDK 7) as OpenJDK8 is not available in the package repository of my operating system. 
+\item The application will be run using Java 1.7 (OpenJDK 7) as OpenJDK8 is not available in the official package repository of my operating system. 
 \item The application will be run on a platform which supports the Java Swing library
 \item I cannot assume what Operating System the application will be run on, therefore it should be compatible with all major Operating Systems: Windows, Macintosh OS X, and Linux
-\item The application could conceivably be run as a Jar
+\item The application could conceivably be run as a Jar, with all resources packed into the Jar
 \end{enumerate}
 
 \subsection{My Solution}
 
-I plan on implementing a solution using MVC design patters, I considered using Observer/Observable but there is a two way exchange of data to/from the View which would make an Observer/Observable approach impracticable as the View and Model would both have to be an Observer and Observable of each other. This solution allows me to separate out the view from the underlying models/work to allow rewriting/changes/replacement of the view with minimal to no changes of the model. This also gives me the added easy implementation of the two Views specified in the brief. 
+I plan on implementing a solution using MVC design patters, I considered using Observer/Observable but there is a two way exchange of data to/from the View which would make an Observer/Observable approach impracticable as the View and Model would both have to be an Observer and Observable of each other. This solution allows me to separate out the view from the underlying models/work to allow rewriting/changes/replacement of the view with minimal changes of the model. This also gives me the added easy implementation of the two Views specified in the brief. 
 
-The controllers will be the EventListener for the Swing graphical view, but for the Command line view they will be rolled into the view, as there is little or need or practicality of separating out the controllers. 
+The controllers will be the EventListener for the Swing graphical view, but for the Command line view they will be rolled into the view, as there is little need or practicality of separating out the controllers. 
 
-My decision to use Json as the storage format instead of the provided format was to keep the data standardized and easy to manipulate by hand, the provided format was clumsy because editing it required you to add the desired elements and then edit the total number of elements in that section, whilst easy when adding/deleting in small numbers of words or phrases, or altering an existing word, larger numbers of additions/deletions would be more time consuming and would result in parsing errors if the number of words/phrases at the beginning was incorrect. 
+My decision to use Json as the storage format instead of the provided format was to keep the data standardized and easy to manipulate by hand, the provided format was clumsy as editing it required adding the desired elements and then editing the total number of elements in that section. Whilst easy when adding/deleting a small numbers of words or phrases, or altering an existing word, larger numbers of additions/deletions would be more time consuming and would result in parsing errors if the number of words/phrases at the beginning was incorrect. However, I have designed the reading/writing of the data in a separate class to allow it to be switched out later should it be necessary. 
 
 \begin{figure}[H]
 \centering
@@ -111,11 +111,11 @@ My decision to use Json as the storage format instead of the provided format was
 \label{ModelClassDiagram}
 \end{figure}
 
-Following MVC guidelines, I have split the views and the models up, in the \texttt{Main} class, the \texttt{Model} is created, and then passed to the \texttt{View} that the user has chosen. the \texttt{PirateView} interface contains one method; \texttt{addModel} which takes a \texttt{Model} and associates it with the view. I designed it this way so the view can retrieve data from the model when necessary, as there is no need for the model to notify the \texttt{View} of a change as changes only happen when new data has been entered, and the \texttt{View} can then make method calls to the \texttt{Model} to do guesses. 
+Following MVC guidelines, I have split the views and the models up. In the \texttt{Main} class, the \texttt{Model} is created, and then passed to the \texttt{View} that the user has chosen. The \texttt{PirateView} interface contains one method: \texttt{addModel}, which takes a \texttt{Model} and associates it with the view. I designed it this way so the view can retrieve data from the model when necessary, as there is no need for the model to notify the \texttt{View} of a change, as changes only happen when new data has been entered, and the \texttt{View} can then make method calls to the \texttt{Model} to do guesses.
 
-The \texttt{PhraseBook} class holds the associated pirate words and phrases, it is the thing that is (de)serialized to/from Json in the dictionary.json file. The \texttt{DictionaryReader} class only serves to read from a file and return a \texttt{PhraseBook} object, or take a \texttt{PhraseBook} object and a file location and serialize and write the \texttt{PhraseBook} to Json.
+The \texttt{PhraseBook} class holds the associated pirate words and phrases, it is the object that is (de)serialized to/from Json in the dictionary.json file. The \texttt{DictionaryReader} class only serves to read from a file and return a \texttt{PhraseBook} object, or take a \texttt{PhraseBook} object and a file location, serialize and write the \texttt{PhraseBook} to Json. The \texttt{DictionaryReader} could easily be substituted for an alternative should the storage format need to change. 
 
-The \texttt{SwingView} and \texttt{CliView} which both implement \texttt{PirateView} are the Views (and Controllers) for the Model. I decided to separate the \texttt{ActionListeners} out from the \texttt{SwingView} so as to not have many classes or anonymous classes in the associated \texttt{SwingView} elements. However for the \texttt{CliView} as there is significantly less code required to create visual elements, I opted to keep the Controllers within the class, as separating them would only make using it more cumbersome. 
+The \texttt{SwingView} and \texttt{CliView}, which both implement \texttt{PirateView}, are the Views (and Controllers) for the Model. I decided to separate the \texttt{ActionListeners} out from the \texttt{SwingView} so as not to have many classes or anonymous classes in the associated \texttt{SwingView} elements. However, for the \texttt{CliView} as there is significantly less code required to create visual elements, I opted to keep the Controllers within the class, as separating them would only make using it more cumbersome. 
 
 \subsection{Graphical User Interface Design}
 
@@ -137,7 +137,7 @@ The File menu will hold options for loading and saving the dictionary file, Edit
 \label{CliView}
 \end{figure}
 
-The majority of funtionality from the SwingView will be present, but in a purely text based environment. When not in game, the user will be able to access help, the word list, add and remove words, save and reload the dictionary etc. whilst in game the user will only be able to make guesses to the current game.
+The majority of functionality from the SwingView will be present, but in a purely text based environment. When not in game, the user will be able to access help, the word list, add and remove words, save and reload the dictionary etc. whilst in game the user will only be able to make guesses to the current game.
 
 The finished UI looked as follows
 
@@ -146,14 +146,14 @@ The finished UI looked as follows
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{./res/CliView.png}
-\caption{Command Line}
+\caption{Finished Command Line View}
 \label{CliViewFinished}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{./res/SwingView.png}
-\caption{Swing View}
+\caption{Finished Swing View}
 \label{SwingViewFinished}
 \end{figure}
 
@@ -249,7 +249,7 @@ I believe this mark is an accurate representation of the amount of work I have p
 
 I feel my solution to this problem is for the most part maintainable and expendable. I would have preferred to stick more closely to the principles of MVC. 
 
-I feel I could have improved 
+I feel I could have improved.
 
 \subsection{Running instructions}
 
@@ -283,6 +283,7 @@ Whilst completing this assignment, I have increased my knowledge and experience 
 \item IDEA's Intellij IDEA (instead of eclipse) \url{http://www.jetbrains.com/idea/} 
 \item Lecture presentations and worksheets on Blackboard
 \item GenMyModel for UML/Class/Package diagrams \url{https://app.genmymodel.com/}
+\item The `GoodReportExample.tex' example writeup that this writeup is based off
 \end{enumerate}
 
 \end{document}

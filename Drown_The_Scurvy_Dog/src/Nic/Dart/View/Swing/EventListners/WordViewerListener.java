@@ -22,7 +22,7 @@ public class WordViewerListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-        if(!viewer.showViewer(model.getPhraseBook(), model))
+        if(!viewer.showViewer(model))
             JOptionPane.showMessageDialog(view, "That would be cheating!");
 	}
 

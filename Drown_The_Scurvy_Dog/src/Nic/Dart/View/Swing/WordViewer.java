@@ -24,7 +24,6 @@ public class WordViewer extends JFrame {
 	public WordViewer(GameModel model){
 		super("Word Viewer");
         this.model = model;
-        this.phraseBook = phraseBook;
 
 		setVisible(false);
 		this.add(mainPanel);
@@ -49,9 +48,9 @@ public class WordViewer extends JFrame {
 		this.setResizable(false);
 	}
 
-    public boolean showViewer(PhraseBook phraseBook, GameModel model){
+    public boolean showViewer(GameModel model){
         if(!model.isInGame()) {
-            this.phraseBook = phraseBook;
+            this.phraseBook = model.getPhraseBook();
             updateView();
             setVisible(true);
             return true;
