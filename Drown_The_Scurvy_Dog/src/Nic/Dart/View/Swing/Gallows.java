@@ -55,7 +55,15 @@ public class Gallows extends JPanel {
     }
 
     private void doFailAnimation() {
-
+        for(int i=1; i< 10; i++){
+            pirateY+=i*10;
+            repaint();
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
