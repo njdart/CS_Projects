@@ -14,6 +14,8 @@ From my time at Aberystwyth University (2013 - Present)
 |C and Unix               |ANSI C98|
 |Hardware And Archetecture|n/a     |
 |Systems and Networks     |n/a     |
+|Moddeling Persistant Data|PostgreSQL|
+
 
 ======
 
@@ -44,3 +46,6 @@ Design for a three bit greater than comparitor using [logisim](http://www.cburch
 
 #### Systems and Network Administration
 A report on upgrading IT  infrastructure and project management of the "University of Costal West Wales" (aka Aberystwyth)
+
+#### Modelling Persistant Data
+A task to normalise and implement a database from a sports-and-teams senario, using the Postgresql language
