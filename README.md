@@ -15,6 +15,8 @@ From my time at Aberystwyth University (2013 - Present)
 |Hardware And Archetecture|n/a     |
 |Systems and Networks     |n/a     |
 |Moddeling Persistant Data|PostgreSQL|
+|Line Following           |Arduino |
+|Pioneer Robot            |n/a     |
 
 
 ======
@@ -49,3 +51,9 @@ A report on upgrading IT  infrastructure and project management of the "Universi
 
 #### Modelling Persistant Data
 A task to normalise and implement a database from a sports-and-teams senario, using the Postgresql language
+
+#### Line Following
+A simple line following competition in which we were given two hours with part of the track and no time to prepare for the teal thing!
+
+#### Pioneer Robot
+A compariason between simulated and real robotics
