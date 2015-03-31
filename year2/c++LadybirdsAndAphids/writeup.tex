@@ -49,12 +49,12 @@
 %% Variables for version and release status
 %% useage: \version
 %%%%%%
-\newcommand\module{CS*****}
-\newcommand\moduleName{Something to do with computers}
+\newcommand\module{CS22510}
+\newcommand\moduleName{C++, C and Java Programming Paradigms}
 \newcommand\authorText{Nicholas Dart}
 \newcommand\authorUsername{nid21}
 \newcommand\studentID{130057750}
-\newcommand\assesser{Some prof}
+\newcommand\assesser{Dr Frederic Labrosse, Dr Neal Snooke}
 
 %%%%%%
 %% Alias
@@ -95,9 +95,39 @@
     \thispagestyle{empty}
     \clearpage
 
-    \tableofcontents
-    \clearpage
+    \section{Design}
+        I designed the rough solution to this coursework together with another student, Owen Garland. Together we outlined the required features and came up with a loose class diagram for how we expect classes and objects to interact. This is shown below:
 
-    \section{Foo}
+        \begin{figure}[bh]
+            \centering
+            \includegraphics[scale=0.1]{roughPlan.jpg}
+            \caption{Full image included named ``roughPlan.jpg''}
+        \end{figure}
+
+        This was then the starting point for my implementation, however we uncovered several vague definitions or scenario in which the outcome is undefined. These we decide not to agree on a solution to as not to plagiarise each others work. They are as follows;
+
+        \begin{itemize}
+            \item When a creature gets killed, can it continue it's work for this generation?
+            \item Do ladybirds have a preferred starting direction or a random one?
+            \item If an aphid attacks, will all it's brethren in the cell automatically attack, or is it then up to them to help?
+            \item Can a creature be killed in the same generation as it's born?
+        \end{itemize}
+
+    \section{Implementation}
+        The implementation largely followed the design above, however the outcome was not as object orientated as I feel I would have been able to achieve in Java. Several areas, including adding and storing creatures are not as generic as I would like; I am storing aphids and ladybirds separately, not as generic creatures. This was due to the fact a ladybird or aphid has to know what type the creature it is interacting with is. As such things like movement of the board (which does not care about surroundings except being off the board) are less elegant and require two loops, one for aphids and one for creatures.
+
+        I also feel (and \#c++ on irc.freenode.net agree) that my use of pointers was excessive and not necessary. I have tried to redactor my work to reduce this, however there still remains a large number of probably unnecessary pointers. I did however change from using an array of cells defined as \texttt{Cell ***cells}, however this was changed to a \texttt{vector<vector<Cell>> Cells} as described in \url{http://www-h.eng.cam.ac.uk/help/tpl/languages/C++/vectormemory.html}.
+
+        I also started out using \texttt{std::list} however I also changed these to lists, again under recommendations from people on irc.
+
+    \section{Additional Features}
+        I implemented a seed feature to the game, where if a given seed and input files are consistent across ``games'' then the outcome of the senario will be the same, this was achieved simply by allowing the user to enter a seed or if not, using the current date time as the seed. The game will also terminate when either side has won.
+
+        \begin{figure}[bh]
+            \centering
+            \includegraphics[scale=0.5]{sameSeeds.png}
+            \caption{An example with two games of the same seed and input files}
+        \end{figure}
+ 
 
 \end{document}
