@@ -17,6 +17,7 @@ From my time at Aberystwyth University (2013 - Present)
 |Moddeling Persistant Data|PostgreSQL|
 |Line Following           |Arduino |
 |Pioneer Robot            |n/a     |
+|Ladybirds & Aphids       |C++ 11  |
 
 
 ======
@@ -57,3 +58,7 @@ A simple line following competition in which we were given two hours with part o
 
 #### Pioneer Robot
 A compariason between simulated and real robotics
+
+#### Ladybirds and Aphids
+A C++ program to simulate the interactions between Aphids and Ladybirds in an OOP design.
+
