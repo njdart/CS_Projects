@@ -18,6 +18,7 @@ From my time at Aberystwyth University (2013 - Present)
 |Line Following           |Arduino |
 |Pioneer Robot            |n/a     |
 |Ladybirds & Aphids       |C++ 11  |
+|Dijkstras Algorithm      |Java    |
 
 
 ======
@@ -62,3 +63,5 @@ A compariason between simulated and real robotics
 #### Ladybirds and Aphids
 A C++ program to simulate the interactions between Aphids and Ladybirds in an OOP design.
 
+#### Dijkstras Algorithm
+An implementation of dijkstras shortest path algorithm using a predetermined interface (ISnapper). Note: the code not in the package `cs21120.assignment2.solution` is a decompilation of the assignment handout jar `CS22120-A2.jar` as it did not include command line run points, so i added these in manually for ease of running in a debugger.
