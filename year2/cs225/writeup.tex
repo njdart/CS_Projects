@@ -1,0 +1,201 @@
+\documentclass[10pt]{article}
+\usepackage{a4wide}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{xkeyval}
+\usepackage{hyperref}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ % Syntax highliughting for java
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=none,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=4,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+%%%%%%
+%% Variables for version and release status
+%% useage: \version
+%%%%%%
+\newcommand\module{CS22510}
+\newcommand\moduleName{Aphids and ladybugs — languages comparison}
+\newcommand\authorText{Nicholas Dart}
+\newcommand\authorUsername{nid21}
+\newcommand\studentID{130057750}
+\newcommand\assesser{Fred Labrosse \& Neal Snooke}
+
+%%%%%%
+%% Alias
+%%%%%%
+% \newcommand{\sectionbreak}{\clearpage}    %% Allways start a section on a new page
+
+\title{ \huge \module~Assignment \\ \Large \moduleName}
+\author{
+  \vspace{100pt}
+  \begin{tabular}{ r || l }
+    Author          & \authorText (\authorUsername)\\
+                    & \studentID \\
+    Date Published  & \today \\
+                    & \\
+    Assessed By     & \assesser \\
+    Department      & Computer Science \\
+    Address         & Aberystwyth University \\
+                    & Penglais Campas \\
+                    & Ceredigion \\
+                    & SY23 3DB \\
+  \end{tabular} \\
+  Copyright \textcopyright Aberystwyth University 2015
+  %get rid of the date on the titlepage
+  \date{}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\module~Assignment}
+\rhead{\authorText~-~\studentID}
+\rfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\lfoot{Aberystwyth University - Computer Science}
+
+\begin{document}
+  \setcounter{page}{1}
+
+  \maketitle
+  \thispagestyle{empty}
+  \clearpage
+
+  % \tableofcontents
+  % \clearpage
+
+  \section{Introduction}
+
+    C, C++ and Java have many different strengths and weaknesses; as such they are each suited for particular purposes. These can hinder or help a given project or task, as well as leading to performance increase/decrease. The previous assignment ``Aphids and Ladybirds'' will be used as a practical example to explain and demonstrate these. 
+
+  \section{C}
+    C is a very powerful programming language, principally because it doesn't contain features that are not essential, and either requires a library or re-implementing of these features to use them. This has the advantage that programs can be very small, fast to compile and run, it also gives many options to optimize features, such as ordered lists which are inserted frequently but rarely read can be reimplemented to only sort when a read is performed, thus redundancy overall computation of the list. It also allows operations to be done very close to hardware, such as pointer manipulation, memory allocation and deallocation. These operations afford a greater control of how a program operates, and the possible efficiencies achieved, but also allow more ways to ``shoot your self in the foot''\cite{shootFoot}\cite{davePrice}. To this end C is very effective for applications where system resources are particularly limited or speed and efficiency is required, such as embedded systems or operating systems, but can be very difficult for new/novice programmers to build reliable, efficient or clean (ie no memory leaks) programs. 
+
+    C would not be an optimal language for developing the aforementioned ``Ladybirds and Aphids'' assignment, as it contains clear classes and a hierarchy to them (Ladybird and Aphid are both of similar type, possibly Creature) as was mentioned in the assignment brief\cite{assignment}. It also does not require large amounts of efficiency, so the ability to allocate memory manually and manipulate pointers is not especially required. However an implementation could be made in C should if it is desired/required
+
+    The main benefits and drawbacks of C are listed below in shorthand;\\
+    \begin{tabular}{| p{7cm} | p{7cm} |}
+      \hline
+      \emph{Pros} & \emph{Cons} \\ \hline \hline
+      
+      Can be Fast/Efficient & Hard to read/write - requires more knowledge \\ \hline
+      ISO Standard & Memory Management - No garbage collection \\ \hline
+      Good for Small/Embedded Systems & GCC Compiler Errors/Seg faults Hard to understand \\ \hline
+      Control over Memory Management - Optimize for hardware at hand & Hard to debug Memory leaks \\ \hline
+      Native Binaries - Optimize for hardware & Compiler Defined Behaviour - Size of data types compiler/hardware specific \\ \hline
+       & Native Binaries - Need Recompilation for new Hardware\\ \hline
+       & Some common data types (boolean) ``fudged'' and not obvious/easy to get wrong\\ \hline
+    \end{tabular}
+
+  \newpage
+
+  \section{C++}
+    C++ provides extensive tools and features to allow for design and use of object orientation, unlike C which has no object orientation and only provides data structures (``structs''). In fact, C++ affords a greater control of objects than Java does, with multiple inheritances and control over Virtual functions being the prime examples. Compared with C, C++ has no major performance benefits or hits; it has some features (such as stdio) that are improved from C's \texttt{print} and \texttt{scan} family of functions, however C also has features which can be performed better than in C++. As well as this, C++ provides templates through the ``stl'' library, this allows more generic code to be created, such as iterators, containers and functions that take a type that may not have been explicitly coded, but can be generated. This enables the concept of lists that are both generic (can take any type), but also strict (once created will only take that type). Another small, but extremely useful feature of C++ that is not provided in C is operator overloading; the ability to redefine what operators (such as +, =, += etc) do. This can make for more concise code, such as vector arithmetic;
+    \begin{verbatim}
+      Vector(1,2) + Vector(3,4)                  // = Vector(4,6)
+      Vector(1,2) *= 2;                          // = Vector(2,4)
+      int magnitude = Vector(1,2) * Vector(3,4); // magnitude = 11
+    \end{verbatim}
+
+
+    Compared with C, C++ is a more suited language to develop the ``Ladybirds and Aphids'' assignment, however it still has some of the caveats as C does, such as direct memory access and the ability to ``shoot your self in to foot'' all too easily. Unlike C however, C++ does have object orientation which allows for better encapsulation and interaction of objects within the game. It also provides more easy facilities to extend the program in the future, providing a suitable class structure is chosen (eg ``Ladybird'' and ``Aphid'' are both derived from a common class). For example a third creature could be added with little to no (depending on implementation) additional code to the ``Ladybird'' and ``Aphid'' classes. 
+
+    \begin{tabular}{| p{7cm} | p{7cm} |}
+      \hline
+      \emph{Pros} & \emph{Cons} \\ \hline \hline
+
+      Operator Overloading & Compiler Defined Behavior \\ \hline
+      Easier Memory Management via References & Complex OO models \\ \hline
+      Strings, boolean and other data types & GCC Compiler Errors \\ \hline
+      Multiple Inheritances & Hard to debug Memory \\ \hline
+      Speed & Vtables require lookup at runtime - Slower code \\ \hline
+      OOP + Efficiency & \\ \hline
+      Native Binaries & \\ \hline
+      ISO Standard & \\ \hline
+    \end{tabular}
+    
+    \newpage
+
+  \section{Java}
+    Java, unlike C and C++ is not strictly a compiled language; it relies on interpretation of Java byte code through a Java Virtual Machine (JVM), with the Java byte code being compiled from source. This allows it to be platform independent (with the JVM having to be compiled for the architecture) and so a write once-run-everywhere mentality to coding. However this comes at the cost of a large amount of speed and efficiency; the JVM has to interpret the Java byte code on the fly. However it is possible to precompile to native binaries Java code, as \texttt{ART} does on newer versions of Android, this can lead to significant performance increases over just-in-time compiled Java byte code\cite{androidART}.
+
+    Java, unlike C and C++, is an entirely Object Orientated language, with no support for imperative programming ideologies what-so-ever. This can lead to scenarios where implementations are more complex than they would otherwise need to be; prime examples are mathematical functions which don't belong to an object as they work on data. Java also does not provide operator overloading as with C++.
+
+    Another big advantage, and also disadvantage of Java is the lack of direct memory manipulation; this allows for more easy writing of code as deallocation of memory is done by the in-build garbage collector (GC). This however decreases the performance of Java as the GC has to search for objects out of scope/orphaned and clean them up, thus taking CPU time and also not deallocating memory when they immediately go out of scope as is required in C and C++. The advantage therefore of a GC is that memory management is not required to be implemented and is \texttt{theoretically} handled for you, enabling programs that can run indefinitely, whereas in C and C++ these kind of programs are substantially more difficult to create. 
+
+    Along with no direct memory access, Java also does not allow for any pointer manipulation; and instead deals only with references. This allows for less control over objects, especially arrays which are inherently pointers in C. As a result Java only allows passing by reference and passing by value, with only a few primitive types that can be passed by value.
+
+    \begin{tabular}{| p{7cm} | p{7cm} |}
+      \hline
+      \emph{pros} & \emph{cons} \\ \hline \hline
+
+      Platform Independent & Everything is OOP \\ \hline
+      Strong OOP & Slow \\ \hline
+      Exceptions & JVM \\ \hline
+      Android & Security \\ \hline
+      Fixed Data type sizes & Requires Java/JVM/JRE \\ \hline
+      Dynamic Memory and Garbage Collection & Eclipse? \\ \hline
+      Jar Libraries & Oracle/Propriety \\ \hline
+      JUnit & \\ \hline
+      More IDE's & \\ \hline
+      
+    \end{tabular}
+
+  \section{Overview \& Conclusion}
+    For the given assignment ``Ladybirds and Aphids'', there was not any explicit need for great levels of efficiency or direct memory access. As such I feel the optimal programming language for the assignment would have been Java; It contains Object Orientation and allows manipulation of references, but does not require any thought as to how memory is managed. It therefore would have been easier and most likely quicker to write the assignment in Java. 
+
+  \newpage
+
+  \begin{thebibliography}{9}
+    \bibitem{shootFoot}
+      University of York Jokes Page on ``How to Shoot Yourself In the Foot''\\
+      \url{http://www-users.cs.york.ac.uk/susan/joke/foot.htm} Accessed 10th April 2015
+    \bibitem{davePrice}
+      Dave Price BSc, MSc (Wales), MBCS.\\Teaching Fellow and Computer Officer, Aberystwyth University\\
+      Mentioned many times about ``Shooting your self in the foot'' when writing C
+    \bibitem{assignment}
+      Assignment 1 Brief stated ``Given that the assignment is about programming in C++, design an object oriented solution to the problem''
+    \bibitem{tiobeIndex}
+      TIOBE programming languages popularity Index for 2015 \\
+      \url{http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html} Accessed 14 April 2014
+    \bibitem{androidART}
+      News Relic article about the release of the new ART after the Google 2014 I/O keynotes presentation\\
+      \url{http://blog.newrelic.com/2014/07/07/android-art-vs-dalvik/} Accessed 15 April 2015
+
+  \end{thebibliography}
+
+\end{document}
