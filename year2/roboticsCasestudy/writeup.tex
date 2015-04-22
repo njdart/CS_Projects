@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+\usepackage{a4wide}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{xkeyval}
+\usepackage{hyperref}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ % Syntax highliughting for java
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=none,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=4,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+%%%%%%
+%% Variables for version and release status
+%% useage: \version
+%%%%%%
+\newcommand\module{CS26410}
+\newcommand\moduleName{Assignment 3}
+\newcommand\authorText{Nicholas Dart}
+\newcommand\authorUsername{nid21}
+\newcommand\studentID{130057750}
+\newcommand\assesser{Myra Wilson}
+
+%%%%%%
+%% Alias
+%%%%%%
+%\newcommand{\sectionbreak}{\clearpage}    %% Allways start a section on a new page
+
+\title{ \huge \module~Assignment \\ \Large \moduleName}
+\author{
+  \vspace{100pt}
+  \begin{tabular}{ r || l }
+    Author          & \authorText (\authorUsername)\\
+            & \studentID \\
+    Date Published  & \today \\
+            & \\
+    Assessed By     & \assesser \\
+    Department      & Computer Science \\
+    Address         & Aberystwyth University \\
+            & Penglais Campas \\
+            & Ceredigion \\
+            & SY23 3DB \\
+  \end{tabular} \\
+  Copyright \textcopyright~Aberystwyth University 2015
+  %get rid of the date on the titlepage
+  \date{}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\module~Assignment}
+\rhead{\authorText~-~\studentID}
+\rfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\lfoot{Aberystwyth University - Computer Science}
+
+\begin{document}
+  \setcounter{page}{1}
+
+  \maketitle
+  \thispagestyle{empty}
+  \clearpage
+
+  % \tableofcontents
+  % \clearpage
+
+  \section{Assumptions}
+    I have made the following assumptions in the requirements of the robot and the environment it will be working it:
+    \begin{itemize}
+      \item It will be working across a variety of surfaces including carpet, tiles, wood flooring, each of which may be wet or slippery.
+      \item It will not have to contend with changes in elevation such as stairs, escalates or lifts, however should be able to navigate ramps.
+      \item A map of the building will be provided, including the positions of doors, automatic doors, ramps, walls, any recharging/resupply points.
+    \end{itemize}
+
+  \section{Locomotion}
+      The main considerations for a locomotion system are as follows:
+      \begin{itemize}
+        \item Manoeuvrability - Small ``turning circle''
+        \item Safe to be near/easily enclosed
+        \item Low power
+        \item Robust and reliable
+        \item Cope with inclines
+        \item Stability
+      \end{itemize}
+
+      The method of locomotion I have chosen is two powered wheels with a caster at the rear. Providing powerful enough motors are used, this design should be able to contend with slopes, and should also be a relatively stable platform whist maintaining mobility and having a tight turning circle for easy navigation of corridors. Wheels are a common mode of transport and so many sensors exist to monitor the output, position and rotation speed of the robot. They can also easily be hidden under the robot or behind guards to protect them from damage and from damaging other obstacles and people. Motors are not especially low power as they can require a large amount of current to run, however low friction motors, bearing and wheels can help reduce the energy requirement, whist the wheel surface can be adapted specially for the types of terrain likely to be encountered in a school. Motors can easily be controlled by use of a H-Bridge and PWM or other similar electronic device to provide speed and direction control and rotational encoders can be fitted to monitor speed, acceleration and estimate position.
+
+      Whist considering locomotion, I have assumed  that most schools will have either laminate or concrete flooring, which under normal circumstances isn't very slippy. It is also reasonable that the robot will get stuck in corners or corridors where it will be required to turn around to continue it's job; to achieve this a two wheeled design is optimal, with the wheels placed squarely in the middle such that if both turn in opposite directions then the robot will turn on the spot. 
+
+      For the overall design for locomotion of the robot, I have followed work I have done in robotics competitions before, namely the 2012 Student Robotics challenge in Southampton.\cite{systemetricBlogspot}\cite{srobo} 
+
+  \newpage
+
+  \section{Sensors Considerations}
+    Sensors chosen for this robot should have some (preferably all) of the following characteristics:
+    \begin{itemize}
+      \item Low Power
+      \item Accurate
+      \item Range
+      \item Sensitive
+      \item Small
+      \item robust/durable
+      \item Non-damaging/dangerous
+    \end{itemize}
+
+    For the purpose of this robot, it will have to operate autonomously for extended periods of time, potentially around groups of people, as such any sensors choose need to be low power so as to extend the functional time of the robot. However sensors chosen should also be accurate enough and to a reasonable range to allow the robot to perceive dangers from a distance and allow early avoidance of them. 
+
+    The sensors on the robot will also need to be sensitive enough to detect possible small objects such as table legs, railing, banisters etc. These are difficult to detect, especially at range and so detection of them should be considered essential to avoid damage to the robot. However sensors chosen should be durable and robust enough to survive in a public setting where they may take a beating from passers by, undetected obstacles and wear and tear over the operational life cycle of the robot. In some cases the sensors are not able to be manufactured to a robust enough way and so must be able to be hidden within recesses, cavities or behind screens in order to be protected, as such they should where possible be kept as small as possible, without sacrificing accuracy or sensitivity. 
+
+    Lastly, as this robot will be operating in a public setting, the robot should not contain any damaging or dangerous sensors such as heigh powered lasers or active heigh-energy sensors (such as x-ray sensors). However this is unlikely to be a large problem as many sensors such laser scanners often have human-friendly low power or non-damaging variants that are safe for such purposes. And the use of any radioactive sensor/emitter would serve little purpose for a cleaning robot.\\
+
+    For the task at hand, the main priority for sensors chosen should be that they are safe and approved for use in public settings and that they are accurate enough for the job, however all the points raised above should be considered when choosing sensors for this robot.
+
+    \newpage
+   
+   \section{Sensors}
+    As the robot will be operating in a potentially busy place, the robot will have to content with a large number of possible hazardous situations during it's operation. The following two sensors I will describe I have considered the most important for safe operation of the robot;
+
+    \subsection{Ground Scanning LiDAR}
+      LiDAR is a sensing technology using lasers to measure distance to an object, in this application, Ground Scanning LiDAR would utilize a LiDAR sensor to scan and map height differences in surrounding terrain, which can be used to determine where the robot can safely move and if any slopes are present and whether they are safe to be traversed. LiDAR can be very accurate in it's measurements, this is a good choice for detecting suitable terrain for the robot to traverse. The downside is that it can be power hungry as a laser will have to be powered nearly continuously during a scan and scans would have to be performed nearly constantly during operation.
+
+      LiDAR does present a safety concern as it is using lasers however commercial LiDAR units are often low-power and designed to be ``eye-safe''.
+
+    \subsection{Sonar}
+      Sonar is a good sensing technology that can have a broad or field of view, but can also be accurate to a reasonable distance (10-15 meters from experience). They are low power and are safe for use in public. The advantage they have to line scanning is they return the distance to the closest thing in it's field of view, and as such is a better sensor for determine if a person or object is close to the robot.
+
+    \subsection{Additional Sensors}
+      In addition to the above main sensors, other sensors that would be required or recommended are a gyro for measuring rotational acceleration and speeds, compass, pressure or micro-switches on the exterior to detect collisions and rotary encoders to gauge distance travelled. 
+
+
+  \section{Control Architecture}
+    The two control architectures under consideration are \texttt{Reactive Architecture} and \texttt{Deliberate Architecture}, each of these has strengths and weaknesses.\\
+
+    Reactive architecture relies on the continuous feedback from the real environment and detecting changes in it caused by external stimuli or changes in the agents outputs, it allows for great control of outputs when sensor(s) monitor said output, for example a force sensors on a robotic hand when it it trying to grip an object. Reactive systems are very good for unpredictable or varied environments, such as that of a busy hallway; they can try to clean but stop if it becomes busy, or they encounter a closed door. 
+
+    A large caveat of reactive systems, however, is that actions are not predetermined; they cannot be predicted ahead of time. If the system receives input which it perceives are valid, but to a human would not make any sense (eg the robot believes it turned 180\textdegree in under a millisecond), or sensors are broken and not returning any change at all, then it will try to react or compensate for this change, most likely in overly reactive way. As such reactive systems can pose safety concerns when working closely with people and delicate objects (an example can be seen in the finals of my robotics challenge, when it ultrasonic sensors are obscured by a very close robot and so reports that the path is clear)\\
+
+    Deliberate architecture is a less robust architecture than reactive, as it tries to represent the world in a model, with the caveat that any real-world information that does not fit into the model is not considered. A Deliberate architecture balances world data, intentions and desires and then decides on an action from a set of actions generated from the world data, intentions and desires. This kind of system is very well suited for applications where a ``correct course of action'' can be made (IE there is a right and wrong), however in the situation the robot will be working in, cleaning schools, there is very little of this white/black decision making that can be made. 
+
+    Deliberate architecture in theory could provide a more safe robot as intentions and outputs are constructed and defined based on a model, which can be limited to only produce desired and safe output, however this comes at the cost of robustness of the robot; it may not be able to function in certain conditions and scenarios where it isn't programmed too. 
+
+    The preferred choice of architectures would be a mixture of both, deliberate actions should be undertaken to fulfil the job at hand, however if the robot needs to, react to the situation it finds it's self in. However if one architecture choice was to be chosen, reactive architecture would be superior as it can react to situations that may not have been considered at design time.
+
+  \begin{thebibliography}{9}
+    \bibitem{systemetricBlogspot} Team 759's Student robotics blog for the Student Robotics 2012 Challenge (From Hills Road Sixth Form College)\\
+      \url{http://team759.blogspot.co.uk/2012/04/second-place.html} Accessed 18th April 2015
+
+    \bibitem{srobo} Student Robotics official website
+      \url{https://www.studentrobotics.org/} Accessed 18th April 2015
+
+    \bibitem{sroboHRSFinalsReactiveSystemsFail} The finals of the 2012 Student robotics competition. At 1min 56sec, the robot is obscured from getting back to the home zone by another robot and unintentional behaviours occurs.
+      \url{https://youtu.be/d0LI9v6-_dQ}
+  \end{thebibliography}
+
+\end{document}
