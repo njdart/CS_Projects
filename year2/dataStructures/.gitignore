@@ -1,0 +1,35 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#auto-generated documentation
+docs/
+
+#writeup latex files
+*.log
+*.aux
+*.fdb_latexmk
+*.lol
+*.synctex
+*.synctex.gz
+*.toc
+*.fls
+
+#zips
+*.tar
+*.gz
+*.zip
+
+#include spec
+!spec/
+
+#?!?
+*.directory
+*.directory.lock
+
+#idea project files
+.gradle/
+
