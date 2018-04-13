@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.firstname %></td>
+        <td><%= user.lastname %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to 'Show', user, { class: 'btn btn-default', role: 'button' } %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), { class: 'btn btn-default', role: 'button' } %></td>
+        <td><%= link_to 'Destroy', user, { class: 'btn btn-danger', role: 'button', method: :delete, data: { confirm: 'Are you sure?' }} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New User', new_user_path, { class: 'btn btn-primary' } %>
+<br>
+<%= will_paginate @users %>
+<br>

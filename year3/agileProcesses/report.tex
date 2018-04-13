@@ -1,0 +1,135 @@
+\documentclass[10pt]{article}
+\usepackage{a4wide}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{xkeyval}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ % Syntax highliughting for java
+    backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygreen},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    frame=none,                      % adds a frame around the code
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{blue},       % keyword style
+    language=Octave,                 % the language of the code
+    morekeywords={*,...},            % if you want to add more keywords to the set
+    numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{mymauve},     % string literal style
+    tabsize=4,                       % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+%%%%%%
+%% Variables for version and release status
+%% useage: \version
+%%%%%%
+\newcommand\module{CS31310}
+\newcommand\assignmentTitle{Agile Methodologies - Worksheet 2A}
+% \newcommand\authorText{Nicholas Dart}
+% \newcommand\authorUsername{nid21}
+\newcommand\studentID{130057750}
+\newcommand\assesser{Neil Taylor}
+
+%%%%%%
+%% Alias
+%%%%%%
+%\newcommand{\sectionbreak}{\clearpage}    %% Allways start a section on a new page
+
+\title{ \huge \module~Assignment \\ \Large \assignmentTitle}
+\author{
+    \vspace{100pt}
+    \begin{tabular}{ r || l }
+        Author          & \studentID \\
+        Date Published  & \today \\
+                        & \\
+        Assessed By     & \assesser \\
+        Department      & Computer Science \\
+        Address         & Aberystwyth University \\
+                        & Penglais Campas \\
+                        & Ceredigion \\
+                        & SY23 3DB \\
+    \end{tabular} \\
+    Copyright \textcopyright~Aberystwyth University 2015
+    %get rid of the date on the titlepage
+    \date{}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\module~Assignment}
+\rhead{\studentID}
+\rfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\lfoot{Aberystwyth University - Computer Science}
+
+\begin{document}
+    \setcounter{page}{1}
+
+    % \maketitle
+    % \thispagestyle{empty}
+    % \clearpage
+
+    % \tableofcontents
+    % \clearpage
+
+    \section{Pair Programming}
+        % How did you interact with the people that you worked with in pairs? Was the pair programming helpful? Explain why you thought it was or was not helpful.
+
+        Pair programming is a very useful tactic in getting higher quality code written faster; during pair programming I found that whilst I was driving, the navigator was frequently making suggestions about structure and formatting as well as reminding me about style guides. This lead to more readable code first time round with a better structure to it.
+
+        Whilst navigating I found the inverse was true for myself, I was frequently suggesting improvements to styling and structure, as well as test cases that may be desirable to be explored, or edge cases that could occur.
+
+        I found that whilst pair programming, once we got under way development was faster and felt to me to produce better working code. It did lead to arguments initially about styling and structure (problems which in an organisation would likely be decided by a style guide) however the did bring up points that I thought were valuable (Comma first styling).
+    
+    \section{Red, Green, Refactor and Test Driven Development}
+        % Comment on the use of the red-green-refactor approach used during the workshops. Was this a help or a hindrance when developing the code. Discuss your thoughts on this.
+
+        Test-Driven-Development is a technique I have followed in the past, it forces developers to think about how testing should be carried out early. I've also found that for myself it has an added benefit of focusing me on the features that are needed and prevents scope creep.
+
+        During the Red, Green, Refactor practical I was reminded of how more productive it feels to do TDD, and watch tests go from failing to passing. There is definitely value in it's use on systems or components where a clear specification exist, however in circumstances where design decisions need to be made or changed, they likely add overhead as changing interfaces between components may necessitate rewriting many tests.
+    
+    \section{Class Responsibility Collaboration Cards}
+        % Discuss your view on the use of CRC cards as a way to discuss the design.
+        Class Response Collaboration (CRC) cards are a way of planning interactions and responsibilities between components of a system, which likely represent classes. I found their use very similar to what I would do on a whiteboard during system design sessions. The obvious advantage I saw with paper notes was reorganising them during discussions, however changing structure of the cards did require them to be rewritten. I found their use a bit vague as during discussions I was wanting to first write more general topics of concern on them, which I planned to further explore later, this lead to some confusion in the group.
+
+        Personally I would advocate more for whiteboards (referred to as information radiators on my Industrial Year) where designs can be displayed to a group (especially if they are located where developers are working) as the paper CRC cards could become lost, or written up in a document that is not looked at again. 
+
+    \section{Conclusion}
+        % Do you think that TDD, Pair Programming and Refactoring can help to deliver a good design? Discuss your view.
+
+        Overall, I feel that TDD, pair programming and refactoring provide a good tool set and environment where code can be developed that is of good quality, maintainable and understandable. Having used TDD and Refactoring in the past, I have found they have the effect of focusing developers on key features and on adding value to projects whilst preventing scope creep and spaghetti code. Whilst they do not eliminate these pitfalls entirely, they do a good job at making them harder, whilst not added large amounts of overhead to development efforts. CRC Cards are not something I have extensive use with, but I can imagine them being invaluable tools to a team that understands them and plans with them, although I think I would prefer a whiteboard. 
+
+    % Any other points that you would like to make about the workshop exercises.
+
+    % https://bitbucket.org/spooning/
+
+\end{document}
+
+% 130057750_CS313_worksheet2a.pdf
